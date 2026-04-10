@@ -3,14 +3,8 @@ using UnityEngine;
 public class AtaqueData : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+  
+   public float vida;
+   public int speed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

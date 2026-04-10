@@ -2,18 +2,68 @@ using UnityEngine;
 
 public abstract class Jugador : MonoBehaviour
 {
-   
-   public float vida { get; protected set; }
-   public float armadura  { get; protected set; }
 
-   public int speed  { get; protected set; }
+    #region Interfaz
 
-   public int probCritica  { get; protected set; }
+    public string nombre;
+    public string clase;
+    public string descripcion;
+
+    #endregion
+
+
+    #region Estadisticas
+    public float vidaMaxima { get; protected set; }
+    public float vida { get; protected set; } //vida actual
+    public float armadura { get; protected set; }
+    public int speed { get; protected set; } //velocidad
+    public int posicion { get; protected set; } //posicion en la ronda actual 
+    //*------------------------------------------
+    public int probCritico { get; protected set; } //prob de que sea critico el ataque
+    public int probEvasion { get; protected set; } //prob de evadir el ataque
+    public int probGolpe { get; protected set; } //probabilidad de asestar el ataque
+     //*------------------------------------------
+    public float potencia { get; protected set; }
+    public float alteracionDaño { get; protected set; } //porcentaje que implica cuanto por ciento te entra de mas o de menos en el daño.
+
+    #endregion
+
+
+    #region Ataques
 
     public abstract void Ataque1();
 
-     //public abstract void Ataque2();
+    //public abstract void Ataque2();
     //public abstract void Ataque3();
     // public abstract void Ataque4();
+    #endregion
 
+
+    #region Metodos de jugador
+    //*probabilidades
+    public bool ProbabilidadAcertada(int porcentaje)
+    {
+        porcentaje = Mathf.Clamp(porcentaje, 0, 100);
+        return Random.value < porcentaje / 100f;
+    }
+
+    //*Realizar ataques
+    public float AplicarDaño(float daño)
+    {
+        if(ProbabilidadAcertada(probGolpe))
+        {
+            daño = daño * potencia*alteracionDaño;
+        
+        }
+        else
+        {
+            daño=0;
+        }
+
+        return daño;
+        
+    }
+
+
+    #endregion
 }
