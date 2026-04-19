@@ -7,5 +7,7 @@ public enum TipoAtaque
     aturdimiento,
     mental,
     escudo,
-    especial
+    especial,
+    unitarget,
+    area
 }
