@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Mago : Jugador
+public class Mago : Personaje
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

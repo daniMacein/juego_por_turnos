@@ -5,9 +5,9 @@ public class ControlCombate : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
-    public Jugador jugador1;
+    public Personaje jugador1;
 
-      public Jugador jugador2;
+      public Personaje jugador2;
     void Start()
     {
         

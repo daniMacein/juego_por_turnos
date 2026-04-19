@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Jugador : MonoBehaviour
+public abstract class Personaje : MonoBehaviour
 {
 
     #region Interfaz
