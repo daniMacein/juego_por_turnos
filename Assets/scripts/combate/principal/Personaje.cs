@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public abstract class Personaje : MonoBehaviour
@@ -18,6 +19,7 @@ public abstract class Personaje : MonoBehaviour
     public float armadura { get; protected set; }
     public int speed { get; protected set; } //velocidad
     public int posicion { get; protected set; } //posicion en la ronda actual 
+
     //*------------------------------------------
     public int probCritico { get; protected set; } //prob de que sea critico el ataque
     public int probEvasion { get; protected set; } //prob de evadir el ataque
@@ -66,4 +68,16 @@ public abstract class Personaje : MonoBehaviour
 
 
     #endregion
+
+
+    #region gets/set
+
+    public void SetPosicion(int posicion)
+    {
+        this.posicion=posicion;
+    }
+    
+    
+    
 }
+    #endregion

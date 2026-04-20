@@ -6,7 +6,7 @@ public class Mago : Personaje
     void Start()
     {
         vida=1000;
-        speed=45;
+        speed=10;
     }
     
 
