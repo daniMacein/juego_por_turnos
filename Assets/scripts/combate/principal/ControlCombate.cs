@@ -39,15 +39,26 @@ public class ControlCombate : MonoBehaviour
     return posicionesIniciales;
   }
 
+//Sumamos las posicionesIniciales a la speed de cada jugador. Y  le asignamos su posicion correspondiente.
 
   void CrearPosicion(List<Personaje> personajes, List<int> posicionesIniciales)
   {
-
+    //recorremos los personajes
     for (int i = 0; i < personajes.Count; i++)
     {
-      posicionesIniciales[i] += personajes[i].speed;
-      personajes[i].SetPosicion(posicionesIniciales[i]);
-      print("posicion" + personajes[i].posicion);
+      posicionesIniciales[i] += personajes[i].speed; //obtenemos la velocidad del personaje
+
+       List<int> posicionenviadas= new List<int>(); //creamos la lista con todas las posiciones que tendra
+      while (posicionesIniciales[i]>100) //hacemos un bucle y añadimos cada 100 una nueva posicion 
+
+      {
+        posicionenviadas.Add(100);
+        posicionesIniciales[i]-=100;
+      }
+       posicionenviadas.Add(posicionesIniciales[i]); //añadimos la menor de 100
+       personajes[i].SetPosicion(posicionenviadas); //las enviamos
+      
+      print("posicion" +string.Join(", ", personajes[i].posicion) );
     }
   }
 

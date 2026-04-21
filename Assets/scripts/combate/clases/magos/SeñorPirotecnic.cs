@@ -8,7 +8,7 @@ public class SeñorPirotecnic : Personaje
         vidaMaxima=860;
         vida=860;
         armadura=30;
-        speed=20;
+        speed=100;
         
         probCritico=8;
         probEvasion=4;

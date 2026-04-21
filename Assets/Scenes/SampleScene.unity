@@ -687,6 +687,7 @@ GameObject:
   - component: {fileID: 1129733161}
   - component: {fileID: 1129733160}
   - component: {fileID: 1129733159}
+  - component: {fileID: 1129733163}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -787,6 +788,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1129733163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129733158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1a8570ef488304c9a464009c1853e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mago
+  nombre: 
+  clase: 
+  descripcion: 
 --- !u!1 &1138393063
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,8 +835,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cf6e8bb30e22b4ea4f7ee5e34fe19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlCombate
-  jugador1: {fileID: 618723950}
-  jugador2: {fileID: 618723950}
+  personaje1: {fileID: 0}
+  personaje2: {fileID: 0}
+  personajes:
+  - {fileID: 618723950}
 --- !u!65 &1138393065
 BoxCollider:
   m_ObjectHideFlags: 0

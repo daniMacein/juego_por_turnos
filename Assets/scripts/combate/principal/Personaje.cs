@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public abstract class Personaje : MonoBehaviour
     public float vida { get; protected set; } //vida actual
     public float armadura { get; protected set; }
     public int speed { get; protected set; } //velocidad
-    public int posicion { get; protected set; } //posicion en la ronda actual 
+    public List<int> posicion { get; protected set; } = new List<int>(); //posicion en la ronda actual 
 
     //*------------------------------------------
     public int probCritico { get; protected set; } //prob de que sea critico el ataque
@@ -72,9 +73,13 @@ public abstract class Personaje : MonoBehaviour
 
     #region gets/set
 
-    public void SetPosicion(int posicion)
+    public void SetPosicion(List <int> posiciones)
     {
-        this.posicion=posicion;
+        for (int i = 0; i < posiciones.Count; i++)
+
+        {
+            this.posicion.Add(posiciones[i]);
+        }
     }
     
     
