@@ -6,14 +6,19 @@ using UnityEngine;
 
 public class ControlCombate : MonoBehaviour
 {
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
+
 
 
   public Personaje personaje1;
 
-  public Personaje personaje2;
+  //public Personaje personaje2;
 
-  public List<Personaje> personajes = new List<Personaje>();
+//  public List<Personaje> personajes = new List<Personaje>();
+
+
+  #region  Posicion
+
+ /*
   void Start()
   {
 
@@ -62,6 +67,37 @@ public class ControlCombate : MonoBehaviour
     }
   }
 
+*/
+ #endregion
+
+
+ #region  combate
+
+
+void Start()
+  {
+
+    personaje1.Ataque1();
+
+  }
+
+
+ public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
+    {
+        foreach (GolpeData golpe in ataque.golpes)
+        {
+            foreach (Personaje objetivo in golpe.objetivos)
+            {
+                objetivo.RecibirGolpe(golpe);
+            }
+        }
+    }
+
+
+
+
+
+ #endregion
 }
 
 

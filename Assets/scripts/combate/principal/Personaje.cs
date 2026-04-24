@@ -81,6 +81,17 @@ public abstract class Personaje : MonoBehaviour
             this.posicion.Add(posiciones[i]);
         }
     }
+
+
+
+
+
+    public void RecibirGolpe(GolpeData golpe)
+    {
+        vida += golpe.vida; // recuerda: daño es negativo
+
+        Debug.Log(nombre + " recibe " + golpe.vida + " de vida. Vida actual: " + vida);
+    }
     
     
     
