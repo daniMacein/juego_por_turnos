@@ -86,12 +86,35 @@ public abstract class Personaje : MonoBehaviour
 
 
 
-    public void RecibirGolpe(GolpeData golpe)
+    public ResultadoGolpe RecibirGolpe(GolpeData golpe)
     {
+
+         
+
+
         vida += golpe.vida; // recuerda: daño es negativo
 
         Debug.Log(nombre + " recibe " + golpe.vida + " de vida. Vida actual: " + vida);
+
+
+         ResultadoGolpe resultado = new ResultadoGolpe();
+
+
+         resultado.dañoFinal=-golpe.vida;
+         resultado.armaduraReducida=golpe.vida*-0.1f;
+
+         resultado.estadoGolpe=EstadoGolpe.Golpeado;
+
+         return resultado;
+
     }
+
+    public void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
+
+    {
+        Debug.Log(resultadoAtaque.ToString());
+    }
+    
     
     
     

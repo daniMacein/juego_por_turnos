@@ -24,5 +24,6 @@ public enum EstadoGolpe
     Atacando,
     Golpeado,
     Fallado,
-    Bloqueado
+    Persuadido,
+    Critico
 }

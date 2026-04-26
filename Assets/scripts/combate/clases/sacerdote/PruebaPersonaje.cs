@@ -17,6 +17,8 @@ public class PruebaPersonaje : Personaje
         probGolpe=50;
         alteracionDaño=1;
 
+        
+
     }
     
    

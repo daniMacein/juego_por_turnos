@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b1c8732420d134c825df065fc59e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PruebaPersonaje
-  nombre: 
+  nombre: Gatita
   clase: 
   descripcion: 
   enemigo: {fileID: 1261912960}
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b1c8732420d134c825df065fc59e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PruebaPersonaje
-  nombre: 
+  nombre: Perrita
   clase: 
   descripcion: 
   enemigo: {fileID: 993878760}

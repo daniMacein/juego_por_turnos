@@ -82,16 +82,42 @@ void Start()
   }
 
 
- public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
+public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
+{
+    Dictionary<Personaje, ResultadoAtaque> resultados = new Dictionary<Personaje, ResultadoAtaque>();
+
+    foreach (GolpeData golpe in ataque.golpes)
     {
-        foreach (GolpeData golpe in ataque.golpes)
+        foreach (Personaje objetivo in golpe.objetivos)
         {
-            foreach (Personaje objetivo in golpe.objetivos)
+            // Crear resultado si no existe
+            if (!resultados.ContainsKey(objetivo))
             {
-                objetivo.RecibirGolpe(golpe);
+                resultados[objetivo] = new ResultadoAtaque();
+                resultados[objetivo].objetivo = objetivo;
+            }
+
+            // Recibir golpe y devolver el resultado del golpe
+            ResultadoGolpe res = objetivo.RecibirGolpe(golpe);
+
+            // Guardar info del resultadogolpe en resultadoataque
+            resultados[objetivo].golpes.Add(res);
+
+            // Solo sumar si ha sido golpeado (ejemplo básico)
+            if (res.estadoGolpe == EstadoGolpe.Golpeado || res.estadoGolpe == EstadoGolpe.Critico)
+            {
+                resultados[objetivo].dañoTotal += res.dañoFinal;
+                resultados[objetivo].armaduraTotal+=res.armaduraReducida;
             }
         }
     }
+
+    // Avisar que ha recibido un ataque, a las personas afectadas (mas pasar la info)
+    foreach (var kvp in resultados)
+    {
+        kvp.Key.AtaqueRecibido(kvp.Value);
+    }
+}
 
 
 
