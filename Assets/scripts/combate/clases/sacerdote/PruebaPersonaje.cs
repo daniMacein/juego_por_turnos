@@ -41,7 +41,7 @@ public class PruebaPersonaje : Personaje
         
      //  Golpe principal
         GolpeData golpe1 = new GolpeData(200,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
-        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
+        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.AreaTodosEnemigos);
 
         AtaqueData ataque = new AtaqueData(golpe1, golpe2);
   

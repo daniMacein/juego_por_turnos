@@ -15,7 +15,7 @@ public class GolpeData
     //** Definir ataque
     public TipoAtaque tipoAtaque;
     public TipoObjetivo tipoObjetivo;
-    public EstadoGolpe estado;
+    public EstadoGolpe estadoGolpe;
 
 
 
@@ -37,6 +37,7 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
 {
     this.tipoAtaque = tipoAtaque;
     this.objetivos = objetivos;
+    this.tipoObjetivo=tipoObjetivo;
 
     switch (tipoAtaque)
     {

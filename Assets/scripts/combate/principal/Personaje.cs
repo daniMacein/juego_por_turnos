@@ -104,6 +104,7 @@ public abstract class Personaje : MonoBehaviour
          resultado.armaduraReducida=golpe.vida*-0.1f;
 
          resultado.estadoGolpe=EstadoGolpe.Golpeado;
+         resultado.tiTipoObjetivo=golpe.tipoObjetivo;
 
          return resultado;
 

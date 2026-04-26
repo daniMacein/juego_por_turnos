@@ -82,13 +82,38 @@ void Start()
   }
 
 
+
+public List<Personaje> personajesPrincipalesEnemigos=new List<Personaje>();
+
+
+List<Personaje> ObtenerObjetivos(Personaje atacante, GolpeData golpe)
+{
+    switch (golpe.tipoObjetivo)
+    {
+        case TipoObjetivo.AreaTodosEnemigos:
+            return  new List<Personaje>(personajesPrincipalesEnemigos);
+
+        case TipoObjetivo.Unitario:
+            return golpe.objetivos;
+
+        default:
+            return new List<Personaje>();
+    }
+}
+
+
+
 public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
 {
     Dictionary<Personaje, ResultadoAtaque> resultados = new Dictionary<Personaje, ResultadoAtaque>();
+    
 
     foreach (GolpeData golpe in ataque.golpes)
     {
-        foreach (Personaje objetivo in golpe.objetivos)
+
+      List<Personaje> objetivosFinales = ObtenerObjetivos(atacante, golpe);
+      
+        foreach (Personaje objetivo in objetivosFinales)
         {
             // Crear resultado si no existe
             if (!resultados.ContainsKey(objetivo))

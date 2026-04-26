@@ -29,7 +29,7 @@ public class ResultadoAtaque
         ResultadoGolpe g = golpes[i];
 
         resultado += "- Golpe " + i + ": ";
-        resultado += "Estado=" + g.estadoGolpe + ", ";
+        resultado += "objetivo=" + g.tiTipoObjetivo + ", ";
         resultado += "Daño=" + g.dañoFinal + ", ";
         resultado += "Armadura=" + g.armaduraReducida + "\n";
     }
