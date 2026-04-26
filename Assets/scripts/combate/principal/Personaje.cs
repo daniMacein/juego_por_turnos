@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class Personaje : MonoBehaviour
 {
 
+   
+
     #region Interfaz
 
     public string nombre;
@@ -42,34 +44,6 @@ public abstract class Personaje : MonoBehaviour
     #endregion
 
 
-    #region Metodos de jugador
-    //*probabilidades
-    public bool ProbabilidadAcertada(int porcentaje)
-    {
-        porcentaje = Mathf.Clamp(porcentaje, 0, 100);
-        return Random.value < porcentaje / 100f;
-    }
-
-    //*Realizar ataques
-    public float AplicarDaño(float daño)
-    {
-        if(ProbabilidadAcertada(probGolpe))
-        {
-            daño = daño * potencia*alteracionDaño;
-        
-        }
-        else
-        {
-            daño=0;
-        }
-
-        return daño;
-        
-    }
-
-
-    #endregion
-
 
     #region gets/set
 
@@ -83,25 +57,83 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
+  #endregion
+    #region Metodos
+    //*formulas
+
+    
+
+public bool ProbabilidadAcertada(int porcentaje)
+{
+    porcentaje = Mathf.Clamp(porcentaje, 0, 100);
+
+    float prob = porcentaje / 100f;
+
+
+    return Random.value < prob;
+}
+
+private float DañoReducidoPorArmadura(float daño)
+    {
+        return daño*(100/(100+armadura));
+    }
+
+private float DesgasteArmadura(float dañoArmadura)
+    {
+        float armaduraAntigua=armadura;
+        armadura=armadura-((dañoArmadura*armadura/50)/100);
+        return armaduraAntigua-armadura;
+    }
+
+    //todo: Metodos para infligir daño
+    //Aplicar daño que vAS A INFLIGIR
+    public GolpeData AplicarEstadisticasAGolpe(GolpeData golpe)
+    {
+        
+          GolpeData nuevo = new GolpeData(
+        -golpe.vida,
+        golpe.objetivos,
+        golpe.tipoAtaque,
+        golpe.tipoObjetivo
+    );
+    nuevo.armadura=golpe.armadura;
+
+        if(ProbabilidadAcertada(probGolpe))
+        {
+            nuevo.vida = nuevo.vida * potencia*alteracionDaño;
+            nuevo.armadura=nuevo.armadura * potencia * alteracionDaño;
+        }
+        else
+        {
+             nuevo.vida=0;
+             nuevo.estadoGolpe=EstadoGolpe.Fallado;
+        }
+
+        return nuevo;
+        
+    }
 
 
 
+   //todo: Metodos para recibir daño
+
+    private float RecibirDaño(float dañoRecibido)
+    {
+        return DañoReducidoPorArmadura(dañoRecibido*alteracionDaño);
+    }
     public ResultadoGolpe RecibirGolpe(GolpeData golpe)
     {
+         // recuerda: daño es negativo
+        float dañoRecibido=RecibirDaño(golpe.vida);
 
-         
-
-
-        vida += golpe.vida; // recuerda: daño es negativo
-
-        Debug.Log(nombre + " recibe " + golpe.vida + " de vida. Vida actual: " + vida);
-
+        vida += dañoRecibido;
+        float armaduraGastada=DesgasteArmadura(dañoRecibido);
 
          ResultadoGolpe resultado = new ResultadoGolpe();
 
 
-         resultado.dañoFinal=-golpe.vida;
-         resultado.armaduraReducida=golpe.vida*-0.1f;
+         resultado.dañoFinal=-dañoRecibido;
+         resultado.armaduraReducida=armaduraGastada;
 
          resultado.estadoGolpe=EstadoGolpe.Golpeado;
          resultado.tiTipoObjetivo=golpe.tipoObjetivo;
@@ -110,6 +142,8 @@ public abstract class Personaje : MonoBehaviour
 
     }
 
+    //Despues de haber recibido un ataque completo. Se indica que el ataque ha sido finalizado/ejecutado
+    //y se consigue cuantos daño y armadura total ha sido quitada.
     public void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
 
     {
@@ -120,4 +154,5 @@ public abstract class Personaje : MonoBehaviour
     
     
 }
-    #endregion
+  
+#endregion

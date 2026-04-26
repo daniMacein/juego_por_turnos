@@ -966,7 +966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b1c8732420d134c825df065fc59e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PruebaPersonaje
-  nombre: Perrita
+  nombre: El UwU
   clase: 
   descripcion: 
   enemigo: {fileID: 1261912960}

@@ -15,7 +15,7 @@ public class GolpeData
     //** Definir ataque
     public TipoAtaque tipoAtaque;
     public TipoObjetivo tipoObjetivo;
-    public EstadoGolpe estadoGolpe;
+    public EstadoGolpe estadoGolpe= EstadoGolpe.Previo;
 
 
 

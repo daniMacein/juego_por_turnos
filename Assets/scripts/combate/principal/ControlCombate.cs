@@ -74,6 +74,7 @@ public class ControlCombate : MonoBehaviour
  #region  combate
 
 
+//**Pruebas
 void Start()
   {
 
@@ -82,10 +83,13 @@ void Start()
   }
 
 
-
+//**Pruebas
 public List<Personaje> personajesPrincipalesEnemigos=new List<Personaje>();
 
+//**FUNCIONES DE CONTROLAR ATAQUES
 
+//Obtener los objetivos de un GolpeData 
+//Si es area, se le añaden los objetivos correspondientes
 List<Personaje> ObtenerObjetivos(Personaje atacante, GolpeData golpe)
 {
     switch (golpe.tipoObjetivo)
@@ -102,6 +106,12 @@ List<Personaje> ObtenerObjetivos(Personaje atacante, GolpeData golpe)
 }
 
 
+//Ejecutar un ataque realizado.
+
+//Recorres los golpes, por cada golpe mandas un golpe a cada personaje que lo iba a recibir
+//Mientras recopilas la informacion que has hecho en Golpe resultado, y todos esos los recopidas
+//En un ataqueresultado por cada personaje dañado. Para luego mandarle esta informacion + decirles
+//que han recibido un 
 
 public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
 {
@@ -113,6 +123,12 @@ public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
 
       List<Personaje> objetivosFinales = ObtenerObjetivos(atacante, golpe);
       
+      if (golpe.estadoGolpe==EstadoGolpe.Fallado)
+      {
+        Debug.Log("Golpe fallado vaya :(");
+        continue;
+      }
+
         foreach (Personaje objetivo in objetivosFinales)
         {
             // Crear resultado si no existe
@@ -123,6 +139,7 @@ public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
             }
 
             // Recibir golpe y devolver el resultado del golpe
+            
             ResultadoGolpe res = objetivo.RecibirGolpe(golpe);
 
             // Guardar info del resultadogolpe en resultadoataque

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 public class PruebaPersonaje : Personaje
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
+        
         vidaMaxima=860;
         vida=860;
         armadura=30;
@@ -14,7 +15,7 @@ public class PruebaPersonaje : Personaje
         probEvasion=4;
 
         potencia=1;
-        probGolpe=50;
+        probGolpe=100;
         alteracionDaño=1;
 
         
@@ -40,8 +41,13 @@ public class PruebaPersonaje : Personaje
     {
         
      //  Golpe principal
+        
         GolpeData golpe1 = new GolpeData(200,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
+        
         GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.AreaTodosEnemigos);
+
+        golpe1=AplicarEstadisticasAGolpe(golpe1);
+        golpe2=AplicarEstadisticasAGolpe(golpe2);
 
         AtaqueData ataque = new AtaqueData(golpe1, golpe2);
   
