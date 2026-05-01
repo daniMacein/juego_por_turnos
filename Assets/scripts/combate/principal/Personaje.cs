@@ -17,6 +17,10 @@ public abstract class Personaje : MonoBehaviour
 
 
     #region Estadisticas
+
+    public List<Efecto> efectosActivos = new List<Efecto>();
+    public Equipo equipo;
+
     public float vidaMaxima { get; protected set; }
     public float vida { get; protected set; } //vida actual
     public float armadura { get; protected set; }
@@ -49,6 +53,7 @@ public abstract class Personaje : MonoBehaviour
 
     public void SetPosicion(List <int> posiciones)
     {
+        posicion.Clear();
         for (int i = 0; i < posiciones.Count; i++)
 
         {
@@ -66,12 +71,15 @@ public abstract class Personaje : MonoBehaviour
         {
             vida=vidaMaxima;
         }
-        else
+        else if ((vida+vidaRecibida)<=0)
+        {
+            vida=0;
+        }else
         {
             vida+=vidaRecibida;
         }
 
-        if (vida<=0)
+        if (vida==0)
         {
             Debug.Log("me morís");
         }
@@ -82,7 +90,7 @@ public abstract class Personaje : MonoBehaviour
     #region Metodos
     //*formulas
 
-    
+    //todo: Formulas
 
 public bool ProbabilidadAcertada(int porcentaje)
 {
@@ -103,16 +111,25 @@ private float DesgasteArmadura(float dañoArmadura)
     {
         float armaduraAntigua=armadura;
         armadura=armadura-((dañoArmadura*armadura/50)/100);
+
+        if (armadura<0)
+        {
+            armadura=0;
+        }
         return armaduraAntigua-armadura;
     }
 
-    //todo: Metodos para infligir daño
+    //todo: Metodos para infligir 
     //Aplicar daño que vAS A INFLIGIR
     public GolpeData AplicarEstadisticasAGolpe(GolpeData golpe)
     {
-        
+        float vidaUsada=golpe.vida;
+        if (golpe.esPositivo==false)
+        {
+            vidaUsada=-vidaUsada;
+        }
           GolpeData nuevo = new GolpeData(
-        -golpe.vida,
+        vidaUsada,
         golpe.objetivos,
         golpe.tipoAtaque,
         golpe.tipoObjetivo
@@ -136,11 +153,18 @@ private float DesgasteArmadura(float dañoArmadura)
 
 
 
-   //todo: Metodos para recibir daño
+   //todo: Metodos para recibir
 
-    private float RecibirDaño(float daño)
+    private float RecibirDaño(float daño,bool ignoraArmadura)
+
     {
-        return DañoReducidoPorArmadura(daño*alteracionDaño);
+
+        float nuevoDaño=daño*alteracionDaño;
+        if (ignoraArmadura==false)
+        {
+            nuevoDaño=DañoReducidoPorArmadura(nuevoDaño);
+        }
+        return nuevoDaño;
     }
 
     private float GastarArmadura(float desgaste)
@@ -151,18 +175,22 @@ private float DesgasteArmadura(float dañoArmadura)
     public ResultadoGolpe RecibirGolpe(GolpeData golpe)
     {
          // recuerda: daño es negativo
-        float dañoRecibido=RecibirDaño(golpe.vida);
-        setvida(dañoRecibido);
-        float armaduraGastada=GastarArmadura(golpe.armadura);
+         float vidaRecibida=0;
+          float armaduraGastada=0;
+         if (golpe.esPositivo==false)
+        {
+             vidaRecibida=RecibirDaño(golpe.vida,golpe.ignoraArmadura);
+        setvida(vidaRecibida);
+        armaduraGastada=GastarArmadura(golpe.armadura);
+        }
+        else
+        {
+            setvida(golpe.vida);
+            vidaRecibida=golpe.vida;
+        }
 
-         ResultadoGolpe resultado = new ResultadoGolpe();
-
-
-         resultado.dañoFinal=-dañoRecibido;
-         resultado.armaduraReducida=armaduraGastada;
-
-         resultado.estadoGolpe=EstadoGolpe.Golpeado;
-         resultado.tiTipoObjetivo=golpe.tipoObjetivo;
+         ResultadoGolpe resultado = new ResultadoGolpe
+         (vidaRecibida,armaduraGastada,EstadoGolpe.Golpeado,golpe.tipoObjetivo,golpe.tipoAtaque);
 
          return resultado;
 
@@ -178,9 +206,38 @@ private float DesgasteArmadura(float dañoArmadura)
         Debug.Log(this);
     }
     
+
+    //todo: EFECTOS
+
+
+    public void AplicarEfecto(Efecto efecto)
+{
+    efectosActivos.Add(efecto);
+    efecto.AlAplicarse(this);
+}
     
+
+    public void EjecutarInicioDeRonda()
+{
+    foreach (Efecto efecto in efectosActivos)
+    {
+        efecto.InicioDeRonda(this);
+    }
+}
+
+
+public void LimpiarEfectos()
+{
+    for (int i = efectosActivos.Count - 1; i >= 0; i--)
+    {
+        if (efectosActivos[i].disipado)
+        {
+            efectosActivos.RemoveAt(i);
+        }
+    }
+}
     
-    //! Esto simplemente es el Tostring, NO HACE NADAS
+    //! tostring
     public override string ToString()
 {
     string resultado = "";
@@ -189,6 +246,9 @@ private float DesgasteArmadura(float dañoArmadura)
     resultado += "vida actual: " + vida+ "\n";
      resultado += "armadura: " + armadura+ "\n";
 
+    resultado += "equipo: " + equipo+ "\n";
+    resultado+= "posicion: " +string.Join(", ", posicion) + "\n";
+       
 
     return resultado;
 }

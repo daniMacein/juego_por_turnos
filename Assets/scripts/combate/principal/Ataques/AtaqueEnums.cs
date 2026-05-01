@@ -1,7 +1,9 @@
 public enum TipoAtaque
 {
     Daño,
+    DañoCritico,
     Curacion,
+    curacionCritico,
     Aturdimiento,
     Mental,
     Escudo,

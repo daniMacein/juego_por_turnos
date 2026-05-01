@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.Rendering;
 public class GolpeData 
 {
 
@@ -11,6 +12,8 @@ public class GolpeData
     //**Estadisticas
     public float vida;
     public float armadura;
+
+    public bool ignoraArmadura=false;
 
     //** Definir ataque
     public TipoAtaque tipoAtaque;
@@ -42,19 +45,24 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
     switch (tipoAtaque)
     {
         case TipoAtaque.Daño:
+        case TipoAtaque.DañoCritico:
         case TipoAtaque.Aturdimiento:
         case TipoAtaque.Mental:
             esPositivo = false;
             vida = -valor;
+            Debug.Log("gola");
             armadura=valor;
             break;
 
+
         case TipoAtaque.Curacion:
+        case TipoAtaque.curacionCritico:
         case TipoAtaque.Escudo:
         case TipoAtaque.Especial:
            esPositivo = true;
-            vida = valor;
+            vida = --valor;
             armadura=0;
+             
             break;
 
         default:

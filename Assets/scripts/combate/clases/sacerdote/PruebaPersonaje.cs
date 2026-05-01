@@ -7,9 +7,9 @@ public class PruebaPersonaje : Personaje
     {
         
         vidaMaxima=860;
-        vida=860;
+        vida=760;
         armadura=30;
-        speed=100;
+        speed=50;
         
         probCritico=8;
         probEvasion=4;
@@ -22,10 +22,7 @@ public class PruebaPersonaje : Personaje
 
     }
 
-    void Start()
-    {
-        Debug.Log(this);
-    }
+  
 
 
 
@@ -47,15 +44,16 @@ public class PruebaPersonaje : Personaje
         
      //  Golpe principal
         
-        GolpeData golpe1 = new GolpeData(200,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
+        GolpeData golpe1 = new GolpeData(2000,new List<Personaje> { enemigo }, TipoAtaque.Curacion,TipoObjetivo.Unitario);
         
-        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
-
+        //GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
+          
         golpe1=AplicarEstadisticasAGolpe(golpe1);
-        golpe2=AplicarEstadisticasAGolpe(golpe2);
+       // golpe2=AplicarEstadisticasAGolpe(golpe2);
 
-        AtaqueData ataque = new AtaqueData(golpe1, golpe2);
-  
+        AtaqueData ataque = new AtaqueData(golpe1);
+
+        
         // ejecutar ataque
         controlCombate.EjecutarAtaque(this.GetComponent<Personaje>(), ataque);
     }

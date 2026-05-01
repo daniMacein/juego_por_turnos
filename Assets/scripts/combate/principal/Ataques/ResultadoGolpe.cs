@@ -5,7 +5,19 @@ public class ResultadoGolpe
 
     public EstadoGolpe estadoGolpe;
 
-    public TipoObjetivo tiTipoObjetivo;
+    public TipoObjetivo tipoObjetivo;
+    public TipoAtaque tipoAtaque;
+
+    public ResultadoGolpe(float Dañofinal,float armaduraReducida,EstadoGolpe estadoGolpe,
+     TipoObjetivo tipoObjetivo,TipoAtaque tipoAtaque)
+    {
+        this.dañoFinal=Dañofinal;
+        this.armaduraReducida=armaduraReducida;
+        this.estadoGolpe=estadoGolpe;
+        this.tipoObjetivo=tipoObjetivo;
+        this.tipoAtaque=tipoAtaque;
+
+    }
 
     
 }

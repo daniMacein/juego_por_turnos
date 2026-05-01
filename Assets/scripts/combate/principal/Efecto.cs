@@ -1,6 +1,28 @@
-using UnityEngine;
 
-public class Efecto : MonoBehaviour
+
+public abstract class Efecto
 {
-   
+   bool esPositivo;
+   bool esDisipable=true;
+
+    public bool disipado=false;
+   public int duracion;
+
+    public virtual void DisiparEfecto() { }
+
+        public virtual void AlAplicarse(Personaje objetivo) { disipado=true;}
+    public virtual void AntesDeImpacto(GolpeData golpe, Personaje objetivo) { }
+
+    public virtual void InicioDeRonda(Personaje personaje) { }
+
+    public virtual void EnTurnoPropio(Personaje personaje) { }
+
+    public virtual void EnTurnoAliado(Personaje personaje) { }
+
+    public virtual void EnTurnoEnemigo(Personaje personaje) { }
+
+    public virtual void EnTurnoGeneral(Personaje personaje) { }
+
+    public virtual void TrasRecibirAtaque(Personaje personaje, ResultadoAtaque resultado) { }
+
 }

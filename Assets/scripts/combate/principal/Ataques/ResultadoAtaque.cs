@@ -29,7 +29,8 @@ public class ResultadoAtaque
         ResultadoGolpe g = golpes[i];
 
         resultado += "- Golpe " + i + ": ";
-        resultado += "objetivo=" + g.tiTipoObjetivo + ", ";
+        resultado += "objetivo=" + g.tipoObjetivo + ", ";
+        //resultado += "tipo=" + g.tipoataque + ", ";
         resultado += "Daño=" + g.dañoFinal + ", ";
         resultado += "Armadura=" + g.armaduraReducida + "\n";
     }
