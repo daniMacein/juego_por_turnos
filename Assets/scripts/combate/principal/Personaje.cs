@@ -56,6 +56,27 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
+    void setvida(float vidaRecibida)
+    {
+        
+        
+
+        if ((vida+vidaRecibida)>vidaMaxima)
+
+        {
+            vida=vidaMaxima;
+        }
+        else
+        {
+            vida+=vidaRecibida;
+        }
+
+        if (vida<=0)
+        {
+            Debug.Log("me morís");
+        }
+    }
+
 
   #endregion
     #region Metodos
@@ -100,8 +121,8 @@ private float DesgasteArmadura(float dañoArmadura)
 
         if(ProbabilidadAcertada(probGolpe))
         {
-            nuevo.vida = nuevo.vida * potencia*alteracionDaño;
-            nuevo.armadura=nuevo.armadura * potencia * alteracionDaño;
+            nuevo.vida = nuevo.vida * potencia;
+            nuevo.armadura=nuevo.armadura * potencia;
         }
         else
         {
@@ -117,17 +138,22 @@ private float DesgasteArmadura(float dañoArmadura)
 
    //todo: Metodos para recibir daño
 
-    private float RecibirDaño(float dañoRecibido)
+    private float RecibirDaño(float daño)
     {
-        return DañoReducidoPorArmadura(dañoRecibido*alteracionDaño);
+        return DañoReducidoPorArmadura(daño*alteracionDaño);
     }
+
+    private float GastarArmadura(float desgaste)
+    {
+        return DesgasteArmadura(desgaste*alteracionDaño);
+    }
+
     public ResultadoGolpe RecibirGolpe(GolpeData golpe)
     {
          // recuerda: daño es negativo
         float dañoRecibido=RecibirDaño(golpe.vida);
-
-        vida += dañoRecibido;
-        float armaduraGastada=DesgasteArmadura(dañoRecibido);
+        setvida(dañoRecibido);
+        float armaduraGastada=GastarArmadura(golpe.armadura);
 
          ResultadoGolpe resultado = new ResultadoGolpe();
 
@@ -148,11 +174,24 @@ private float DesgasteArmadura(float dañoArmadura)
 
     {
         Debug.Log(resultadoAtaque.ToString());
+
+        Debug.Log(this);
     }
     
     
     
-    
+    //! Esto simplemente es el Tostring, NO HACE NADAS
+    public override string ToString()
+{
+    string resultado = "";
+    resultado += "Personaje"+ "\n";
+    resultado += "nombre: " + nombre+ "\n";
+    resultado += "vida actual: " + vida+ "\n";
+     resultado += "armadura: " + armadura+ "\n";
+
+
+    return resultado;
+}
 }
   
 #endregion

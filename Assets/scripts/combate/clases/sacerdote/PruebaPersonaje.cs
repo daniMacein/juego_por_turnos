@@ -21,8 +21,13 @@ public class PruebaPersonaje : Personaje
         
 
     }
-    
-   
+
+    void Start()
+    {
+        Debug.Log(this);
+    }
+
+
 
     public override void Ataque1()
     {
@@ -44,7 +49,7 @@ public class PruebaPersonaje : Personaje
         
         GolpeData golpe1 = new GolpeData(200,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
         
-        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.AreaTodosEnemigos);
+        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
 
         golpe1=AplicarEstadisticasAGolpe(golpe1);
         golpe2=AplicarEstadisticasAGolpe(golpe2);

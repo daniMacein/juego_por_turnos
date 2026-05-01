@@ -16,7 +16,7 @@ public class ResultadoAtaque
     public override string ToString()
 {
     string resultado = "";
-
+     resultado += "AtaqueData"+ "\n";
     resultado += "Objetivo: " + objetivo.nombre + "\n";
     resultado += "Daño total: " + dañoTotal + "\n";
     resultado += "Armadura reducida: " + armaduraTotal + "\n";

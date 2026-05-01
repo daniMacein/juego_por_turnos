@@ -46,6 +46,7 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
         case TipoAtaque.Mental:
             esPositivo = false;
             vida = -valor;
+            armadura=valor;
             break;
 
         case TipoAtaque.Curacion:
@@ -53,6 +54,7 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
         case TipoAtaque.Especial:
            esPositivo = true;
             vida = valor;
+            armadura=0;
             break;
 
         default:
