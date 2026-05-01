@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using System.Collections;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -26,7 +26,7 @@ public class ControlCombate : MonoBehaviour
 
 
 
-//todo: Listas organizadas de los personajes
+  //todo: Listas organizadas de los personajes
   public List<Personaje> TodosPersonajes;
 
   public List<PosicionPersonaje> PersonajesOrdenados = new List<PosicionPersonaje>();
@@ -36,8 +36,8 @@ public class ControlCombate : MonoBehaviour
   public List<Personaje> principalesA = new List<Personaje>();
   public List<Personaje> principalesB = new List<Personaje>();
 
-//todo: Iniciar el combate
-
+  //todo: Iniciar el combate
+public SelectorPersonaje selectorPersonaje;
 
   void AsignarEquipo()
   {
@@ -54,10 +54,13 @@ public class ControlCombate : MonoBehaviour
         principalesB.Add(personaje);
         equipoB.Add(personaje);
       }
+
+      personaje.selector=selectorPersonaje;
+      personaje.controlCombate=this;
     }
   }
 
-//todo: Posicion y orden
+  //todo: Posicion y orden
 
   List<int> ObtenerPosicionInicial()
   {
@@ -119,7 +122,7 @@ public class ControlCombate : MonoBehaviour
 
 
 
-//todo: Gestionar Combate
+  //todo: Gestionar Combate
 
   void CrearCombate()
   {
@@ -129,32 +132,53 @@ public class ControlCombate : MonoBehaviour
     CrearPosicion();
     OrdenarPersonajes();
 
-    EjecutarRonda();
+    StartCoroutine(EjecutarRonda());
 
 
   }
 
 
-  void EjecutarRonda()
+  private IEnumerator EjecutarRonda()
   {
 
     while (PersonajesOrdenados.Count > 0)
     {
-      var actual = PersonajesOrdenados[0];
-      Debug.Log(PersonajesOrdenados[0].personaje);
+      Personaje PersonajeActual = PersonajesOrdenados[0].personaje;
+      Debug.Log(PersonajeActual);
       PersonajesOrdenados.RemoveAt(0);
 
       //EjecutarTurno(actual);
-
+      yield return StartCoroutine(EjecutarTurno(PersonajeActual));
       // después del turno, reordenas por si algo ha cambiado
       //Reordenar();
     }
   }
 
+  public InterfazCombate interfazCombate;
+
+  private IEnumerator EjecutarTurno(Personaje p)
+  {
+
+
+    interfazCombate.MostrarMenuPersonaje(p);
+
+    p.esperandoInput = true;
+    p.haElegidoAccion = false;
+   
+    yield return new WaitUntil(() => p.haElegidoAccion == true);
+
+    p.haElegidoAccion = false;
+    /*
+     else
+     {
+         IA.Ejecutar(p);
+     }*/
+  }
+
 
   #endregion
 
- 
+
   #region  combate
 
 

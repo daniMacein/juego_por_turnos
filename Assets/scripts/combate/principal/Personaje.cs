@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-
+using System.Collections;
+using System;
 public abstract class Personaje : MonoBehaviour
 {
 
-   
+
 
     #region Interfaz
 
@@ -13,14 +14,23 @@ public abstract class Personaje : MonoBehaviour
     public string clase;
     public string descripcion;
 
+    public string Ataque1Nombre;
+
     #endregion
 
-
-    #region Estadisticas
-
+     #region Interaccion
+    public SelectorPersonaje selector;
+    public ControlCombate controlCombate;
     public List<Efecto> efectosActivos = new List<Efecto>();
     public Equipo equipo;
 
+
+    public bool esperandoInput;
+    public bool haElegidoAccion;
+    public AtaqueData ataqueElegido;
+      #endregion
+
+    #region Estadisticas
     public float vidaMaxima { get; protected set; }
     public float vida { get; protected set; } //vida actual
     public float armadura { get; protected set; }
@@ -31,7 +41,7 @@ public abstract class Personaje : MonoBehaviour
     public int probCritico { get; protected set; } //prob de que sea critico el ataque
     public int probEvasion { get; protected set; } //prob de evadir el ataque
     public int probGolpe { get; protected set; } //probabilidad de asestar el ataque
-     //*------------------------------------------
+                                                 //*------------------------------------------
     public float potencia { get; protected set; }
     public float alteracionDaño { get; protected set; } //porcentaje que implica cuanto por ciento te entra de mas o de menos en el daño.
 
@@ -51,7 +61,7 @@ public abstract class Personaje : MonoBehaviour
 
     #region gets/set
 
-    public void SetPosicion(List <int> posiciones)
+    public void SetPosicion(List<int> posiciones)
     {
         posicion.Clear();
         for (int i = 0; i < posiciones.Count; i++)
@@ -63,136 +73,139 @@ public abstract class Personaje : MonoBehaviour
 
     void setvida(float vidaRecibida)
     {
-        
-        
 
-        if ((vida+vidaRecibida)>vidaMaxima)
+
+
+        if ((vida + vidaRecibida) > vidaMaxima)
 
         {
-            vida=vidaMaxima;
+            vida = vidaMaxima;
         }
-        else if ((vida+vidaRecibida)<=0)
+        else if ((vida + vidaRecibida) <= 0)
         {
-            vida=0;
-        }else
+            vida = 0;
+        }
+        else
         {
-            vida+=vidaRecibida;
+            vida += vidaRecibida;
         }
 
-        if (vida==0)
+        if (vida == 0)
         {
             Debug.Log("me morís");
         }
     }
 
 
-  #endregion
+    #endregion
     #region Metodos
     //*formulas
 
     //todo: Formulas
 
-public bool ProbabilidadAcertada(int porcentaje)
-{
-    porcentaje = Mathf.Clamp(porcentaje, 0, 100);
-
-    float prob = porcentaje / 100f;
-
-
-    return Random.value < prob;
-}
-
-private float DañoReducidoPorArmadura(float daño)
+    public bool ProbabilidadAcertada(int porcentaje)
     {
-        return daño*(100/(100+armadura));
+        porcentaje = Mathf.Clamp(porcentaje, 0, 100);
+
+        float prob = porcentaje / 100f;
+
+
+        return UnityEngine.Random.value < prob;
     }
 
-private float DesgasteArmadura(float dañoArmadura)
+    private float DañoReducidoPorArmadura(float daño)
     {
-        float armaduraAntigua=armadura;
-        armadura=armadura-((dañoArmadura*armadura/50)/100);
+        return daño * (100 / (100 + armadura));
+    }
 
-        if (armadura<0)
+    private float DesgasteArmadura(float dañoArmadura)
+    {
+        float armaduraAntigua = armadura;
+        armadura = armadura - ((dañoArmadura * armadura / 50) / 100);
+
+        if (armadura < 0)
         {
-            armadura=0;
+            armadura = 0;
         }
-        return armaduraAntigua-armadura;
+        return armaduraAntigua - armadura;
     }
 
     //todo: Metodos para infligir 
     //Aplicar daño que vAS A INFLIGIR
     public GolpeData AplicarEstadisticasAGolpe(GolpeData golpe)
     {
-        float vidaUsada=golpe.vida;
-        if (golpe.esPositivo==false)
+        float vidaUsada = golpe.vida;
+        if (golpe.esPositivo == false)
         {
-            vidaUsada=-vidaUsada;
+            vidaUsada = -vidaUsada;
         }
-          GolpeData nuevo = new GolpeData(
-        vidaUsada,
-        golpe.objetivos,
-        golpe.tipoAtaque,
-        golpe.tipoObjetivo
-    );
-    nuevo.armadura=golpe.armadura;
+        GolpeData nuevo = new GolpeData(
+      vidaUsada,
+      golpe.objetivos,
+      golpe.tipoAtaque,
+      golpe.tipoObjetivo
+  );
+        nuevo.armadura = golpe.armadura;
 
-        if(ProbabilidadAcertada(probGolpe))
+        if (ProbabilidadAcertada(probGolpe))
         {
             nuevo.vida = nuevo.vida * potencia;
-            nuevo.armadura=nuevo.armadura * potencia;
+            nuevo.armadura = nuevo.armadura * potencia;
         }
         else
         {
-             nuevo.vida=0;
-             nuevo.estadoGolpe=EstadoGolpe.Fallado;
+            nuevo.vida = 0;
+            nuevo.estadoGolpe = EstadoGolpe.Fallado;
         }
 
         return nuevo;
-        
+
     }
 
 
 
-   //todo: Metodos para recibir
+    //todo: Metodos para recibir
 
-    private float RecibirDaño(float daño,bool ignoraArmadura)
+    private float RecibirDaño(float daño, bool ignoraArmadura)
 
     {
 
-        float nuevoDaño=daño*alteracionDaño;
-        if (ignoraArmadura==false)
+        float nuevoDaño = daño * alteracionDaño;
+        if (ignoraArmadura == false)
         {
-            nuevoDaño=DañoReducidoPorArmadura(nuevoDaño);
+            nuevoDaño = DañoReducidoPorArmadura(nuevoDaño);
         }
         return nuevoDaño;
     }
 
     private float GastarArmadura(float desgaste)
     {
-        return DesgasteArmadura(desgaste*alteracionDaño);
+        return DesgasteArmadura(desgaste * alteracionDaño);
     }
 
     public ResultadoGolpe RecibirGolpe(GolpeData golpe)
     {
-         // recuerda: daño es negativo
-         float vidaRecibida=0;
-          float armaduraGastada=0;
-         if (golpe.esPositivo==false)
+        // recuerda: daño es negativo
+        float vidaRecibida = 0;
+        float armaduraGastada = 0;
+        if (golpe.esPositivo == false)
         {
-             vidaRecibida=RecibirDaño(golpe.vida,golpe.ignoraArmadura);
-        setvida(vidaRecibida);
-        armaduraGastada=GastarArmadura(golpe.armadura);
+            vidaRecibida = RecibirDaño(golpe.vida, golpe.ignoraArmadura);
+            setvida(vidaRecibida);
+            armaduraGastada = GastarArmadura(golpe.armadura);
         }
         else
         {
             setvida(golpe.vida);
-            vidaRecibida=golpe.vida;
+            vidaRecibida = golpe.vida;
         }
 
-         ResultadoGolpe resultado = new ResultadoGolpe
-         (vidaRecibida,armaduraGastada,EstadoGolpe.Golpeado,golpe.tipoObjetivo,golpe.tipoAtaque);
+        ResultadoGolpe resultado = new ResultadoGolpe
+        (vidaRecibida, armaduraGastada, EstadoGolpe.Golpeado, golpe.tipoObjetivo, golpe.tipoAtaque);
+        Debug.Log(resultado.ToString());
+        Debug.Log(this);
 
-         return resultado;
+        return resultado;
 
     }
 
@@ -205,53 +218,53 @@ private float DesgasteArmadura(float dañoArmadura)
 
         Debug.Log(this);
     }
-    
+
 
     //todo: EFECTOS
 
 
     public void AplicarEfecto(Efecto efecto)
-{
-    efectosActivos.Add(efecto);
-    efecto.AlAplicarse(this);
-}
-    
+    {
+        efectosActivos.Add(efecto);
+        efecto.AlAplicarse(this);
+    }
+
 
     public void EjecutarInicioDeRonda()
-{
-    foreach (Efecto efecto in efectosActivos)
     {
-        efecto.InicioDeRonda(this);
-    }
-}
-
-
-public void LimpiarEfectos()
-{
-    for (int i = efectosActivos.Count - 1; i >= 0; i--)
-    {
-        if (efectosActivos[i].disipado)
+        foreach (Efecto efecto in efectosActivos)
         {
-            efectosActivos.RemoveAt(i);
+            efecto.InicioDeRonda(this);
         }
     }
-}
-    
+
+
+    public void LimpiarEfectos()
+    {
+        for (int i = efectosActivos.Count - 1; i >= 0; i--)
+        {
+            if (efectosActivos[i].disipado)
+            {
+                efectosActivos.RemoveAt(i);
+            }
+        }
+    }
+
     //! tostring
     public override string ToString()
-{
-    string resultado = "";
-    resultado += "Personaje"+ "\n";
-    resultado += "nombre: " + nombre+ "\n";
-    resultado += "vida actual: " + vida+ "\n";
-     resultado += "armadura: " + armadura+ "\n";
+    {
+        string resultado = "";
+        resultado += "Personaje" + "\n";
+        resultado += "nombre: " + nombre + "\n";
+        resultado += "vida actual: " + vida + "\n";
+        resultado += "armadura: " + armadura + "\n";
 
-    resultado += "equipo: " + equipo+ "\n";
-    resultado+= "posicion: " +string.Join(", ", posicion) + "\n";
-       
+        resultado += "equipo: " + equipo + "\n";
+        resultado += "posicion: " + string.Join(", ", posicion) + "\n";
 
-    return resultado;
+
+        return resultado;
+    }
 }
-}
-  
-#endregion
+
+    #endregion

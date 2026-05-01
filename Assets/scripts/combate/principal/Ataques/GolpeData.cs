@@ -50,7 +50,6 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
         case TipoAtaque.Mental:
             esPositivo = false;
             vida = -valor;
-            Debug.Log("gola");
             armadura=valor;
             break;
 
