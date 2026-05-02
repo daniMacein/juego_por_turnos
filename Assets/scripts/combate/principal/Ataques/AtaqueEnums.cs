@@ -29,3 +29,12 @@ public enum EstadoGolpe
     Persuadido,
     Critico
 }
+
+
+public enum TipoAnimacion
+{
+    Ataque1_Golpe1,
+    Ataque1_Golpe2,
+    AtaqueFuerte,
+    Magia_Fuego
+}

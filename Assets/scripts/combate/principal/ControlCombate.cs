@@ -144,7 +144,9 @@ public SelectorPersonaje selectorPersonaje;
     while (PersonajesOrdenados.Count > 0)
     {
       Personaje PersonajeActual = PersonajesOrdenados[0].personaje;
-      Debug.Log(PersonajeActual);
+      Debug.Log("Turno de: "+PersonajeActual.nombre+"\n"+"vida: "+ PersonajeActual.vida+"\n"+"posicion: "
+      +  PersonajesOrdenados[0].posicion+"\n");
+     
       PersonajesOrdenados.RemoveAt(0);
 
       //EjecutarTurno(actual);
@@ -162,12 +164,11 @@ public SelectorPersonaje selectorPersonaje;
 
     interfazCombate.MostrarMenuPersonaje(p);
 
-    p.esperandoInput = true;
-    p.haElegidoAccion = false;
+    p.haTerminadoElAtaque = false;
    
-    yield return new WaitUntil(() => p.haElegidoAccion == true);
+    yield return new WaitUntil(() => p.haTerminadoElAtaque == true);
 
-    p.haElegidoAccion = false;
+    p.haTerminadoElAtaque = false;
     /*
      else
      {
@@ -186,7 +187,7 @@ public SelectorPersonaje selectorPersonaje;
 
 
   //**Pruebas
-  public List<Personaje> personajesPrincipalesEnemigos = new List<Personaje>();
+  
 
   //**FUNCIONES DE CONTROLAR ATAQUES
 
@@ -196,8 +197,8 @@ public SelectorPersonaje selectorPersonaje;
   {
     switch (golpe.tipoObjetivo)
     {
-      case TipoObjetivo.AreaTodosEnemigos:
-        return new List<Personaje>(personajesPrincipalesEnemigos);
+      case TipoObjetivo.AreaTodos:
+        return new List<Personaje>(TodosPersonajes);
 
       case TipoObjetivo.Unitario:
         return golpe.objetivos;
@@ -215,7 +216,12 @@ public SelectorPersonaje selectorPersonaje;
   //En un ataqueresultado por cada personaje dañado. Para luego mandarle esta informacion + decirles
   //que han recibido un 
 
-  public void EjecutarAtaque(Personaje atacante, AtaqueData ataque)
+  public void EmpezarAtaque(Personaje atacante, AtaqueData ataque)
+  {
+    StartCoroutine(EjecutarAtaque(atacante, ataque));
+  }
+
+  public IEnumerator  EjecutarAtaque(Personaje atacante, AtaqueData ataque)
   {
     Dictionary<Personaje, ResultadoAtaque> resultados = new Dictionary<Personaje, ResultadoAtaque>();
 
@@ -230,6 +236,8 @@ public SelectorPersonaje selectorPersonaje;
         Debug.Log("Golpe fallado vaya :(");
         continue;
       }
+      //aqui, que por cierto haremos esta funcion una corrutine y se parara aqui hasta que devuelva algo como animacion completa
+      yield return atacante.AnimarAtaque(golpe,objetivosFinales);
 
       foreach (Personaje objetivo in objetivosFinales)
       {
@@ -254,13 +262,18 @@ public SelectorPersonaje selectorPersonaje;
           resultados[objetivo].armaduraTotal += res.armaduraReducida;
         }
       }
+
+       yield return new WaitForSeconds(3f);
     }
 
     // Avisar que ha recibido un ataque, a las personas afectadas (mas pasar la info)
     foreach (var kvp in resultados)
     {
       kvp.Key.AtaqueRecibido(kvp.Value);
+      yield return new WaitForSeconds(4f);
     }
+    atacante.TerminarAtaque(ataque);
+    
   }
 
 

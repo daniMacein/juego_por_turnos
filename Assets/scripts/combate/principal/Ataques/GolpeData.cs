@@ -20,7 +20,7 @@ public class GolpeData
     public TipoObjetivo tipoObjetivo;
     public EstadoGolpe estadoGolpe= EstadoGolpe.Previo;
 
-
+    public TipoAnimacion tipoAnimacion;
 
 
     //**características
@@ -36,11 +36,12 @@ public class GolpeData
    
 
 
-public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,TipoObjetivo tipoObjetivo)
+public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,TipoObjetivo tipoObjetivo,TipoAnimacion tipoAnimacion)
 {
     this.tipoAtaque = tipoAtaque;
     this.objetivos = objetivos;
     this.tipoObjetivo=tipoObjetivo;
+    this.tipoAnimacion=tipoAnimacion;
 
     switch (tipoAtaque)
     {

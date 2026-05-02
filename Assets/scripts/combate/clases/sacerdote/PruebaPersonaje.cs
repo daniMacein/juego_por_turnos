@@ -7,8 +7,8 @@ public class PruebaPersonaje : Personaje
     void Awake()
     {
 
-        vidaMaxima = 860;
-        vida = 760;
+        vidaMaxima = 1000;
+        vida = 1000;
         armadura = 30;
         speed = 50;
 
@@ -23,7 +23,22 @@ public class PruebaPersonaje : Personaje
 
     }
 
+    public override IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)
+    {
+        
+        switch(golpeData.tipoAnimacion)
+{
+    case TipoAnimacion.Ataque1_Golpe1:
+        
+         yield return new WaitForSeconds(2f);
+        break;
 
+    case TipoAnimacion.Magia_Fuego:
+        Debug.Log("Anim fuego");
+         yield return new WaitForSeconds(1f);
+        break;
+}
+    }
 
 
     public override void Ataque1()
@@ -46,7 +61,7 @@ public class PruebaPersonaje : Personaje
 
         CrearAtaque(objetivoTemporal);
 
-        haElegidoAccion = true;
+        
 
         selector.Reset();
     }
@@ -60,23 +75,27 @@ public class PruebaPersonaje : Personaje
     private void CrearAtaque(Personaje objetivo)
 
     {
-        Debug.Log("el seleccionado es" +objetivo.nombre);
+        Debug.Log("el seleccionado es: " +objetivo.nombre);
         //  Golpe principal
 
-        GolpeData golpe1 = new GolpeData(90, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario);
+        GolpeData golpe1 = new GolpeData
+        (90, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        //GolpeData golpe2 = new GolpeData(30,new List<Personaje> { enemigo }, TipoAtaque.Daño,TipoObjetivo.Unitario);
+        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
 
         golpe1 = AplicarEstadisticasAGolpe(golpe1);
-        // golpe2=AplicarEstadisticasAGolpe(golpe2);
+         golpe2=AplicarEstadisticasAGolpe(golpe2);
 
-        AtaqueData ataque = new AtaqueData(golpe1);
+        AtaqueData ataque = new AtaqueData(golpe1,golpe2);
 
 
         // ejecutar ataque
         
-        controlCombate.EjecutarAtaque(this, ataque);
+        controlCombate.EmpezarAtaque(this, ataque);
 
-        Debug.Log("ataque creado");
+       
     }
+
+
+  
 }

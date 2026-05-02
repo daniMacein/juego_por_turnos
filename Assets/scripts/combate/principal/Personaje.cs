@@ -25,8 +25,8 @@ public abstract class Personaje : MonoBehaviour
     public Equipo equipo;
 
 
-    public bool esperandoInput;
-    public bool haElegidoAccion;
+   
+    public bool haTerminadoElAtaque;
     public AtaqueData ataqueElegido;
       #endregion
 
@@ -51,13 +51,20 @@ public abstract class Personaje : MonoBehaviour
     #region Ataques
 
     public abstract void Ataque1();
+     
 
     //public abstract void Ataque2();
     //public abstract void Ataque3();
     // public abstract void Ataque4();
     #endregion
 
+    public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales )
 
+    {
+        //aqui miras cual es el golpe, porque tendra un identificador dentro de golpe y haces la animacion
+        //correspondiente
+         yield return new WaitForSeconds(1f);
+    }
 
     #region gets/set
 
@@ -143,7 +150,8 @@ public abstract class Personaje : MonoBehaviour
       vidaUsada,
       golpe.objetivos,
       golpe.tipoAtaque,
-      golpe.tipoObjetivo
+      golpe.tipoObjetivo,
+      golpe.tipoAnimacion
   );
         nuevo.armadura = golpe.armadura;
 
@@ -202,21 +210,29 @@ public abstract class Personaje : MonoBehaviour
 
         ResultadoGolpe resultado = new ResultadoGolpe
         (vidaRecibida, armaduraGastada, EstadoGolpe.Golpeado, golpe.tipoObjetivo, golpe.tipoAtaque);
-        Debug.Log(resultado.ToString());
-        Debug.Log(this);
+        AnimacionRecibirGolpe(resultado);
 
         return resultado;
 
     }
 
+    private void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
+    {
+        Debug.Log(nombre+" golpeado con "+resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
+    }
+
     //Despues de haber recibido un ataque completo. Se indica que el ataque ha sido finalizado/ejecutado
     //y se consigue cuantos daño y armadura total ha sido quitada.
-    public void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
+    public virtual void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
 
     {
-        Debug.Log(resultadoAtaque.ToString());
+          Debug.Log(nombre +": vida actual: "+ vida.ToString("F0")+"/"+vidaMaxima+"\n"+"armadura:"+ armadura.ToString("F0"));
+          
+    }
 
-        Debug.Log(this);
+    public  virtual void TerminarAtaque(AtaqueData ataqueData)
+    {
+        haTerminadoElAtaque=true;
     }
 
 
