@@ -1,4 +1,4 @@
-# 📘 Flujo de trabajo con GitHub Desktop (Proyecto Android)
+# 📘 Flujo de trabajo con GitHub Desktop (Proyecto Juego por turnos)
 
 ##  RESUMEN (explicacion)
 Cada integrante del equipo:
