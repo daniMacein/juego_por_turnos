@@ -1,4 +1,4 @@
-# 📘 Flujo de trabajo con GitHub Desktop (Proyecto Juego por turnos)
+#  Flujo de trabajo con GitHub Desktop (Proyecto Juego por turnos)
 
 ##  RESUMEN (explicacion)
 Cada integrante del equipo:
@@ -42,7 +42,7 @@ Cada integrante del equipo:
 
 ---
 
-### 🅑 Actualizar antes de unir cambios
+### 🅑 Unir tus cambios
 
 #### 4. Actualizar tu rama con `main` (otra vez)
 *(Por si alguien ha subido cambios mientras trabajabas)*
@@ -50,9 +50,6 @@ Cada integrante del equipo:
 - Ir a `main` → **Fetch + Pull**
 - Volver a tu rama → **Branch → Update from main**
 
----
-
-### 🔀 Unir cambios a `main`
 
 #### 5. Hacer merge
 - Cambiar a `main`
