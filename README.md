@@ -1,15 +1,6 @@
 # 📘 Flujo de trabajo con GitHub Desktop (Proyecto Android)
 
-## ⚠️ NORMAS
-
-- Cada uno trabaja en su **rama independiente**
-- **No trabajar en los mismos archivos a la vez**
-- Evitar tocar el mismo código simultáneamente
-
----
-
-## 🧠 RESUMEN
-
+##  RESUMEN (explicacion)
 Cada integrante del equipo:
 
 1. Trabaja en su **rama**
@@ -18,27 +9,21 @@ Cada integrante del equipo:
 4. Vuelve a actualizar su rama con `main` (por si hay cambios nuevos)
 5. Une sus cambios a `main`
 
-🔁 Repetir este proceso continuamente
+ Repetir este proceso continuamente
+
+
+##  REGLAS IMPORTANTES
+
+###  ❌No trabajar en el mismo archivo que otra persona❌
+### - ❌ No trabajar directamente en `main` ❌
+- Actualizar siempre tu rama con lo del main (cada vez que trabajes)
+- No tardar demasiado en pasar tus cambios al main.
 
 ---
 
-## ⚠️ REGLAS IMPORTANTES
 
-- ✅ Siempre actualizar antes de trabajar
-- ✅ Siempre actualizar antes de hacer merge
-- ❌ No trabajar directamente en `main`
-- ✅ Cada uno trabaja en su rama
-- ⚠️ No esperar demasiado tiempo para actualizar `main`
 
----
-
-## 📌 RESUMEN RÁPIDO
-
-> Trabaja en tu rama y luego pasa los cambios a `main`
-
----
-
-## 🛠️ PASOS
+##  PASOS
 
 ### 🅐 Trabajar en tu rama
 
@@ -74,12 +59,6 @@ Cada integrante del equipo:
 - Menú:
   👉 **Branch → Merge into current branch**
 - Elegir tu rama (ej: `tu-nombre`)
+- Click en **Push origin** (subir cambios)
 
-#### 6. Subir cambios
-- Click en **Push origin**
 
----
-
-## 🚀 CONSEJO
-
-Mantén tus cambios pequeños y frecuentes para evitar conflictos 👍
