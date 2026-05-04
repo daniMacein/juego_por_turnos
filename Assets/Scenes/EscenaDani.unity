@@ -270,7 +270,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Paco
+  m_text: '
 
 '
   m_isRightToLeft: 0
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ATAQUE 1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1055,6 +1055,7 @@ MonoBehaviour:
   principalesA: []
   principalesB: []
   selectorPersonaje: {fileID: 951301808}
+  numeroRonda: 1
   interfazCombate: {fileID: 327011412}
 --- !u!4 &951301807
 Transform:
@@ -1128,6 +1129,7 @@ MonoBehaviour:
   controlCombate: {fileID: 0}
   equipo: 1
   haTerminadoElAtaque: 0
+  estaVivo: 1
   enemigo: {fileID: 1261912960}
 --- !u!65 &993878761
 BoxCollider:
@@ -1262,6 +1264,7 @@ MonoBehaviour:
   controlCombate: {fileID: 0}
   equipo: 0
   haTerminadoElAtaque: 0
+  estaVivo: 1
   enemigo: {fileID: 993878760}
 --- !u!65 &1261912961
 BoxCollider:
@@ -1529,6 +1532,7 @@ MonoBehaviour:
   controlCombate: {fileID: 0}
   equipo: 1
   haTerminadoElAtaque: 0
+  estaVivo: 1
   enemigo: {fileID: 1261912960}
 --- !u!65 &1805704115
 BoxCollider:

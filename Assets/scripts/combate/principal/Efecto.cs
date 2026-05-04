@@ -10,7 +10,7 @@ public abstract class Efecto
 
     public virtual void DisiparEfecto() { }
 
-        public virtual void AlAplicarse(Personaje objetivo) { disipado=true;}
+        public virtual void AlAplicarse(Personaje objetivo) { }
     public virtual void AntesDeImpacto(GolpeData golpe, Personaje objetivo) { }
 
     public virtual void InicioDeRonda(Personaje personaje) { }
@@ -24,5 +24,7 @@ public abstract class Efecto
     public virtual void EnTurnoGeneral(Personaje personaje) { }
 
     public virtual void TrasRecibirAtaque(Personaje personaje, ResultadoAtaque resultado) { }
+
+     public virtual void TrasIniciarAtaque(Personaje personaje, AtaqueData ataque) { }
 
 }
