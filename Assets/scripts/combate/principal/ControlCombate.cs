@@ -147,12 +147,13 @@ public SelectorPersonaje selectorPersonaje;
       Debug.Log("Turno de: "+PersonajeActual.nombre+"\n"+"vida: "+ PersonajeActual.vida+"\n"+"posicion: "
       +  PersonajesOrdenados[0].posicion+"\n");
      
-      PersonajesOrdenados.RemoveAt(0);
+     
 
       //EjecutarTurno(actual);
       yield return StartCoroutine(EjecutarTurno(PersonajeActual));
       // después del turno, reordenas por si algo ha cambiado
       //Reordenar();
+       PersonajesOrdenados.RemoveAt(0);
     }
   }
 

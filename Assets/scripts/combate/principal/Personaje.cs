@@ -18,17 +18,17 @@ public abstract class Personaje : MonoBehaviour
 
     #endregion
 
-     #region Interaccion
+    #region Interaccion
     public SelectorPersonaje selector;
     public ControlCombate controlCombate;
     public List<Efecto> efectosActivos = new List<Efecto>();
     public Equipo equipo;
 
 
-   
+
     public bool haTerminadoElAtaque;
     public AtaqueData ataqueElegido;
-      #endregion
+    #endregion
 
     #region Estadisticas
     public float vidaMaxima { get; protected set; }
@@ -51,19 +51,19 @@ public abstract class Personaje : MonoBehaviour
     #region Ataques
 
     public abstract void Ataque1();
-     
+
 
     //public abstract void Ataque2();
     //public abstract void Ataque3();
     // public abstract void Ataque4();
     #endregion
 
-    public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales )
+    public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)
 
     {
         //aqui miras cual es el golpe, porque tendra un identificador dentro de golpe y haces la animacion
         //correspondiente
-         yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
     }
 
     #region gets/set
@@ -108,8 +108,12 @@ public abstract class Personaje : MonoBehaviour
     #region Metodos
     //*formulas
 
-    //todo: Formulas
+    //todo: Formulas de utilidad
+    //Formulas que sirve para calcular cosas de forma mas cómoda
 
+
+    //Le metes un numero y te devuelve true o false. 
+    //Si le metes 50, tendra un 50% de devolverte true. Un 100% siempre te dara true. 0 siempre false
     public bool ProbabilidadAcertada(int porcentaje)
     {
         porcentaje = Mathf.Clamp(porcentaje, 0, 100);
@@ -119,6 +123,8 @@ public abstract class Personaje : MonoBehaviour
 
         return UnityEngine.Random.value < prob;
     }
+
+    //todo: Formulas de estadisticas
 
     private float DañoReducidoPorArmadura(float daño)
     {
@@ -138,7 +144,10 @@ public abstract class Personaje : MonoBehaviour
     }
 
     //todo: Metodos para infligir 
-    //Aplicar daño que vAS A INFLIGIR
+    //(utilizados para infligir ataques y efectos)
+
+
+    //Aplicar a tu daño todo lo que hay que aplicar
     public GolpeData AplicarEstadisticasAGolpe(GolpeData golpe)
     {
         float vidaUsada = golpe.vida;
@@ -171,9 +180,16 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
+    //Indico que he terminado un ataque
+    public virtual void TerminarAtaque(AtaqueData ataqueData)
+    {
+        haTerminadoElAtaque = true;
+    }
+
 
     //todo: Metodos para recibir
 
+    //aplicar todo lo que hay que aplicar al recibir daño
     private float RecibirDaño(float daño, bool ignoraArmadura)
 
     {
@@ -218,7 +234,7 @@ public abstract class Personaje : MonoBehaviour
 
     private void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
     {
-        Debug.Log(nombre+" golpeado con "+resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
+        Debug.Log(nombre + " golpeado con " + resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
     }
 
     //Despues de haber recibido un ataque completo. Se indica que el ataque ha sido finalizado/ejecutado
@@ -226,14 +242,10 @@ public abstract class Personaje : MonoBehaviour
     public virtual void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
 
     {
-          Debug.Log(nombre +": vida actual: "+ vida.ToString("F0")+"/"+vidaMaxima+"\n"+"armadura:"+ armadura.ToString("F0"));
-          
+        Debug.Log(nombre + ": vida actual: " + vida.ToString("F0") + "/" + vidaMaxima + "\n" + "armadura:" + armadura.ToString("F0"));
+
     }
 
-    public  virtual void TerminarAtaque(AtaqueData ataqueData)
-    {
-        haTerminadoElAtaque=true;
-    }
 
 
     //todo: EFECTOS
