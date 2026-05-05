@@ -12,7 +12,7 @@ public class PruebaPersonaje : Personaje
         armadura = 30;
         speed = 50;
 
-        probCritico = 8;
+        probCritico = 100;
         probEvasion = 4;
 
         potencia = 1;
@@ -79,10 +79,10 @@ public class PruebaPersonaje : Personaje
         //  Golpe principal
 
         GolpeData golpe1 = new GolpeData
-        (90, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        (100, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
        // GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
-
+        golpe1.penetracionArmadura=0f;
         golpe1 = AplicarEstadisticasAGolpe(golpe1);
         // golpe2=AplicarEstadisticasAGolpe(golpe2);
 

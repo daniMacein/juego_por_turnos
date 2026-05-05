@@ -13,7 +13,7 @@ public class GolpeData
     public float vida;
     public float armadura;
 
-    public bool ignoraArmadura=false;
+    public float penetracionArmadura=1;
 
     //** Definir ataque
     public TipoAtaque tipoAtaque;

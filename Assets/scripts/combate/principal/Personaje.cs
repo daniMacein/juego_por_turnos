@@ -3,6 +3,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Runtime.ConstrainedExecution;
 public abstract class Personaje : MonoBehaviour
 {
 
@@ -45,6 +46,7 @@ public abstract class Personaje : MonoBehaviour
     public int probGolpe { get; protected set; } //probabilidad de asestar el ataque
                                                  //*------------------------------------------
     public float potencia { get; protected set; }
+    public float penetracionArmadura{get;protected set;}=1; // Ignora parte de la armadura
     public float alteracionDaño { get; protected set; } //porcentaje que implica cuanto por ciento te entra de mas o de menos en el daño.
 
     #endregion
@@ -128,10 +130,30 @@ public abstract class Personaje : MonoBehaviour
 
     //todo: Formulas de estadisticas
 
-    private float DañoReducidoPorArmadura(float daño)
+    private float DañoReducidoPorArmadura(float daño,float penetracion)
     {
-        return daño * (100 / (100 + armadura));
+        return daño * (100 / (100 + (armadura*penetracion)));
     }
+
+    private float CalcularCritico()
+    {
+        float excesoCritico=0f;
+        if (probCritico > 100)
+        {
+            excesoCritico=probCritico-100;
+            excesoCritico=excesoCritico*0.5f;
+
+        }
+        int rango =(int)excesoCritico+150;
+        if (rango > 200)
+        {
+            rango=200;
+        }
+        float critico =UnityEngine.Random.Range(rango,210)/100f;
+        return critico;
+
+    }
+
 
     private float DesgasteArmadura(float dañoArmadura)
     {
@@ -165,17 +187,37 @@ public abstract class Personaje : MonoBehaviour
       golpe.tipoAnimacion
   );
         nuevo.armadura = golpe.armadura;
+        nuevo.penetracionArmadura = golpe.penetracionArmadura;
 
         if (ProbabilidadAcertada(probGolpe))
         {
             nuevo.vida = nuevo.vida * potencia;
             nuevo.armadura = nuevo.armadura * potencia;
+            if (ProbabilidadAcertada(probCritico))
+            {
+                float critico=CalcularCritico();
+                nuevo.vida=nuevo.vida * critico;
+                if (nuevo.esPositivo)
+
+                {
+                    nuevo.tipoAtaque=TipoAtaque.curacionCritico;
+                }
+                else
+                {
+                     nuevo.armadura = nuevo.armadura * critico;
+                     nuevo.tipoAtaque=TipoAtaque.DañoCritico;
+                }
+               
+
+            }
         }
         else
         {
             nuevo.vida = 0;
             nuevo.estadoGolpe = EstadoGolpe.Fallado;
         }
+
+
 
         return nuevo;
 
@@ -192,15 +234,14 @@ public abstract class Personaje : MonoBehaviour
     //todo: Metodos para recibir
 
     //aplicar todo lo que hay que aplicar al recibir daño
-    private float RecibirDaño(float daño, bool ignoraArmadura)
+    private float RecibirDaño(float daño, float penetracion)
 
     {
 
         float nuevoDaño = daño * alteracionDaño;
-        if (ignoraArmadura == false)
-        {
-            nuevoDaño = DañoReducidoPorArmadura(nuevoDaño);
-        }
+        
+        nuevoDaño = DañoReducidoPorArmadura(nuevoDaño,penetracion);
+        
         return nuevoDaño;
     }
 
@@ -216,7 +257,7 @@ public abstract class Personaje : MonoBehaviour
         float armaduraGastada = 0;
         if (golpe.esPositivo == false)
         {
-            vidaRecibida = RecibirDaño(golpe.vida, golpe.ignoraArmadura);
+            vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
             setvida(vidaRecibida);
             armaduraGastada = GastarArmadura(golpe.armadura);
         }
