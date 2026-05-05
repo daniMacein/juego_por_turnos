@@ -81,12 +81,12 @@ public class PruebaPersonaje : Personaje
         GolpeData golpe1 = new GolpeData
         (90, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
+       // GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
 
         golpe1 = AplicarEstadisticasAGolpe(golpe1);
-         golpe2=AplicarEstadisticasAGolpe(golpe2);
+        // golpe2=AplicarEstadisticasAGolpe(golpe2);
 
-        AtaqueData ataque = new AtaqueData(golpe1,golpe2);
+        AtaqueData ataque = new AtaqueData(golpe1);
 
 
         // ejecutar ataque

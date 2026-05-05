@@ -37,7 +37,7 @@ public class ControlCombate : MonoBehaviour
   public List<Personaje> principalesB = new List<Personaje>();
 
   //todo: Iniciar el combate
-public SelectorPersonaje selectorPersonaje;
+  public SelectorPersonaje selectorPersonaje;
 
   void AsignarEquipo()
   {
@@ -55,8 +55,8 @@ public SelectorPersonaje selectorPersonaje;
         equipoB.Add(personaje);
       }
 
-      personaje.selector=selectorPersonaje;
-      personaje.controlCombate=this;
+      personaje.selector = selectorPersonaje;
+      personaje.controlCombate = this;
     }
   }
 
@@ -129,12 +129,32 @@ public SelectorPersonaje selectorPersonaje;
 
     TodosPersonajes = new List<Personaje>(GetComponentsInChildren<Personaje>());
     AsignarEquipo();
-    CrearPosicion();
-    OrdenarPersonajes();
-
-    StartCoroutine(EjecutarRonda());
 
 
+    StartCoroutine(EjecutarCombate());
+
+
+  }
+
+
+  public int numeroRonda = 1;
+  private IEnumerator EjecutarCombate()
+
+  {
+
+    while (numeroRonda < 3)
+
+    {
+      CrearPosicion();
+      OrdenarPersonajes();
+      Debug.Log("Ronda " + numeroRonda + " comenzada");
+
+      yield return new WaitForSeconds(2f);
+      yield return EjecutarRonda();
+      numeroRonda++;
+    }
+
+    Debug.Log("combate terminado");
   }
 
 
@@ -144,16 +164,16 @@ public SelectorPersonaje selectorPersonaje;
     while (PersonajesOrdenados.Count > 0)
     {
       Personaje PersonajeActual = PersonajesOrdenados[0].personaje;
-      Debug.Log("Turno de: "+PersonajeActual.nombre+"\n"+"vida: "+ PersonajeActual.vida+"\n"+"posicion: "
-      +  PersonajesOrdenados[0].posicion+"\n");
-     
-     
+      Debug.Log("Turno de: " + PersonajeActual.nombre + "\n" + "vida: " + PersonajeActual.vida + "\n" + "posicion: "
+      + PersonajesOrdenados[0].posicion + "\n");
+
+
 
       //EjecutarTurno(actual);
-      yield return StartCoroutine(EjecutarTurno(PersonajeActual));
+      yield return EjecutarTurno(PersonajeActual);
       // después del turno, reordenas por si algo ha cambiado
       //Reordenar();
-       PersonajesOrdenados.RemoveAt(0);
+      PersonajesOrdenados.RemoveAt(0);
     }
   }
 
@@ -166,7 +186,7 @@ public SelectorPersonaje selectorPersonaje;
     interfazCombate.MostrarMenuPersonaje(p);
 
     p.haTerminadoElAtaque = false;
-   
+
     yield return new WaitUntil(() => p.haTerminadoElAtaque == true);
 
     p.haTerminadoElAtaque = false;
@@ -188,7 +208,7 @@ public SelectorPersonaje selectorPersonaje;
 
 
   //**Pruebas
-  
+
 
   //**FUNCIONES DE CONTROLAR ATAQUES
 
@@ -222,7 +242,7 @@ public SelectorPersonaje selectorPersonaje;
     StartCoroutine(EjecutarAtaque(atacante, ataque));
   }
 
-  public IEnumerator  EjecutarAtaque(Personaje atacante, AtaqueData ataque)
+  public IEnumerator EjecutarAtaque(Personaje atacante, AtaqueData ataque)
   {
     Dictionary<Personaje, ResultadoAtaque> resultados = new Dictionary<Personaje, ResultadoAtaque>();
 
@@ -238,7 +258,7 @@ public SelectorPersonaje selectorPersonaje;
         continue;
       }
       //aqui, que por cierto haremos esta funcion una corrutine y se parara aqui hasta que devuelva algo como animacion completa
-      yield return atacante.AnimarAtaque(golpe,objetivosFinales);
+      yield return atacante.AnimarAtaque(golpe, objetivosFinales);
 
       foreach (Personaje objetivo in objetivosFinales)
       {
@@ -264,17 +284,17 @@ public SelectorPersonaje selectorPersonaje;
         }
       }
 
-       yield return new WaitForSeconds(3f);
+      yield return new WaitForSeconds(2f);
     }
 
     // Avisar que ha recibido un ataque, a las personas afectadas (mas pasar la info)
     foreach (var kvp in resultados)
     {
       kvp.Key.AtaqueRecibido(kvp.Value);
-      yield return new WaitForSeconds(4f);
+      yield return new WaitForSeconds(2f);
     }
     atacante.TerminarAtaque(ataque);
-    
+
   }
 
 

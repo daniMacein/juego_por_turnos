@@ -31,6 +31,8 @@ public abstract class Personaje : MonoBehaviour
     #endregion
 
     #region Estadisticas
+
+    public bool estaVivo=true;
     public float vidaMaxima { get; protected set; }
     public float vida { get; protected set; } //vida actual
     public float armadura { get; protected set; }
@@ -99,7 +101,7 @@ public abstract class Personaje : MonoBehaviour
 
         if (vida == 0)
         {
-            Debug.Log("me morís");
+            morir();
         }
     }
 
@@ -246,7 +248,15 @@ public abstract class Personaje : MonoBehaviour
 
     }
 
+    
+    //todo: formulas de estados
 
+
+    private void morir()
+
+    {
+        
+    }
 
     //todo: EFECTOS
 
