@@ -171,56 +171,44 @@ public abstract class Personaje : MonoBehaviour
     //(utilizados para infligir ataques y efectos)
 
 
-    //Aplicar a tu daño todo lo que hay que aplicar
-    public GolpeData AplicarEstadisticasAGolpe(GolpeData golpe)
+// Aplicar a tu daño todo lo que hay que aplicar
+    public void AplicarEstadisticasAGolpe(GolpeData golpe)
     {
-        float vidaUsada = golpe.vida;
-        if (golpe.esPositivo == false)
-        {
-            vidaUsada = -vidaUsada;
-        }
-        GolpeData nuevo = new GolpeData(
-      vidaUsada,
-      golpe.objetivos,
-      golpe.tipoAtaque,
-      golpe.tipoObjetivo,
-      golpe.tipoAnimacion
-  );
-        nuevo.armadura = golpe.armadura;
-        nuevo.penetracionArmadura = golpe.penetracionArmadura;
+        // 1. Invertir la vida si no es positivo
+      //  if (golpe.esPositivo == false)
+       // {
+            //golpe.vida = -golpe.vida; // Modificamos directo
+        //}
 
+        // 2. Comprobar si acierta
         if (ProbabilidadAcertada(probGolpe))
         {
-            nuevo.vida = nuevo.vida * potencia;
-            nuevo.armadura = nuevo.armadura * potencia;
+            golpe.vida = golpe.vida * potencia;
+            golpe.armadura = golpe.armadura * potencia;
+
+            // 3. Comprobar si hay crítico
             if (ProbabilidadAcertada(probCritico))
             {
-                float critico=CalcularCritico();
-                nuevo.vida=nuevo.vida * critico;
-                if (nuevo.esPositivo)
+                float critico = CalcularCritico();
+                golpe.vida = golpe.vida * critico;
 
+                if (golpe.esPositivo)
                 {
-                    nuevo.tipoAtaque=TipoAtaque.curacionCritico;
+                    golpe.tipoAtaque = TipoAtaque.curacionCritico;
                 }
                 else
                 {
-                     nuevo.armadura = nuevo.armadura * critico;
-                     nuevo.tipoAtaque=TipoAtaque.DañoCritico;
+                    golpe.armadura = golpe.armadura * critico;
+                    golpe.tipoAtaque = TipoAtaque.DañoCritico;
                 }
-               
-
             }
         }
         else
         {
-            nuevo.vida = 0;
-            nuevo.estadoGolpe = EstadoGolpe.Fallado;
+            // 4. Si falla
+            golpe.vida = 0;
+            golpe.estadoGolpe = EstadoGolpe.Fallado;
         }
-
-
-
-        return nuevo;
-
     }
 
 

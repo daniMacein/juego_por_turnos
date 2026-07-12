@@ -27,4 +27,6 @@ public abstract class Efecto
 
      public virtual void TrasIniciarAtaque(Personaje personaje, AtaqueData ataque) { }
 
+     public virtual void AlMorir(){}
+
 }

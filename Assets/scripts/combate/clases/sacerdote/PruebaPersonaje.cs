@@ -15,7 +15,7 @@ public class PruebaPersonaje : Personaje
         probCritico = 100;
         probEvasion = 4;
 
-        potencia = 1;
+        potencia = 3;
         probGolpe = 100;
         alteracionDaño = 1;
 
@@ -83,11 +83,11 @@ public class PruebaPersonaje : Personaje
 
        // GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
         golpe1.penetracionArmadura=0f;
-        golpe1 = AplicarEstadisticasAGolpe(golpe1);
+        AplicarEstadisticasAGolpe(golpe1);
         // golpe2=AplicarEstadisticasAGolpe(golpe2);
 
         AtaqueData ataque = new AtaqueData(golpe1);
-
+        
 
         // ejecutar ataque
         
