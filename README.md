@@ -1,61 +1,63 @@
-#  Flujo de trabajo con GitHub Desktop (Proyecto Juego por turnos)
+# 🎮 Juego por Turnos PvP
 
-##  RESUMEN (explicacion)
-Cada integrante del equipo:
+## 📖 Descripción
 
-1. Trabaja en su **rama**
-2. Actualiza su rama con los cambios de `main`
-3. Desarrolla su parte
-4. Vuelve a actualizar su rama con `main` (por si hay cambios nuevos)
-5. Une sus cambios a `main`
+Este proyecto consiste en un videojuego de combate por turnos centrado en partidas PvP local. El juego incluye múltiples personajes inspirados en la fantasía medieval, cada uno con habilidades, ataques y efectos únicos.
 
- Repetir este proceso continuamente
-
-
-##  REGLAS IMPORTANTES
-
-###  ❌No trabajar en el mismo archivo que otra persona❌
-### - ❌ No trabajar directamente en `main` ❌
-- Actualizar siempre tu rama con lo del main (cada vez que trabajes)
-- No tardar demasiado en pasar tus cambios al main.
+Actualmente, el proyecto se encuentra en desarrollo. A futuro se planea la implementación de un modo PvE completo, con worldbuilding, progresión y múltiples niveles.
 
 ---
 
+## ⚔️ Características
 
-
-##  PASOS
-
-### 🅐 Trabajar en tu rama
-
-#### 1. Actualizar `main`
-- Cambiar a la rama `main`
-- Click en **Fetch origin**
-- Click en **Pull origin**
-
-#### 2. Actualizar tu rama con `main`
-- Cambiar a tu rama
-- Menú: **Branch → Update from main**
-
-#### 3. Trabajar
-- Hacer commits en tu rama
-- Subir cambios (**Push**)
+* Combate por turnos PvP local
+* Múltiples personajes jugables
+* Gran variedad de habilidades y efectos
+* Ambientación de fantasía medieval
 
 ---
 
-### 🅑 Unir tus cambios
+## 🚧 Estado del proyecto
 
-#### 4. Actualizar tu rama con `main` (otra vez)
-*(Por si alguien ha subido cambios mientras trabajabas)*
+El proyecto se encuentra en una fase temprana de desarrollo.
 
-- Ir a `main` → **Fetch + Pull**
-- Volver a tu rama → **Branch → Update from main**
+Actualmente:
 
+* Definición del diseño del juego (GDD)
+* Implementación de mecánicas base
+* Desarrollo de un prototipo inicial
 
-#### 5. Hacer merge
-- Cambiar a `main`
-- Menú:
-  👉 **Branch → Merge into current branch**
-- Elegir tu rama (ej: `tu-nombre`)
-- Click en **Push origin** (subir cambios)
+Próximas mejoras:
 
+* Animaciones
+* Mejora de la interfaz (UI)
+* Nuevos personajes y habilidades
+* Desarrollo del modo PvE
 
+---
+
+## 🛠️ Tecnologías utilizadas
+
+* Unity
+* Blender
+
+---
+
+## ▶️ Cómo ejecutar el proyecto
+
+Actualmente el proyecto no cuenta con una versión ejecutable.
+
+Para probarlo:
+
+1. Clonar el repositorio
+2. Abrir el proyecto en Unity
+3. Ejecutar el juego desde el editor
+
+---
+
+## 👥 Colaboradores
+
+* daniMacein
+* mdefez1
+* Varya06
+* MrSus10
