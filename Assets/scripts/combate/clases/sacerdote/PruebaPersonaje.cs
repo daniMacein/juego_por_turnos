@@ -13,7 +13,7 @@ public class PruebaPersonaje : Personaje
         speed = 50;
 
         probCritico = 100;
-        probEvasion = 4;
+        probEvasion = 5;
 
         potencia = 1;
         probGolpe = 100;
