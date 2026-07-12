@@ -82,7 +82,7 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
-    void setvida(float vidaRecibida)
+    void SetVida(float vidaRecibida)
     {
 
 
@@ -174,19 +174,14 @@ public abstract class Personaje : MonoBehaviour
 // Aplicar a tu daño todo lo que hay que aplicar
     public void AplicarEstadisticasAGolpe(GolpeData golpe)
     {
-        // 1. Invertir la vida si no es positivo
-      //  if (golpe.esPositivo == false)
-       // {
-            //golpe.vida = -golpe.vida; // Modificamos directo
-        //}
 
-        // 2. Comprobar si acierta
+        // 1. Comprobar si acierta
         if (ProbabilidadAcertada(probGolpe))
         {
             golpe.vida = golpe.vida * potencia;
             golpe.armadura = golpe.armadura * potencia;
 
-            // 3. Comprobar si hay crítico
+            // 2. Comprobar si hay crítico
             if (ProbabilidadAcertada(probCritico))
             {
                 float critico = CalcularCritico();
@@ -205,7 +200,7 @@ public abstract class Personaje : MonoBehaviour
         }
         else
         {
-            // 4. Si falla
+            // 3. Si falla
             golpe.vida = 0;
             golpe.estadoGolpe = EstadoGolpe.Fallado;
         }
@@ -246,12 +241,12 @@ public abstract class Personaje : MonoBehaviour
         if (golpe.esPositivo == false)
         {
             vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
-            setvida(vidaRecibida);
+            SetVida(vidaRecibida);
             armaduraGastada = GastarArmadura(golpe.armadura);
         }
         else
         {
-            setvida(golpe.vida);
+            SetVida(golpe.vida);
             vidaRecibida = golpe.vida;
         }
 
