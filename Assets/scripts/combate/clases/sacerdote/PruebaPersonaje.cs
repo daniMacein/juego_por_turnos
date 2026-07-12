@@ -15,7 +15,7 @@ public class PruebaPersonaje : Personaje
         probCritico = 100;
         probEvasion = 4;
 
-        potencia = 3;
+        potencia = 1;
         probGolpe = 100;
         alteracionDaño = 1;
 
