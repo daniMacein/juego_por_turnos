@@ -101,10 +101,6 @@ public abstract class Personaje : MonoBehaviour
             vida += vidaRecibida;
         }
 
-        if (vida == 0)
-        {
-            morir();
-        }
     }
 
 
@@ -189,12 +185,14 @@ public abstract class Personaje : MonoBehaviour
 
                 if (golpe.esPositivo)
                 {
-                    golpe.tipoAtaque = TipoAtaque.curacionCritico;
+                    golpe.tipoAtaque = TipoAtaque.Curacion;
+                    golpe.esCritico=true;
                 }
                 else
                 {
                     golpe.armadura = golpe.armadura * critico;
-                    golpe.tipoAtaque = TipoAtaque.DañoCritico;
+                    golpe.tipoAtaque = TipoAtaque.Daño;
+                     golpe.esCritico=true;
                 }
             }
         }
@@ -238,6 +236,7 @@ public abstract class Personaje : MonoBehaviour
         // recuerda: daño es negativo
         float vidaRecibida = 0;
         float armaduraGastada = 0;
+        //si es daño
         if (golpe.esPositivo == false)
         {
             vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
@@ -251,7 +250,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
-        (vidaRecibida, armaduraGastada, EstadoGolpe.Golpeado, golpe.tipoObjetivo, golpe.tipoAtaque);
+        (vidaRecibida, armaduraGastada, golpe.estadoGolpe, golpe.tipoObjetivo, golpe.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;

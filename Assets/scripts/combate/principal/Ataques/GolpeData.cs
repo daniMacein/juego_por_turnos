@@ -13,12 +13,14 @@ public class GolpeData
     public float vida;
     public float armadura;
 
+    public bool esCritico=false;
+
     public float penetracionArmadura=1;
 
     //** Definir ataque
     public TipoAtaque tipoAtaque;
     public TipoObjetivo tipoObjetivo;
-    public EstadoGolpe estadoGolpe= EstadoGolpe.Previo;
+    public EstadoGolpe estadoGolpe= EstadoGolpe.Normal;
 
     public TipoAnimacion tipoAnimacion;
 
@@ -46,9 +48,6 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
     switch (tipoAtaque)
     {
         case TipoAtaque.Daño:
-        case TipoAtaque.DañoCritico:
-        case TipoAtaque.Aturdimiento:
-        case TipoAtaque.Mental:
             esPositivo = false;
             vida = -valor;
             armadura=valor;
@@ -56,11 +55,8 @@ public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,T
 
 
         case TipoAtaque.Curacion:
-        case TipoAtaque.curacionCritico:
-        case TipoAtaque.Escudo:
-        case TipoAtaque.Especial:
            esPositivo = true;
-            vida = --valor;
+            vida = valor;
             armadura=0;
              
             break;

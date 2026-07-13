@@ -1,33 +1,24 @@
 public enum TipoAtaque
 {
     Daño,
-    DañoCritico,
     Curacion,
-    curacionCritico,
-    Aturdimiento,
-    Mental,
-    Escudo,
-    Especial
+    efecto,
 }
 
 public enum TipoObjetivo
 {
     Unitario,
     AreaTodos,
-    AreaPrincipalesAliados,
-    AreaPrincipalesEnemigos,
-    AreaTodosAliados,
-    AreaTodosEnemigos
+    AreaAliados,
+    AreaEnemigos
 }
 
 public enum EstadoGolpe
 {
-    Previo,
-    Atacando,
-    Golpeado,
+    Normal,
+    Critico,
     Fallado,
-    Persuadido,
-    Critico
+    Evadido
 }
 
 

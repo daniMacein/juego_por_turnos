@@ -204,11 +204,6 @@ public class ControlCombate : MonoBehaviour
   #region  combate
 
 
-  //**Pruebas
-
-
-  //**Pruebas
-
 
   //**FUNCIONES DE CONTROLAR ATAQUES
 
@@ -277,7 +272,7 @@ public class ControlCombate : MonoBehaviour
         resultados[objetivo].golpes.Add(res);
 
         // Solo sumar si ha sido golpeado (ejemplo básico)
-        if (res.estadoGolpe == EstadoGolpe.Golpeado || res.estadoGolpe == EstadoGolpe.Critico)
+        if (res.estadoGolpe == EstadoGolpe.Normal || res.estadoGolpe == EstadoGolpe.Critico)
         {
           resultados[objetivo].dañoTotal += res.dañoFinal;
           resultados[objetivo].armaduraTotal += res.armaduraReducida;

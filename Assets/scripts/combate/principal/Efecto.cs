@@ -2,6 +2,8 @@
 
 public abstract class Efecto
 {
+
+public bool id{ get; protected set; } 
    bool esPositivo;
    bool esDisipable=true;
 
