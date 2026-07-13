@@ -236,17 +236,40 @@ public abstract class Personaje : MonoBehaviour
         // recuerda: daño es negativo
         float vidaRecibida = 0;
         float armaduraGastada = 0;
+        bool golpeAcertado=true;
         //si es daño
         if (golpe.esPositivo == false)
         {
-            vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
+
+             if (ProbabilidadAcertada(probEvasion))
+            {
+               golpe.estadoGolpe=EstadoGolpe.Evadido; 
+               golpeAcertado=false;
+            }
+
+            else
+            {
+                      vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
             SetVida(vidaRecibida);
             armaduraGastada = GastarArmadura(golpe.armadura);
+                
+            }
+      
         }
         else
         {
             SetVida(golpe.vida);
             vidaRecibida = golpe.vida;
+        }
+
+        //aplicar los efectos
+        if (golpe.aplicaEfecto && golpeAcertado)
+        {
+            foreach (Efecto efecto in golpe.efectos)
+        {
+           AplicarEfecto(efecto);
+        }
+            
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
@@ -291,11 +314,19 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
-    public void EjecutarInicioDeRonda()
+    public void EfectosInicioDeRonda()
     {
         foreach (Efecto efecto in efectosActivos)
         {
             efecto.InicioDeRonda(this);
+        }
+    }
+
+        public void EfectosTurnoGeneral()
+    {
+        foreach (Efecto efecto in efectosActivos)
+        {
+            efecto.EnTurnoGeneral(this);
         }
     }
 

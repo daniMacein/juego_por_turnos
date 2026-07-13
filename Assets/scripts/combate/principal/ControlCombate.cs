@@ -252,7 +252,7 @@ public class ControlCombate : MonoBehaviour
         Debug.Log("Golpe fallado vaya :(");
         continue;
       }
-      //aqui, que por cierto haremos esta funcion una corrutine y se parara aqui hasta que devuelva algo como animacion completa
+      // se parara aqui hasta que haga la animacion completa de ese golpe especifico
       yield return atacante.AnimarAtaque(golpe, objetivosFinales);
 
       foreach (Personaje objetivo in objetivosFinales)
@@ -277,8 +277,10 @@ public class ControlCombate : MonoBehaviour
           resultados[objetivo].dañoTotal += res.dañoFinal;
           resultados[objetivo].armaduraTotal += res.armaduraReducida;
         }
-      }
 
+        //?AQUI PROGRAMARAS CON "RES", que es el resultado golpe, que se vea en pantalla "golpeado con tal"
+      }
+      //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);
     }
 

@@ -12,11 +12,11 @@ public class PruebaPersonaje : Personaje
         armadura = 30;
         speed = 50;
 
-        probCritico = 100;
+        probCritico = 10;
         probEvasion = 5;
 
         potencia = 1;
-        probGolpe = 100;
+        probGolpe = 90;
         alteracionDaño = 1;
 
 

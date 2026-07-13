@@ -8,7 +8,7 @@ public bool id{ get; protected set; }
    bool esDisipable=true;
 
     public bool disipado=false;
-   public int duracion;
+   public int duracion { get; protected set; } 
 
     public virtual void DisiparEfecto() { }
 
