@@ -31,4 +31,8 @@ public bool id{ get; protected set; }
 
      public virtual void AlMorir(){}
 
+     //efectos especiales
+
+     public virtual void AntesDeMorir(){}
+
 }

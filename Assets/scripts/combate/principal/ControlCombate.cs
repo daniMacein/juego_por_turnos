@@ -73,23 +73,32 @@ public class ControlCombate : MonoBehaviour
   }
 
 
-  void CrearPosicion()
+  void CrearPosicionEnPersonajes()
   {
-    List<int> posicionesIniciales = ObtenerPosicionInicial();
+     List<int> posicionesIniciales = ObtenerPosicionInicial();
+     PersonajesOrdenados.Clear();
+   
     //recorremos los personajes
     for (int i = 0; i < TodosPersonajes.Count; i++)
     {
-      posicionesIniciales[i] += TodosPersonajes[i].speed; //obtenemos la velocidad del personaje
+      int repeticion=0;
+      bool PosicionMayorAcien=true;
 
-      List<int> posicionenviadas = new List<int>(); //creamos la lista con todas las posiciones que tendra
-      while (posicionesIniciales[i] > 100) //hacemos un bucle y añadimos cada 100 una nueva posicion 
+      
+      Personaje personaje= TodosPersonajes[i];
+      int posicionInicial=posicionesIniciales[i];
+
+
+      while (PosicionMayorAcien)  
 
       {
-        posicionenviadas.Add(100);
-        posicionesIniciales[i] -= 100;
+        PosicionPersonaje personajePosicion = new PosicionPersonaje(personaje,posicionInicial,repeticion);
+         PersonajesOrdenados.Add(personajePosicion);
+
+
+         PosicionMayorAcien=personajePosicion.EsPosicionMayorACien();
+         repeticion++;
       }
-      posicionenviadas.Add(posicionesIniciales[i]); //añadimos la menor de 100
-      TodosPersonajes[i].SetPosicion(posicionenviadas); //las enviamos
 
       //print("posicion" +string.Join(", ", TodosPersonajes[i].posicion) );
 
@@ -102,21 +111,11 @@ public class ControlCombate : MonoBehaviour
 
   void OrdenarPersonajes()
   {
-    PersonajesOrdenados.Clear();
-
-    foreach (Personaje personaje in TodosPersonajes)
-    {
-      foreach (int posicion in personaje.posicion)
-      {
-        PersonajesOrdenados.Add(new PosicionPersonaje(posicion, personaje));
-      }
-    }
 
     //  ORDENAR de mayor a menor
     PersonajesOrdenados.Sort((a, b) => b.posicion.CompareTo(a.posicion));
   }
 
-  //Sumamos las posicionesIniciales a la speed de cada jugador. Y  le asignamos su posicion correspondiente.
 
 
 
@@ -145,7 +144,8 @@ public class ControlCombate : MonoBehaviour
     while (numeroRonda < 3)
 
     {
-      CrearPosicion();
+     
+      CrearPosicionEnPersonajes();
       OrdenarPersonajes();
       Debug.Log("Ronda " + numeroRonda + " comenzada");
 
@@ -197,6 +197,22 @@ public class ControlCombate : MonoBehaviour
      }*/
   }
 
+
+
+  private IEnumerator EjecutarEfectosGenerales()
+  {
+
+
+       foreach (Personaje personaje in TodosPersonajes)
+    {
+      personaje.EfectosTurnoGeneral();
+    }
+
+     yield return new WaitForSeconds(2f);
+    
+
+
+  }
 
   #endregion
 
