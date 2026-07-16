@@ -1,50 +1,34 @@
 
-public class PosicionPersonaje 
+public class PosicionPersonaje
 {
-    public int posicion;
+
     public Personaje personaje;
 
 
     private int posicionInicial;
-    private int numeroRepeticion=0;
+    public int posicion;
+
+
 
     public void SetPosicionInicial(int posicionInicial)
     {
-        this.posicionInicial=posicionInicial;
-    }
-
-
-        public void SetnumeroRepeticion(int numeroRepeticion)
-    {
-        this.numeroRepeticion=numeroRepeticion;
+        this.posicionInicial = posicionInicial;
     }
 
 
 
-    public void SetPosicion()
+    public void CalcularPosicion()
     {
-        posicion=posicionInicial+personaje.speed+(-100*numeroRepeticion);
-    }
-
-    public bool EsPosicionMayorACien()
-    {
-        if (posicion > 100)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        posicion = posicionInicial + personaje.speed;
     }
 
 
-    public PosicionPersonaje(Personaje personaje, int posicionInicial, int numeroRepeticion )
-    {
-       this.personaje=personaje;
 
-       SetPosicionInicial(posicionInicial);
-       SetnumeroRepeticion(numeroRepeticion);
-       SetPosicion();
+    public PosicionPersonaje(Personaje personaje, int posicionInicial, int posicion)
+    {
+        this.personaje = personaje;
+
+        SetPosicionInicial(posicionInicial);
+        this.posicion = posicion;
     }
 }

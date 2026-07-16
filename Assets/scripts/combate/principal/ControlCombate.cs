@@ -47,6 +47,7 @@ public class ControlCombate : MonoBehaviour
       {
         principalesA.Add(personaje);
         equipoA.Add(personaje);
+  
       }
 
       else
@@ -81,27 +82,27 @@ public class ControlCombate : MonoBehaviour
     //recorremos los personajes
     for (int i = 0; i < TodosPersonajes.Count; i++)
     {
-      int repeticion=0;
-      bool PosicionMayorAcien=true;
+   
+    
 
       
       Personaje personaje= TodosPersonajes[i];
       int posicionInicial=posicionesIniciales[i];
+      int velocidadPersonaje=TodosPersonajes[i].speed;
+      int posicion=0;
 
 
-      while (PosicionMayorAcien)  
-
+      do
       {
-        PosicionPersonaje personajePosicion = new PosicionPersonaje(personaje,posicionInicial,repeticion);
+         posicion= posicionInicial+velocidadPersonaje;
+        PosicionPersonaje personajePosicion = new PosicionPersonaje(personaje,posicionInicial,posicion);
          PersonajesOrdenados.Add(personajePosicion);
 
+        posicionInicial-=100;
+        
+      } while(posicion>100);
 
-         PosicionMayorAcien=personajePosicion.EsPosicionMayorACien();
-         repeticion++;
-      }
-
-      //print("posicion" +string.Join(", ", TodosPersonajes[i].posicion) );
-
+     
 
     }
 
@@ -114,6 +115,15 @@ public class ControlCombate : MonoBehaviour
 
     //  ORDENAR de mayor a menor
     PersonajesOrdenados.Sort((a, b) => b.posicion.CompareTo(a.posicion));
+
+      foreach( PosicionPersonaje posicionPersonaje in PersonajesOrdenados){
+       
+        
+
+         print( posicionPersonaje.personaje.nombre+" posicion " +string.Join(", ",posicionPersonaje.posicion) );
+
+
+    }
   }
 
 
