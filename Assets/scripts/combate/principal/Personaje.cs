@@ -177,6 +177,11 @@ public abstract class Personaje : MonoBehaviour
             golpe.vida = golpe.vida * potencia;
             golpe.armadura = golpe.armadura * potencia;
 
+            if(probGolpe > 100)
+            {
+                golpe.probGolpeExtra = probGolpe - 100;
+            }
+
             // 2. Comprobar si hay crítico
             if (ProbabilidadAcertada(probCritico))
             {
@@ -241,7 +246,7 @@ public abstract class Personaje : MonoBehaviour
         if (golpe.esPositivo == false)
         {
 
-             if (ProbabilidadAcertada(probEvasion))
+             if (ProbabilidadAcertada(probEvasion-golpe.probGolpeExtra))
             {
                golpe.estadoGolpe=EstadoGolpe.Evadido; 
                golpeAcertado=false;
