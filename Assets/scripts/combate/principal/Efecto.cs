@@ -1,5 +1,7 @@
 
 
+using System.Runtime.ConstrainedExecution;
+
 public abstract class Efecto
 {
 
@@ -12,7 +14,7 @@ public bool id{ get; protected set; }
 
     public virtual void DisiparEfecto() { }
 
-        public virtual void AlAplicarse(Personaje objetivo) { }
+        public virtual void AlAplicarse(Personaje objetivo, float potencia, float critico ) { }
     public virtual void AntesDeImpacto(GolpeData golpe, Personaje objetivo) { }
 
     public virtual void InicioDeRonda(Personaje personaje) { }

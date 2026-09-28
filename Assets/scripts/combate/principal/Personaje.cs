@@ -307,10 +307,41 @@ public abstract class Personaje : MonoBehaviour
     //todo: EFECTOS
 
 
+
+    public ResultadoGolpe RecibirEfecto(EfectoData efecto)
+    {
+        // recuerda: daño es negativo
+        float vidaRecibida = 0;
+        float armaduraGastada = 0;
+        //si es daño
+        if (efecto.esPositivo == false)
+        {
+
+        vidaRecibida = RecibirDaño(efecto.vida, efecto.penetracionArmadura);
+        SetVida(vidaRecibida);
+        armaduraGastada = GastarArmadura(efecto.armadura);      
+      
+        }
+        else
+        {
+            SetVida(efecto.vida);
+            vidaRecibida = efecto.vida;
+        }
+
+        ResultadoGolpe resultado = new ResultadoGolpe
+        (vidaRecibida, armaduraGastada, efecto.estadoGolpe, efecto.tipoObjetivo, efecto.tipoAtaque);
+        AnimacionRecibirGolpe(resultado);
+
+        return resultado;
+
+    }
+
+
+
     public void AplicarEfecto(Efecto efecto)
     {
         efectosActivos.Add(efecto);
-        efecto.AlAplicarse(this);
+        //efecto.AlAplicarse(this, potencia, critico);
     }
 
 
@@ -322,13 +353,6 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
-        public void EfectosTurnoGeneral()
-    {
-        foreach (Efecto efecto in efectosActivos)
-        {
-            efecto.EnTurnoGeneral(this);
-        }
-    }
 
 
     public void LimpiarEfectos()

@@ -195,6 +195,8 @@ public class ControlCombate : MonoBehaviour
      {
          IA.Ejecutar(p);
      }*/
+
+     EjecutarEfectosGenerales();
   }
 
 
@@ -205,7 +207,7 @@ public class ControlCombate : MonoBehaviour
 
        foreach (Personaje personaje in TodosPersonajes)
     {
-      personaje.EfectosTurnoGeneral();
+      EfectosTurnoGeneral(personaje);
     }
 
      yield return new WaitForSeconds(2f);
@@ -213,6 +215,17 @@ public class ControlCombate : MonoBehaviour
 
 
   }
+
+
+        public void EfectosTurnoGeneral(Personaje personaje)
+    {
+        foreach (Efecto efecto in personaje.efectosActivos)
+        {
+            efecto.EnTurnoGeneral(personaje);
+        }
+    }
+
+
 
   #endregion
 
