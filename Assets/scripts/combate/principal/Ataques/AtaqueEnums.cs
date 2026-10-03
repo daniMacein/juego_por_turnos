@@ -29,3 +29,9 @@ public enum TipoAnimacion
     AtaqueFuerte,
     Magia_Fuego
 }
+
+public enum TipoEfecto
+{
+    Daño,
+    Curacion
+}

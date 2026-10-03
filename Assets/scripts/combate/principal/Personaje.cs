@@ -177,6 +177,11 @@ public abstract class Personaje : MonoBehaviour
             golpe.vida = golpe.vida * potencia;
             golpe.armadura = golpe.armadura * potencia;
 
+            if(probGolpe > 100)
+            {
+                golpe.probGolpeExtra = probGolpe - 100;
+            }
+
             // 2. Comprobar si hay crítico
             if (ProbabilidadAcertada(probCritico))
             {
@@ -241,7 +246,7 @@ public abstract class Personaje : MonoBehaviour
         if (golpe.esPositivo == false)
         {
 
-             if (ProbabilidadAcertada(probEvasion))
+             if (ProbabilidadAcertada(probEvasion-golpe.probGolpeExtra))
             {
                golpe.estadoGolpe=EstadoGolpe.Evadido; 
                golpeAcertado=false;
@@ -307,10 +312,41 @@ public abstract class Personaje : MonoBehaviour
     //todo: EFECTOS
 
 
+
+    public ResultadoGolpe RecibirEfecto(EfectoData efecto)
+    {
+        // recuerda: daño es negativo
+        float vidaRecibida = 0;
+        float armaduraGastada = 0;
+        //si es daño
+        if (efecto.esPositivo == false)
+        {
+
+        vidaRecibida = RecibirDaño(efecto.vida, efecto.penetracionArmadura);
+        SetVida(vidaRecibida);
+        armaduraGastada = GastarArmadura(efecto.armadura);      
+      
+        }
+        else
+        {
+            SetVida(efecto.vida);
+            vidaRecibida = efecto.vida;
+        }
+
+        ResultadoGolpe resultado = new ResultadoGolpe
+        (vidaRecibida, armaduraGastada, efecto.estadoGolpe, efecto.tipoObjetivo, efecto.tipoAtaque);
+        AnimacionRecibirGolpe(resultado);
+
+        return resultado;
+
+    }
+
+
+
     public void AplicarEfecto(Efecto efecto)
     {
         efectosActivos.Add(efecto);
-        efecto.AlAplicarse(this);
+        //efecto.AlAplicarse(this, potencia, critico);
     }
 
 
@@ -322,13 +358,6 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
-        public void EfectosTurnoGeneral()
-    {
-        foreach (Efecto efecto in efectosActivos)
-        {
-            efecto.EnTurnoGeneral(this);
-        }
-    }
 
 
     public void LimpiarEfectos()
