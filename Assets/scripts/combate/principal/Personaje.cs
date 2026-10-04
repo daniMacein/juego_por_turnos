@@ -20,6 +20,7 @@ public abstract class Personaje : MonoBehaviour
     #endregion
 
     #region Interaccion
+    //private Animator animator;
     public SelectorPersonaje selector;
     public ControlCombate controlCombate;
     public List<Efecto> efectosActivos = new List<Efecto>();
@@ -145,12 +146,36 @@ public abstract class Personaje : MonoBehaviour
 
     #endregion
 
+    void Start()
+    {
+        //animator = GetComponent<Animator>(); 
+    }
+
     public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)
 
     {
         //aqui miras cual es el golpe, porque tendra un identificador dentro de golpe y haces la animacion
         //correspondiente
-        yield return new WaitForSeconds(1f);
+
+        if (golpeData.tipoAtaque== TipoAtaque.Daño){
+             // Lógica para animar un ataque de daño
+            Debug.Log("Animando ataque de daño");
+
+            foreach (Personaje personaje in objetivosFinales)
+            {
+                Animator animatorObjetivo = personaje.GetComponent<Animator>();
+                if(animatorObjetivo != null)
+                {
+                    animatorObjetivo.Play("Golpeado");
+                     yield return new WaitForSeconds(1f);
+                    animatorObjetivo.Play("Idle");
+                } else {
+                    Debug.LogWarning("El objetivo no tiene un Animator asignado.");
+                }
+            }
+            
+        }
+       
     }
 
     #region gets/set
