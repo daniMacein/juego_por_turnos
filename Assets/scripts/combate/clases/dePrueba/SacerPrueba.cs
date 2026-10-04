@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class GuerreroPrueba : Personaje
+public class SacerPrueba : Personaje
 {
    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,29 +21,29 @@ public class GuerreroPrueba : Personaje
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Guerrero Paco";
-        clase="Guerrero";
+        nombre="Sacerdote Antonio";
+        clase="Sacerdote";
 
 
 
          ataquesInfo[0] = new AtaqueInfo(
-            "Tajo",
-            "Golpea al enemigo con un tajo"
+            "Golpe sagrado",
+            "Golpea al enemigo con el poder sagrado."
         );
 
         ataquesInfo[1] = new AtaqueInfo(
-            "Doble tajada",
-            "Golpea dos veces"
+            "Curación",
+            "Restaura una cantidad de vida a un aliado."
         );
 
         ataquesInfo[2] = new AtaqueInfo(
-            "Golpe explosivo",
-            "Inflige daño en area a todos los enemigos."
+            "Luz sagrada",
+            "Inflige daño sagrado a los enemigos."
         );
 
         ataquesInfo[3] = new AtaqueInfo(
-            "Arrodillarse",
-            "Nada."
+            "Curacion en masa",
+            "Cura todos los aliados"
         );
 
 

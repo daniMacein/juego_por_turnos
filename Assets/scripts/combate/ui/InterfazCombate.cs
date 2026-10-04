@@ -68,8 +68,7 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
-        //personaje.Ataque2(); Se ponrá el ataque 2 aquí cuando la función este creada 
-        Debug.Log("Botón 2 pulsado, pero Ataque2 no implementado aún");
+        personaje.Ataque2();
     }
 
     public void AlpulsarBoton3()
@@ -79,8 +78,7 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
-        //personaje.Ataque3(); Se ponrá el ataque 3 aquí cuando la función este creada 
-        Debug.Log("Botón 3 pulsado, pero Ataque3 no implementado aún");
+        personaje.Ataque3(); 
     }
 
     public void AlpulsarBoton4()
@@ -90,7 +88,6 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
-        //personaje.Ataque4(); Se ponrá el ataque 4 aquí cuando la función este creada 
-        Debug.Log("Botón 4 pulsado, pero Ataque4 no implementado aún");
+        personaje.Ataque4(); 
     }
 }

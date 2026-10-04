@@ -57,9 +57,9 @@ public abstract class Personaje : MonoBehaviour
     public abstract void Ataque1();
 
 
-    //public abstract void Ataque2();
-    //public abstract void Ataque3();
-    // public abstract void Ataque4();
+    public abstract void Ataque2();
+    public abstract void Ataque3();
+    public abstract void Ataque4();
     #endregion
 
     public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)
