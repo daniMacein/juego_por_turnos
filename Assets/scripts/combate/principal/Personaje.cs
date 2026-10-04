@@ -15,7 +15,7 @@ public abstract class Personaje : MonoBehaviour
     public string clase;
     public string descripcion;
 
-    public string Ataque1Nombre;
+    public AtaqueInfo[] ataquesInfo = new AtaqueInfo[4];
 
     #endregion
 

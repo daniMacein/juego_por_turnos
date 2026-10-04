@@ -15,7 +15,7 @@ public class InterfazCombateDefinitiva : MonoBehaviour
                 return;
             }
             nombre.text=p.nombre;
-            textoBoton.text=p.Ataque1Nombre;
+            //textoBoton.text=p.Ataque1Nombre;
             personaje=p;
         }
 

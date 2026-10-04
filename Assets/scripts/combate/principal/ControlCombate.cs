@@ -19,7 +19,7 @@ public class ControlCombate : MonoBehaviour
 
   void Start()
   {
-
+    interfazCombate= InterfazCombate.interfazCombate;
     //personaje1.Ataque1();
     CrearCombate();
   }
@@ -195,7 +195,7 @@ public class ControlCombate : MonoBehaviour
     }
   }
 
-  public InterfazCombate interfazCombate;
+  private InterfazCombate interfazCombate;
 
   private IEnumerator EjecutarTurno(Personaje p)
   {

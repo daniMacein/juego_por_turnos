@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-public class PruebaPersonaje : Personaje
+
+public class GuerreroPrueba : Personaje
 {
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -88,8 +90,6 @@ public class PruebaPersonaje : Personaje
         selector.Reset();
     }
 
-
-    public Personaje enemigo;
 
 
     
