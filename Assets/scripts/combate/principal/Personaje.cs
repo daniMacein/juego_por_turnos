@@ -191,13 +191,13 @@ public abstract class Personaje : MonoBehaviour
                 if (golpe.esPositivo)
                 {
                     golpe.tipoAtaque = TipoAtaque.Curacion;
-                    golpe.esCritico=true;
+                    golpe.estadoGolpe=EstadoGolpe.Critico;
                 }
                 else
                 {
                     golpe.armadura = golpe.armadura * critico;
                     golpe.tipoAtaque = TipoAtaque.Daño;
-                     golpe.esCritico=true;
+                    golpe.estadoGolpe=EstadoGolpe.Critico;
                 }
             }
         }
@@ -278,7 +278,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
-        (vidaRecibida, armaduraGastada, golpe.estadoGolpe, golpe.tipoObjetivo, golpe.tipoAtaque);
+        (this,vidaRecibida, armaduraGastada, golpe.estadoGolpe, golpe.tipoObjetivo, golpe.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;
@@ -334,7 +334,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
-        (vidaRecibida, armaduraGastada, efecto.estadoGolpe, efecto.tipoObjetivo, efecto.tipoAtaque);
+        (this,vidaRecibida, armaduraGastada, efecto.estadoGolpe, efecto.tipoObjetivo, efecto.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;

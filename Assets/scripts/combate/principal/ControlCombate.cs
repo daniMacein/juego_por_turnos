@@ -15,6 +15,8 @@ public class ControlCombate : MonoBehaviour
 
   //  public List<Personaje> personajes = new List<Personaje>();
 
+ 
+
   void Start()
   {
 
@@ -38,6 +40,12 @@ public class ControlCombate : MonoBehaviour
 
   //todo: Iniciar el combate
   public SelectorPersonaje selectorPersonaje;
+
+
+  
+
+
+
 
   void AsignarEquipo()
   {
@@ -318,6 +326,7 @@ public class ControlCombate : MonoBehaviour
         }
 
         //?AQUI PROGRAMARAS CON "RES", que es el resultado golpe, que se vea en pantalla "golpeado con tal"
+        GestorUICombate.gestorUICombate.MostrarGolpe(res);
       }
       //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);

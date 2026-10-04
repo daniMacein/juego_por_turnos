@@ -1,5 +1,9 @@
+using Unity.VisualScripting;
+
 public class ResultadoGolpe
 {
+
+    public Personaje objetivo;
     public float dañoFinal;
     public float armaduraReducida;
 
@@ -8,9 +12,10 @@ public class ResultadoGolpe
     public TipoObjetivo tipoObjetivo;
     public TipoAtaque tipoAtaque;
 
-    public ResultadoGolpe(float Dañofinal,float armaduraReducida,EstadoGolpe estadoGolpe,
+    public ResultadoGolpe( Personaje objetivo,float Dañofinal,float armaduraReducida,EstadoGolpe estadoGolpe,
      TipoObjetivo tipoObjetivo,TipoAtaque tipoAtaque)
     {
+        this.objetivo= objetivo;
         this.dañoFinal=Dañofinal;
         this.armaduraReducida=armaduraReducida;
         this.estadoGolpe=estadoGolpe;

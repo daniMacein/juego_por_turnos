@@ -13,7 +13,7 @@ public class GolpeData
     public float vida;
     public float armadura;
 
-    public bool esCritico=false;
+    
 
     public float penetracionArmadura=1;
 
