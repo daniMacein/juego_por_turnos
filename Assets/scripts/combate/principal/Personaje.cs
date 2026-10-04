@@ -65,6 +65,9 @@ public abstract class Personaje : MonoBehaviour
         {
         equipoEnemigo = Equipo.equipoA;
         }
+
+        //animator = GetComponent<Animator>(); 
+    
     }
 
 
@@ -146,10 +149,7 @@ public abstract class Personaje : MonoBehaviour
 
     #endregion
 
-    void Start()
-    {
-        //animator = GetComponent<Animator>(); 
-    }
+
 
     public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)
 
