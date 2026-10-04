@@ -6,6 +6,7 @@ using System;
 public class GuerreroPrueba : Personaje
 {
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -22,7 +23,7 @@ public class GuerreroPrueba : Personaje
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Guerrero Paco";
+        nombre="Rojelio";
         clase="Guerrero";
 
 
@@ -72,48 +73,28 @@ public class GuerreroPrueba : Personaje
  public override void Ataque1()
     {
         //Tajo: 1 objetivo del equipo enemigo
-        StartCoroutine(EsperarObjetivos(new SelectorData(1, equipoEnemigo), CrearAtaque1));
+        LanzarAtaque(0, new SelectorData(1, equipoEnemigo), CrearAtaque1);
 
     }
 
     public override void Ataque2()
     {
         //Doble tajada: 2 objetivos del equipo enemigo
-        StartCoroutine(EsperarObjetivos(new SelectorData(2, equipoEnemigo), CrearAtaque2));
+        LanzarAtaque(1, new SelectorData(2, equipoEnemigo), CrearAtaque2);
 
     }
 
     public override void Ataque3()
     {
-        StartCoroutine(EsperarObjetivos(new SelectorData(1, equipoEnemigo), CrearAtaque1));
+        LanzarAtaque(2, new SelectorData(1, equipoEnemigo), CrearAtaque1);
 
     }
 
     public override void Ataque4()
     {
-        StartCoroutine(EsperarObjetivos(new SelectorData(1, equipoEnemigo), CrearAtaque1));
+        LanzarAtaque(3, new SelectorData(1, equipoEnemigo), CrearAtaque1);
 
     }
-
-
-    //Espera hasta que el selector tenga todos los objetivos que pedian los datos
-    //y entonces crea el ataque con ellos
-    IEnumerator EsperarObjetivos(SelectorData datos, Action<List<Personaje>> alCompletar)
-    {
-        // activar modo selección UI
-        selector.EmpezarSeleccion(datos);
-        Debug.Log("Selecciona " + datos.numeroObjetivos + " objetivo(s)...");
-
-        yield return new WaitUntil(() => selector.seleccionCompleta);
-
-        //copiar los objetivos antes de resetear el selector
-        List<Personaje> objetivos = new List<Personaje>(selector.objetivos);
-
-        selector.Reset();
-
-        alCompletar(objetivos);
-    }
-
 
 
 

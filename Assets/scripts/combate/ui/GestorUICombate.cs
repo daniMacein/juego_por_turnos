@@ -31,7 +31,7 @@ public class GestorUICombate : MonoBehaviour
 
         Color color = Color.yellow;
           float  numero = Mathf.Abs( resultadoGolpe.dañoFinal);
-         string texto= numero.ToString();
+        string texto = numero.ToString("0");
         
          switch (resultadoGolpe.tipoAtaque)
         {

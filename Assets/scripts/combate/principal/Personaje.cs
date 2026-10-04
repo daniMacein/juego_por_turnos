@@ -75,6 +75,74 @@ public abstract class Personaje : MonoBehaviour
     public abstract void Ataque2();
     public abstract void Ataque3();
     public abstract void Ataque4();
+
+
+        //corrutina de selección de objetivos en marcha (para poder cancelarla)
+    private Coroutine esperaActiva;
+    private int ataqueEnCurso = -1;
+
+
+    
+
+    //Lanza la espera de objetivos de un ataque.
+    //Si ya hay un ataque esperando: el mismo boton lo cancela, otro boton lo sustituye.
+    protected void LanzarAtaque(int indiceAtaque, SelectorData datos, Action<List<Personaje>> alCompletar)
+    {
+        if (esperaActiva != null)
+        {
+            //mismo boton pulsado otra vez: cancelar
+            if (ataqueEnCurso == indiceAtaque)
+            {
+                CancelarEspera();
+                return;
+            }
+
+            //otro ataque: el anterior deja de esperarse
+            CancelarEspera();
+        }
+
+        ataqueEnCurso = indiceAtaque;
+        esperaActiva = StartCoroutine(EsperarObjetivos(datos, alCompletar));
+    }
+
+    //Cancela la seleccion en marcha (tambien valdra para un futuro boton de cancelar)
+    public void CancelarEspera()
+    {
+        if (esperaActiva != null)
+        {
+            StopCoroutine(esperaActiva);
+            esperaActiva = null;
+        }
+
+        ataqueEnCurso = -1;
+        selector.Reset();
+        Debug.Log("Selección cancelada");
+    }
+
+
+    //Espera hasta que el selector tenga todos los objetivos que pedian los datos
+    //y entonces crea el ataque con ellos
+    IEnumerator EsperarObjetivos(SelectorData datos, Action<List<Personaje>> alCompletar)
+    {
+        // activar modo selección UI
+        selector.EmpezarSeleccion(datos);
+        Debug.Log("Selecciona " + datos.numeroObjetivos + " objetivo(s)...");
+
+        yield return new WaitUntil(() => selector.seleccionCompleta);
+
+        //copiar los objetivos antes de resetear el selector
+        List<Personaje> objetivos = new List<Personaje>(selector.objetivos);
+
+        //la espera ha terminado bien: liberamos el estado antes de crear el ataque
+        esperaActiva = null;
+        ataqueEnCurso = -1;
+
+        selector.Reset();
+
+        alCompletar(objetivos);
+    }
+
+
     #endregion
 
     public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)

@@ -21,7 +21,7 @@ public class SacerPrueba : Personaje
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Sacerdote Antonio";
+        nombre="Verdulio";
         clase="Sacerdote";
 
 
@@ -70,118 +70,91 @@ public class SacerPrueba : Personaje
 
  public override void Ataque1()
     {
-        StartCoroutine(EsperarTarget());
-        
+        //Tajo: 1 objetivo del equipo enemigo
+        LanzarAtaque(0, new SelectorData(1, equipoEnemigo), CrearAtaque1);
+
     }
 
     public override void Ataque2()
     {
-        StartCoroutine(EsperarTarget2());
-        
+        //Doble tajada: 2 objetivos del equipo enemigo
+        LanzarAtaque(1, new SelectorData(2, equipoEnemigo), CrearAtaque2);
+
     }
 
     public override void Ataque3()
     {
-        StartCoroutine(EsperarTarget());
-        
+        LanzarAtaque(2, new SelectorData(1, equipoEnemigo), CrearAtaque1);
+
     }
 
     public override void Ataque4()
     {
-        StartCoroutine(EsperarTarget());
-        
-    }
+        LanzarAtaque(3, new SelectorData(1, equipoEnemigo), CrearAtaque1);
 
-    
-    IEnumerator EsperarTarget()
-    {
-        selector.Reset();
-
-        // activar modo selección UI
-        Debug.Log("Selecciona objetivo...");
-
-        yield return new WaitUntil(() => selector.haySeleccion);
-
-        Personaje objetivoTemporal = selector.seleccionado;
-
-        CrearAtaque1(objetivoTemporal);
-
-        
-
-        selector.Reset();
-    }
-
-       IEnumerator EsperarTarget2()
-    {
-        selector.Reset();
-
-        // activar modo selección UI
-        Debug.Log("Selecciona objetivo...");
-
-        yield return new WaitUntil(() => selector.haySeleccion);
-
-        Personaje objetivoTemporal = selector.seleccionado;
-
-        CrearAtaque2(objetivoTemporal);
-
-        
-
-        selector.Reset();
     }
 
 
 
     
 
-    private void CrearAtaque1(Personaje objetivo)
+    private void CrearAtaque1(List<Personaje> objetivos)
 
     {
-        Debug.Log("el seleccionado es: " +objetivo.nombre);
+        foreach (Personaje objetivo in objetivos)
+        {
+            Debug.Log("el seleccionado es: " + objetivo.nombre);
+        }
+
         //  Golpe principal
 
         GolpeData golpe1 = new GolpeData
-        (100, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-       // GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
         golpe1.penetracionArmadura=0f;
         AplicarEstadisticasAGolpe(golpe1);
-        // golpe2=AplicarEstadisticasAGolpe(golpe2);
 
         AtaqueData ataque = new AtaqueData(golpe1);
-        
+
 
         // ejecutar ataque
-        
+
         controlCombate.EmpezarAtaque(this, ataque);
 
-       
+
     }
 
 
-    
-    private void CrearAtaque2(Personaje objetivo)
+
+    private void CrearAtaque2(List<Personaje> objetivos)
 
     {
-        Debug.Log("el seleccionado es: " +objetivo.nombre);
+        foreach (Personaje objetivo in objetivos)
+        {
+            Debug.Log("el seleccionado es: " + objetivo.nombre);
+        }
+
         //  Golpe principal
 
         GolpeData golpe1 = new GolpeData
-        (100, new List<Personaje> { objetivo }, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-       GolpeData golpe2 = new GolpeData(30,new List<Personaje> { objetivo }, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
-       
+        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
+
         AplicarEstadisticasAGolpe(golpe1);
         AplicarEstadisticasAGolpe(golpe2);
 
         AtaqueData ataque = new AtaqueData(golpe1,golpe2);
-        
+
 
         // ejecutar ataque
-        
+
         controlCombate.EmpezarAtaque(this, ataque);
 
-       
+
     }
+
+
 
 
   
