@@ -24,6 +24,7 @@ public abstract class Personaje : MonoBehaviour
     public ControlCombate controlCombate;
     public List<Efecto> efectosActivos = new List<Efecto>();
     public Equipo equipo;
+    public Equipo equipoEnemigo;
 
 
 
@@ -50,6 +51,20 @@ public abstract class Personaje : MonoBehaviour
     public float alteracionDaño { get; protected set; } //porcentaje que implica cuanto por ciento te entra de mas o de menos en el daño.
 
     #endregion
+
+
+    void Start()
+    {
+        
+      if (equipo == Equipo.equipoA)
+        {
+        equipoEnemigo = Equipo.equipoB;
+        }
+     else
+        {
+        equipoEnemigo = Equipo.equipoA;
+        }
+    }
 
 
     #region Ataques
