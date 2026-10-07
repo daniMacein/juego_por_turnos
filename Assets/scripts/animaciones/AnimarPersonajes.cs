@@ -24,9 +24,17 @@ public class AnimarPersonajes : MonoBehaviour
         {
             StartCoroutine(AnimacionGolpeado());
         }
+        else if (numAnimacion == 2)
+        {
+            StartCoroutine(AnimacionAtaqueCerca());
+        }
+         else if (numAnimacion == 3)
+        {
+            StartCoroutine(AnimacionAtaqueLejos());
+        }
     }
 
-        public virtual IEnumerator AnimacionIdle()
+    public virtual IEnumerator AnimacionIdle()
     {
         Animator animator = personaje.GetComponent<Animator>();
         animator.Play("Idle");
@@ -44,5 +52,21 @@ public class AnimarPersonajes : MonoBehaviour
     
     }
 
+    public virtual IEnumerator AnimacionAtaqueCerca()
+    {
+        Animator animator = personaje.GetComponent<Animator>();
+        animator.Play("AtaqueCerca");
+        Debug.Log("Animacion ataque de cerca");
+        yield return new WaitForSeconds(1f);
+    
+    }
 
+     public virtual IEnumerator AnimacionAtaqueLejos()
+    {
+        Animator animator = personaje.GetComponent<Animator>();
+        animator.Play("AtaqueLejos");
+        Debug.Log("Animacion ataque de lejos");
+        yield return new WaitForSeconds(3f);
+    
+    }
 }
