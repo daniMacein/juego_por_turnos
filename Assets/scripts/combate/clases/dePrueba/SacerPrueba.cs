@@ -14,7 +14,7 @@ public class SacerPrueba : Personaje
         armadura = 30;
         speed = 50;
 
-        probCritico = 10;
+        probCritico = 100;
         probEvasion = 5;
 
         potencia = 1;
@@ -78,7 +78,7 @@ public class SacerPrueba : Personaje
     public override void Ataque2()
     {
         //Doble tajada: 2 objetivos del equipo enemigo
-        LanzarAtaque(1, new SelectorData(2, equipoEnemigo), CrearAtaque2);
+        LanzarAtaque(1, new SelectorData(1, equipo), CrearAtaque2);
 
     }
 
@@ -137,14 +137,14 @@ public class SacerPrueba : Personaje
         //  Golpe principal
 
         GolpeData golpe1 = new GolpeData
-        (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        (75, objetivos, TipoAtaque.Curacion, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
+        
 
         AplicarEstadisticasAGolpe(golpe1);
-        AplicarEstadisticasAGolpe(golpe2);
+        
 
-        AtaqueData ataque = new AtaqueData(golpe1,golpe2);
+        AtaqueData ataque = new AtaqueData(golpe1);
 
 
         // ejecutar ataque

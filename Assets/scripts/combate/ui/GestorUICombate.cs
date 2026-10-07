@@ -53,16 +53,29 @@ public class GestorUICombate : MonoBehaviour
                 break;
 
             case EstadoGolpe.Critico:
-                texto+=" Crítico";
-                color= Color.red;
+            if (resultadoGolpe.tipoAtaque == TipoAtaque.Curacion)
+                {
+                    texto+=" Crítico";
+                    color= Color.forestGreen;
+                }
+            else
+                {
+                    texto+=" Crítico";
+                    color= Color.red;  
+                }
+
                 break;
 
             case EstadoGolpe.Evadido:
                  texto="Evadido";
                 color= Color.grey;
                 break;
-        }
 
+            case EstadoGolpe.Fallado:
+                 texto="Fallado";
+                color= Color.grey;
+                break;
+        }
 
         
 

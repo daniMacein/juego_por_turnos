@@ -19,7 +19,7 @@ public class MagoPrueba : Personaje
         probEvasion = 5;
 
         potencia = 1;
-        probGolpe = 90;
+        probGolpe = 10;
         alteracionDaño = 1;
 
         nombre="Azulio ";

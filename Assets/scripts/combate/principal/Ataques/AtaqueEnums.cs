@@ -3,6 +3,7 @@ public enum TipoAtaque
     Daño,
     Curacion,
     efecto,
+    Nulo
 }
 
 public enum TipoObjetivo
@@ -10,7 +11,8 @@ public enum TipoObjetivo
     Unitario,
     AreaTodos,
     AreaAliados,
-    AreaEnemigos
+    AreaEnemigos,
+    Nulo
 }
 
 public enum EstadoGolpe
