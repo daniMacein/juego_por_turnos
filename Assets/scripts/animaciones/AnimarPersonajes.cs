@@ -5,11 +5,13 @@ public class AnimarPersonajes : MonoBehaviour
 {
     [SerializeField] public GameObject personaje;
     [SerializeField] public int numAnimacion; 
+    [SerializeField] private bool derrotaAnimada; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         numAnimacion = 0; 
+        derrotaAnimada = false; 
         Animator animator = personaje.GetComponent<Animator>();
     }
 
@@ -31,6 +33,10 @@ public class AnimarPersonajes : MonoBehaviour
          else if (numAnimacion == 3)
         {
             StartCoroutine(AnimacionAtaqueLejos());
+        }
+         else if (numAnimacion == 4)
+        {
+            StartCoroutine(AnimacionDerrota());
         }
     }
 
@@ -66,6 +72,18 @@ public class AnimarPersonajes : MonoBehaviour
         Animator animator = personaje.GetComponent<Animator>();
         animator.Play("AtaqueLejos");
         Debug.Log("Animacion ataque de lejos");
+        yield return new WaitForSeconds(3f);
+    
+    }
+
+    public virtual IEnumerator AnimacionDerrota()
+    {
+         if(!derrotaAnimada){
+            derrotaAnimada = true;
+            Animator animator = personaje.GetComponent<Animator>();
+            animator.Play("Derrota");
+            Debug.Log("Animacion de derrota");
+        }
         yield return new WaitForSeconds(3f);
     
     }
