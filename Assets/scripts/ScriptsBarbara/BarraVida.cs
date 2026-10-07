@@ -11,6 +11,7 @@ public class BarraVida : MonoBehaviour
     public int vidaActual; 
     public int vidaMaxima;
 
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,5 +23,6 @@ public class BarraVida : MonoBehaviour
     void Update()
     {
         BarraDeVida.fillAmount =  (float)vidaActual / vidaMaxima;
+
     }
 }
