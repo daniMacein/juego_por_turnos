@@ -157,27 +157,15 @@ public abstract class Personaje : MonoBehaviour
     {
         //aqui miras cual es el golpe, porque tendra un identificador dentro de golpe y haces la animacion
         //correspondiente
-
-        if (golpeData.tipoAtaque== TipoAtaque.Daño){
-             // Lógica para animar un ataque de daño
-            Debug.Log("Animando ataque de daño");
-
-            foreach (Personaje personaje in objetivosFinales)
-            {
-                Animator animatorObjetivo = personaje.GetComponent<Animator>();
-                if(animatorObjetivo != null)
-                {
-                    animatorObjetivo.Play("Golpeado");
-                     yield return new WaitForSeconds(1f);
-                    animatorObjetivo.Play("Idle");
-                } else {
-                    Debug.LogWarning("El objetivo no tiene un Animator asignado.");
-                }
-            }
-            
-        }
-       
+                   
+        yield return new WaitForSeconds(1f);
+                
+  
     }
+
+
+
+    
 
     #region gets/set
 

@@ -20,7 +20,7 @@ public class AnimarPersonajes : MonoBehaviour
     {
         if (numAnimacion == 0)
         {
-            StartCoroutine(AnimacionIdle());
+            //StartCoroutine(AnimacionIdle());
         }
         else if (numAnimacion == 1)
         {

@@ -19,7 +19,7 @@ public class MagoPrueba : Personaje
         probEvasion = 5;
 
         potencia = 1;
-        probGolpe = 10;
+        probGolpe = 100;
         alteracionDaño = 1;
 
         nombre="Azulio ";
@@ -58,7 +58,8 @@ public class MagoPrueba : Personaje
 {
     case TipoAnimacion.Ataque1_Golpe1:
         
-         yield return new WaitForSeconds(2f);
+        AnimarPersonajes perso= GetComponentInChildren<AnimarPersonajes>();
+        StartCoroutine(perso.AnimacionAtaqueCerca());
         break;
 
     case TipoAnimacion.Magia_Fuego:
