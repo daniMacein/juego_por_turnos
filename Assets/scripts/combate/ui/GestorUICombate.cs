@@ -32,6 +32,8 @@ public class GestorUICombate : MonoBehaviour
         Color color = Color.yellow;
           float  numero = Mathf.Abs( resultadoGolpe.dañoFinal);
         string texto = numero.ToString("0");
+
+        float escala=1;
         
          switch (resultadoGolpe.tipoAtaque)
         {
@@ -53,6 +55,7 @@ public class GestorUICombate : MonoBehaviour
                 break;
 
             case EstadoGolpe.Critico:
+            escala=2;
             if (resultadoGolpe.tipoAtaque == TipoAtaque.Curacion)
                 {
                     texto+=" Crítico";
@@ -80,11 +83,11 @@ public class GestorUICombate : MonoBehaviour
         
 
         Debug.Log(resultadoGolpe.objetivo.gameObject.name);
-        MostrarNumGolpe(resultadoGolpe.objetivo.transform.position,texto, color );
+        MostrarNumGolpe(resultadoGolpe.objetivo.transform.position,texto, color,escala );
 
     }
 
-    public void MostrarNumGolpe(Vector3 posicion, string texto, Color color)
+    public void MostrarNumGolpe(Vector3 posicion, string texto, Color color,float escala)
     {
         var ventana = Instantiate(prefab, posicion, Quaternion.identity);
         var temp = ventana.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -92,6 +95,9 @@ public class GestorUICombate : MonoBehaviour
         temp.text = texto;
 
         temp.faceColor = color;
+
+        AnimacionVentanaGolpe animacion = ventana.GetComponent<AnimacionVentanaGolpe>();
+        animacion.escalaInicial = escala;
 
         Destroy(ventana, 1f);
     }
