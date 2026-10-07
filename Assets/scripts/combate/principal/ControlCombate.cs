@@ -26,7 +26,11 @@ public class ControlCombate : MonoBehaviour
 
   #region  ControlCombate
 
-
+  public static ControlCombate controlCombate;
+  void Awake()
+    {
+      controlCombate=this;
+    }
 
   //todo: Listas organizadas de los personajes
   public List<Personaje> TodosPersonajes;
@@ -57,7 +61,7 @@ public class ControlCombate : MonoBehaviour
         equipoA.Add(personaje);
   
       }
-
+      
       else
       {
         principalesB.Add(personaje);
@@ -294,15 +298,24 @@ public class ControlCombate : MonoBehaviour
 
       List<Personaje> objetivosFinales = ObtenerObjetivos(atacante, golpe);
 
-      if (golpe.estadoGolpe == EstadoGolpe.Fallado)
-      {
-        Debug.Log("Golpe fallado vaya :(");
-        continue;
-      }
+
       // se parara aqui hasta que haga la animacion completa de ese golpe especifico
       yield return atacante.AnimarAtaque(golpe, objetivosFinales);
 
-      foreach (Personaje objetivo in objetivosFinales)
+      if (golpe.estadoGolpe == EstadoGolpe.Fallado)
+      {
+        Debug.Log("Golpe fallado vaya :(");
+
+        ResultadoGolpe evasion= new ResultadoGolpe(atacante, 0, 0,EstadoGolpe.Fallado,TipoObjetivo.Nulo,TipoAtaque.Nulo);
+
+
+        GestorUICombate.gestorUICombate.MostrarGolpe(evasion);
+        
+      }
+
+      else
+      {
+         foreach (Personaje objetivo in objetivosFinales)
       {
         // Crear resultado si no existe
         if (!resultados.ContainsKey(objetivo))
@@ -328,6 +341,8 @@ public class ControlCombate : MonoBehaviour
         //?AQUI PROGRAMARAS CON "RES", que es el resultado golpe, que se vea en pantalla "golpeado con tal"
         GestorUICombate.gestorUICombate.MostrarGolpe(res);
       }
+      }
+     
       //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);
     }

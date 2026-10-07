@@ -38,6 +38,7 @@ public abstract class Personaje : MonoBehaviour
     public bool estaVivo=true;
     public float vidaMaxima { get; protected set; }
     public float vida { get; protected set; } //vida actual
+    public float porcentajeVida { get; protected set; } //vida actual en porcentaje
     public float armadura { get; protected set; }
     public int speed { get; protected set; } //velocidad
     public List<int> posicion { get; protected set; } = new List<int>(); //posicion en la ronda actual 
@@ -67,7 +68,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         //animator = GetComponent<Animator>(); 
-    
+        porcentajeVida=(vida/vidaMaxima)*100;
     }
 
 
@@ -208,6 +209,8 @@ public abstract class Personaje : MonoBehaviour
         {
             vida += vidaRecibida;
         }
+
+        porcentajeVida=(vida/vidaMaxima)*100;
 
     }
 
