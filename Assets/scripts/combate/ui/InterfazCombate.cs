@@ -27,6 +27,13 @@ public class InterfazCombate : MonoBehaviour
         menuCombate = transform.GetChild(0).gameObject;
         menuCombate.SetActive(false);
     }
+
+
+    public void ResetBotonesPersonaje()
+    {
+        personaje=null;
+
+    }
     public void MostrarMenuPersonaje(Personaje p)
         {
             

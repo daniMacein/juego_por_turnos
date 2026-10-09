@@ -143,6 +143,7 @@ public abstract class Personaje : MonoBehaviour
         ataqueEnCurso = -1;
 
         selector.Reset();
+        InterfazCombate.interfazCombate.ResetBotonesPersonaje();
 
         alCompletar(objetivos);
     }
