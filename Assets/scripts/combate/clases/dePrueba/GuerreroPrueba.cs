@@ -23,7 +23,7 @@ public class GuerreroPrueba : Personaje
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Rojelio";
+        nombre="Caballero";
         clase="Guerrero";
 
 
@@ -58,8 +58,8 @@ public class GuerreroPrueba : Personaje
         switch(golpeData.tipoAnimacion)
 {
     case TipoAnimacion.Ataque1_Golpe1:
-
-         yield return new WaitForSeconds(2f);
+        animator.SetTrigger("TajoVertical");
+         yield return new WaitForSeconds(0.7f);
         break;
 
     case TipoAnimacion.Magia_Fuego:
@@ -153,6 +153,14 @@ public class GuerreroPrueba : Personaje
 
 
     }
+
+/*
+    public override void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
+    {
+        base.AtaqueRecibido(resultadoAtaque);
+
+        animator.SetTrigger("RecibirDano");
+    }*/
 
 
 

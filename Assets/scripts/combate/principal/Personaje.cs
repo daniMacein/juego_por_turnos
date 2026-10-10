@@ -20,7 +20,7 @@ public abstract class Personaje : MonoBehaviour
     #endregion
 
     #region Interaccion
-    //private Animator animator;
+    protected Animator animator;
     public SelectorPersonaje selector;
     public ControlCombate controlCombate;
     public List<Efecto> efectosActivos = new List<Efecto>();
@@ -67,7 +67,7 @@ public abstract class Personaje : MonoBehaviour
         equipoEnemigo = Equipo.equipoA;
         }
 
-        //animator = GetComponent<Animator>(); 
+        animator = GetComponent<Animator>(); 
         porcentajeVida=(vida/vidaMaxima)*100;
     }
 
@@ -385,8 +385,10 @@ public abstract class Personaje : MonoBehaviour
 
     }
 
-    private void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
+    protected virtual void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
     {
+        animator.SetTrigger("RecibirDano");
+        //Debug.Log("ATACADOOOOOOOOOOOOOOOOOOOOO");
         Debug.Log(nombre + " golpeado con " + resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
     }
 
@@ -395,6 +397,7 @@ public abstract class Personaje : MonoBehaviour
     public virtual void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
 
     {
+ 
         Debug.Log(nombre + ": vida actual: " + vida.ToString("F0") + "/" + vidaMaxima + "\n" + "armadura:" + armadura.ToString("F0"));
 
     }

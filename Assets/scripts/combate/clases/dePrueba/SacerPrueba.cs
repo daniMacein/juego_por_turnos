@@ -21,7 +21,7 @@ public class SacerPrueba : Personaje
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Verdulio";
+        nombre="SacerRojo";
         clase="Sacerdote";
 
 
@@ -57,7 +57,10 @@ public class SacerPrueba : Personaje
 {
     case TipoAnimacion.Ataque1_Golpe1:
         
-         yield return new WaitForSeconds(2f);
+        
+
+         animator.SetTrigger("MagicAtaque");
+          yield return new WaitForSeconds(1.14f);
         break;
 
     case TipoAnimacion.Magia_Fuego:
