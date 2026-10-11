@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -16,7 +17,8 @@ public class ControlCombate : MonoBehaviour
 
   //  public List<Personaje> personajes = new List<Personaje>();
 
- 
+ public Transform []posicionesA;
+  public Transform []posicionesB;
 
   void Start()
   {
@@ -66,6 +68,8 @@ public class ControlCombate : MonoBehaviour
 
 
 
+private int indiceEquipoA=0;
+private int indiceEquipoB=0;
 
   void AsignarEquipo()
   {
@@ -75,6 +79,9 @@ public class ControlCombate : MonoBehaviour
       {
         principalesA.Add(personaje);
         equipoA.Add(personaje);
+
+        personaje.transform.position=posicionesA[indiceEquipoA].transform.position;
+      indiceEquipoA++;
   
       }
       
@@ -82,6 +89,10 @@ public class ControlCombate : MonoBehaviour
       {
         principalesB.Add(personaje);
         equipoB.Add(personaje);
+
+
+        personaje.transform.position=posicionesB[indiceEquipoB].transform.position;
+      indiceEquipoB++;
       }
 
       personaje.selector = selectorPersonaje;
