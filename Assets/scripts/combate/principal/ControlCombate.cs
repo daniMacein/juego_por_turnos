@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -266,9 +267,20 @@ public class ControlCombate : MonoBehaviour
     {
       case TipoObjetivo.AreaTodos:
         return new List<Personaje>(TodosPersonajes);
+        
 
       case TipoObjetivo.Unitario:
         return golpe.objetivos;
+
+        case TipoObjetivo.AreaEnemigos:
+        if (atacante.equipo == Equipo.equipoA)
+        {
+           return new List<Personaje>(equipoB);
+        }
+        else
+        {
+          return new List<Personaje>(equipoA);
+        }
 
       default:
         return new List<Personaje>();
@@ -292,6 +304,22 @@ public class ControlCombate : MonoBehaviour
   {
     Dictionary<Personaje, ResultadoAtaque> resultados = new Dictionary<Personaje, ResultadoAtaque>();
 
+    //empezar movimiento de camara: encuadra al atacante y sus objetivos
+    if (CamaraCombate.camaraCombate != null)
+    {
+      List<Personaje> objetivosCamara = new List<Personaje>();
+      foreach (GolpeData golpeCamara in ataque.golpes)
+      {
+        foreach (Personaje p in ObtenerObjetivos(atacante, golpeCamara))
+        {
+          if (p != null && !objetivosCamara.Contains(p))
+          {
+            objetivosCamara.Add(p);
+          }
+        }
+      }
+      CamaraCombate.camaraCombate.moviminetoAtaque(atacante, objetivosCamara);
+    }
 
     foreach (GolpeData golpe in ataque.golpes)
     {
@@ -300,6 +328,7 @@ public class ControlCombate : MonoBehaviour
 
 
       // se parara aqui hasta que haga la animacion completa de ese golpe especifico
+      
       yield return atacante.AnimarAtaque(golpe, objetivosFinales);
 
       if (golpe.estadoGolpe == EstadoGolpe.Fallado)
@@ -340,11 +369,24 @@ public class ControlCombate : MonoBehaviour
 
         //?AQUI PROGRAMARAS CON "RES", que es el resultado golpe, que se vea en pantalla "golpeado con tal"
         GestorUICombate.gestorUICombate.MostrarGolpe(res);
+       
+      }
+
+      if (CamaraCombate.camaraCombate != null)
+      {
+        CamaraCombate.camaraCombate.movimientoGolpe();
       }
       }
-     
+      
       //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);
+    }
+
+
+    //camara: vuelve a su sitio mientras se muestran las reacciones al golpe
+    if (CamaraCombate.camaraCombate != null)
+    {
+      CamaraCombate.camaraCombate.restaurarOriginal();
     }
 
     // Avisar que ha recibido un ataque, a las personas afectadas (mas pasar la info)

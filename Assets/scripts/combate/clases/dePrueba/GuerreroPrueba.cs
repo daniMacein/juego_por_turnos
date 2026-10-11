@@ -139,7 +139,7 @@ public class GuerreroPrueba : Personaje
         GolpeData golpe1 = new GolpeData
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
+        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaEnemigos,TipoAnimacion.Ataque1_Golpe1);
 
         AplicarEstadisticasAGolpe(golpe1);
         AplicarEstadisticasAGolpe(golpe2);
