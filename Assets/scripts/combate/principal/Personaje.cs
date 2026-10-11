@@ -342,13 +342,16 @@ public abstract class Personaje : MonoBehaviour
         float vidaRecibida = 0;
         float armaduraGastada = 0;
         bool golpeAcertado=true;
+        //estado propio de ESTE objetivo: no se escribe en el golpe compartido,
+        //o el primer objetivo que evada contaminaría el resultado de los demás
+        EstadoGolpe estadoFinal = golpe.estadoGolpe;
         //si es daño
         if (golpe.esPositivo == false)
         {
 
              if (ProbabilidadAcertada(probEvasion-golpe.probGolpeExtra))
             {
-               golpe.estadoGolpe=EstadoGolpe.Evadido; 
+               estadoFinal=EstadoGolpe.Evadido;
                golpeAcertado=false;
             }
 
@@ -357,9 +360,9 @@ public abstract class Personaje : MonoBehaviour
                       vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
             SetVida(vidaRecibida);
             armaduraGastada = GastarArmadura(golpe.armadura);
-                
+
             }
-      
+
         }
         else
         {
@@ -374,11 +377,11 @@ public abstract class Personaje : MonoBehaviour
         {
            AplicarEfecto(efecto);
         }
-            
+
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
-        (this,vidaRecibida, armaduraGastada, golpe.estadoGolpe, golpe.tipoObjetivo, golpe.tipoAtaque);
+        (this,vidaRecibida, armaduraGastada, estadoFinal, golpe.tipoObjetivo, golpe.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;
