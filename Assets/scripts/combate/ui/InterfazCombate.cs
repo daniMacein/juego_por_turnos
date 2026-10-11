@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InterfazCombate : MonoBehaviour
@@ -56,6 +57,7 @@ public class InterfazCombate : MonoBehaviour
 
     public void ResetBotonesPersonaje()
     {
+        RestaurarColores();
         personaje=null;
         OcultarConAnimacion();
 
@@ -169,7 +171,10 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
+        PulsarColor(textoBoton1);
         personaje.Ataque1();
+         
+
 
     }
 
@@ -180,7 +185,9 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
+        PulsarColor(textoBoton2);
         personaje.Ataque2();
+        
     }
 
     public void AlpulsarBoton3()
@@ -190,7 +197,10 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
+        
+        PulsarColor(textoBoton3);
         personaje.Ataque3();
+        
     }
 
     public void AlpulsarBoton4()
@@ -200,6 +210,51 @@ public class InterfazCombate : MonoBehaviour
             Debug.LogError("Se pulsó el botón sin personaje seleccionado");
             return;
         }
+       
+        PulsarColor(textoBoton4);
         personaje.Ataque4();
+        
     }
+
+    public void RestaurarColores()
+    {
+        botonAnterior=null;
+        colorEncendido=false;
+        textoBoton1.RestaurarColor();
+        textoBoton2.RestaurarColor();
+        textoBoton3.RestaurarColor();
+        textoBoton4.RestaurarColor();
+    }
+
+    private bool colorEncendido=false;
+
+    private botonInfoAtaque botonAnterior;
+
+    private void PulsarColor(botonInfoAtaque boton)
+    {
+        if (botonAnterior != boton)
+        {
+            RestaurarColores();
+            colorEncendido=true;
+            boton.ColorPulsar();
+            botonAnterior=boton;
+            return;
+        }
+        if (colorEncendido)
+        {
+            boton.RestaurarColor();
+            colorEncendido=false;
+            botonAnterior=boton;
+
+        }
+        else
+        {
+            boton.ColorPulsar();
+            colorEncendido=true;
+            botonAnterior=boton;
+        }
+
+    }
+
+   
 }

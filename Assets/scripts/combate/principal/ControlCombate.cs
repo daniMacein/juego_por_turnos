@@ -21,6 +21,18 @@ public class ControlCombate : MonoBehaviour
   void Start()
   {
     interfazCombate= InterfazCombate.interfazCombate;
+    if (timeline == null)
+    {
+      timeline = GetComponent<TimelineTurnos>();
+    }
+    if (timeline == null)
+    {
+      timeline = FindObjectOfType<TimelineTurnos>();
+    }
+    if (timeline == null)
+    {
+      timeline = gameObject.AddComponent<TimelineTurnos>();
+    }
     //personaje1.Ataque1();
     CrearCombate();
   }
@@ -45,6 +57,9 @@ public class ControlCombate : MonoBehaviour
 
   //todo: Iniciar el combate
   public SelectorPersonaje selectorPersonaje;
+
+  //banda superior con el orden de turnos (se busca solo si no se asigna)
+  public TimelineTurnos timeline;
 
 
   
@@ -170,6 +185,10 @@ public class ControlCombate : MonoBehaviour
      
       CrearPosicionEnPersonajes();
       OrdenarPersonajes();
+      if (timeline != null)
+      {
+        timeline.MostrarOrden(PersonajesOrdenados);
+      }
       Debug.Log("Ronda " + numeroRonda + " comenzada");
 
       yield return new WaitForSeconds(2f);
@@ -197,6 +216,10 @@ public class ControlCombate : MonoBehaviour
       // después del turno, reordenas por si algo ha cambiado
       //Reordenar();
       PersonajesOrdenados.RemoveAt(0);
+      if (timeline != null)
+      {
+        timeline.AvanzarTurno();
+      }
     }
   }
 

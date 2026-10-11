@@ -816,6 +816,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
@@ -1059,6 +1060,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1184,6 +1186,25 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e0157474b42894ab374710ca730f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CamaraCombate
+  camara: {fileID: 0}
+  duracionAcercamiento: 0.8
+  centradoEnAccion: 0.5
+  zoomAtaque: 0.75
+  intensidadSacudida: 0.35
+  duracionSacudida: 0.35
+  duracionRetorno: 0.6
 --- !u!1 &380088467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,6 +1288,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
@@ -1753,6 +1775,7 @@ GameObject:
   - component: {fileID: 951301806}
   - component: {fileID: 951301808}
   - component: {fileID: 951301809}
+  - component: {fileID: 951301810}
   m_Layer: 0
   m_Name: arena
   m_TagString: Untagged
@@ -1779,6 +1802,7 @@ MonoBehaviour:
   principalesA: []
   principalesB: []
   selectorPersonaje: {fileID: 951301808}
+  timeline: {fileID: 0}
   numeroRonda: 1
 --- !u!4 &951301807
 Transform:
@@ -1825,6 +1849,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorUICombate
   prefab: {fileID: 1926570010301358417, guid: 38dcb538f19c4a64a9de28ff475465f7, type: 3}
+--- !u!114 &951301810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951301805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27946169a61a58f43b5f5f4040ea49db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimelineTurnos
+  tamanoMarco: 84
+  grosorMarco: 8
+  espacioEntre: 10
+  alturaBanda: 120
+  colorEquipoA: {r: 0.25, g: 0.5, b: 1, a: 1}
+  colorEquipoB: {r: 1, g: 0.3, b: 0.25, a: 1}
+  colorFondoBanda: {r: 0, g: 0, b: 0, a: 0.45}
+  atenuadoResto: 0.6
+  escalaTurnoActual: 1.25
 --- !u!1 &951645405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,6 +2103,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
@@ -2303,6 +2349,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
@@ -2419,6 +2466,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
@@ -2990,6 +3038,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
@@ -3821,6 +3870,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
@@ -4196,6 +4246,7 @@ MonoBehaviour:
     descripcion: 
   - nombre: 
     descripcion: 
+  icono: {fileID: 0}
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0

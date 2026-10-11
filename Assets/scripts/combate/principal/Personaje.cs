@@ -17,6 +17,9 @@ public abstract class Personaje : MonoBehaviour
 
     public AtaqueInfo[] ataquesInfo = new AtaqueInfo[4];
 
+    [Header("Icono para el timeline de turnos (asignar en el inspector)")]
+    public Sprite icono;
+
     #endregion
 
     #region Interaccion
@@ -113,6 +116,7 @@ public abstract class Personaje : MonoBehaviour
     //Cancela la seleccion en marcha (tambien valdra para un futuro boton de cancelar)
     public void CancelarEspera()
     {
+        
         if (esperaActiva != null)
         {
             StopCoroutine(esperaActiva);
@@ -144,7 +148,7 @@ public abstract class Personaje : MonoBehaviour
 
         selector.Reset();
         InterfazCombate.interfazCombate.ResetBotonesPersonaje();
-
+         
         alCompletar(objetivos);
     }
 
