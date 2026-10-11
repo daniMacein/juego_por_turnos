@@ -17,13 +17,13 @@ public class GuerreroPrueba : Personaje
         speed = 50;
 
         probCritico = 10;
-        probEvasion = 5;
+        probEvasion = 25;
 
         potencia = 1;
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Caballero";
+        //nombre="Caballero";
         clase="Guerrero";
 
 

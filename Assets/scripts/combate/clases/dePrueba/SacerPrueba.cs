@@ -15,13 +15,13 @@ public class SacerPrueba : Personaje
         speed = 50;
 
         probCritico = 100;
-        probEvasion = 5;
+        probEvasion = 25;
 
         potencia = 1;
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="SacerRojo";
+        //nombre="SacerRojo";
         clase="Sacerdote";
 
 

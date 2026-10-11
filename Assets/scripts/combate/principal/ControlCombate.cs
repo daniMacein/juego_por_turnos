@@ -351,7 +351,7 @@ public class ControlCombate : MonoBehaviour
     foreach (var kvp in resultados)
     {
       kvp.Key.AtaqueRecibido(kvp.Value);
-      yield return new WaitForSeconds(2f);
+      //yield return new WaitForSeconds(2f);
     }
     atacante.TerminarAtaque(ataque);
 
