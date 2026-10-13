@@ -26,6 +26,10 @@ public class GolpeData
 
     public TipoAnimacion tipoAnimacion;
 
+   
+
+  
+
 
     //**características
     public bool aplicaEfecto = false;
@@ -38,6 +42,8 @@ public class GolpeData
     //** Métodos
     //metodo que se llama para aplicar la vida que va a curar
    
+
+
 
 
 public GolpeData(float valor, List<Personaje> objetivos, TipoAtaque tipoAtaque,TipoObjetivo tipoObjetivo,TipoAnimacion tipoAnimacion)

@@ -80,7 +80,15 @@ private int indiceEquipoB=0;
         principalesA.Add(personaje);
         equipoA.Add(personaje);
 
-        personaje.transform.position=posicionesA[indiceEquipoA].transform.position;
+        Transform ubicacionActual=posicionesA[indiceEquipoA].transform;
+        personaje.transform.position=ubicacionActual.position;
+        personaje.SetUbicacion(ubicacionActual);
+
+        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
+        personaje.SetUbicacionAtacante(ubiSec);
+        
+
+
       indiceEquipoA++;
   
       }
@@ -90,8 +98,14 @@ private int indiceEquipoB=0;
         principalesB.Add(personaje);
         equipoB.Add(personaje);
 
+        Transform ubicacionActual=posicionesB[indiceEquipoB].transform;
+        personaje.transform.position=ubicacionActual.position;
+        personaje.SetUbicacion(ubicacionActual);
 
-        personaje.transform.position=posicionesB[indiceEquipoB].transform.position;
+        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
+        personaje.SetUbicacionAtacante(ubiSec);
+
+
       indiceEquipoB++;
       }
 

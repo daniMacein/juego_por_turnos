@@ -34,6 +34,11 @@ public abstract class Personaje : MonoBehaviour
 
     public bool haTerminadoElAtaque;
     public AtaqueData ataqueElegido;
+
+     public Transform UbicacionPropia { get; protected set; }
+      public Transform UbicacionAtacante { get; protected set; }
+
+      private ControlPersonajeCombate controlPersonajeCombate;
     #endregion
 
     #region Estadisticas
@@ -60,6 +65,7 @@ public abstract class Personaje : MonoBehaviour
 
     void Start()
     {
+        controlPersonajeCombate= GetComponent<ControlPersonajeCombate>();
         
       if (equipo == Equipo.equipoA)
         {
@@ -164,8 +170,19 @@ public abstract class Personaje : MonoBehaviour
         //correspondiente
                    
         yield return new WaitForSeconds(1f);
+
                 
   
+    }
+
+    public virtual IEnumerator DesplazarseAObjetivo()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+        public virtual IEnumerator DesplazarseAOrigen()
+    {
+        yield return new WaitForSeconds(1f);
     }
 
 
@@ -205,6 +222,16 @@ public abstract class Personaje : MonoBehaviour
 
         porcentajeVida=(vida/vidaMaxima)*100;
 
+    }
+
+    public void SetUbicacion(Transform ubi)
+    {
+        this.UbicacionPropia=ubi;
+    }
+
+    public void SetUbicacionAtacante(Transform ubi)
+    {
+        this.UbicacionAtacante=ubi;
     }
 
 
