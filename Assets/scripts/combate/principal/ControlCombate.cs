@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using UnityEditor.Experimental.GraphView;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -71,6 +72,10 @@ public class ControlCombate : MonoBehaviour
 private int indiceEquipoA=0;
 private int indiceEquipoB=0;
 
+private float orientacionA= 112;
+
+private float orientacionB=224;
+
   void AsignarEquipo()
   {
     foreach (Personaje personaje in TodosPersonajes)
@@ -85,6 +90,9 @@ private int indiceEquipoB=0;
         personaje.SetUbicacion(ubicacionActual);
 
         personaje.SetUbicacionAtacante(ObtenerUbicacionCombate(ubicacionActual));
+
+        Quaternion rotacion = Quaternion.Euler(0f, orientacionA, 0f);
+        personaje.transform.rotation= rotacion;
         
 
 
@@ -103,6 +111,9 @@ private int indiceEquipoB=0;
 
         personaje.SetUbicacionAtacante(ObtenerUbicacionCombate(ubicacionActual));
 
+        Quaternion rotacionB = Quaternion.Euler(0f, orientacionB, 0f);
+        personaje.transform.rotation= rotacionB;
+
 
       indiceEquipoB++;
       }
@@ -110,6 +121,9 @@ private int indiceEquipoB=0;
       personaje.selector = selectorPersonaje;
       personaje.controlCombate = this;
     }
+
+    //posición inicial: cada equipo mira al otro
+    
   }
 
   //Devuelve la hija "ubicación de combate" (el punto frente a la ubicación donde salta el atacante).
@@ -124,6 +138,9 @@ private int indiceEquipoB=0;
     Debug.LogError("La ubicación " + ubicacion.name + " no tiene hija de combate, se usará la propia ubicación");
     return ubicacion;
   }
+
+
+
 
   //todo: Posicion y orden
 
