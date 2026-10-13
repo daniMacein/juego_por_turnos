@@ -175,14 +175,16 @@ public abstract class Personaje : MonoBehaviour
   
     }
 
-    public virtual IEnumerator DesplazarseAObjetivo()
+    public virtual IEnumerator DesplazarseAObjetivo(Personaje personaje)
     {
-        yield return new WaitForSeconds(1f);
+        controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionAtacante);
+        yield return new WaitForSeconds(4f);
     }
 
         public virtual IEnumerator DesplazarseAOrigen()
     {
-        yield return new WaitForSeconds(1f);
+        controlPersonajeCombate.VolverAOrigen(UbicacionPropia);
+        yield return new WaitForSeconds(4f);
     }
 
 

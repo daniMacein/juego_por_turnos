@@ -369,6 +369,13 @@ private int indiceEquipoB=0;
       CamaraCombate.camaraCombate.moviminetoAtaque(atacante, objetivosCamara);
     }
 
+    //Si ataca a melee, se desplaza hacia el objetivo
+    if(ataque.seDesplaza)
+    {
+      yield return atacante.DesplazarseAObjetivo(ataque.meleeObjetivo);
+    }
+    
+
     foreach (GolpeData golpe in ataque.golpes)
     {
 
@@ -428,6 +435,13 @@ private int indiceEquipoB=0;
       
       //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);
+    }
+
+
+    //Por ahora aqui: el personaje vuelve a su posicion si se ha acercado
+    if(ataque.seDesplaza)
+    {
+      yield return atacante.DesplazarseAOrigen();
     }
 
 
