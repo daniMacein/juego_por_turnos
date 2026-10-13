@@ -39,6 +39,8 @@ public abstract class Personaje : MonoBehaviour
       public Transform UbicacionAtacante { get; protected set; }
 
       private ControlPersonajeCombate controlPersonajeCombate;
+      //acceso al movimiento para las clases hijas (acercarse al objetivo y volver)
+      protected ControlPersonajeCombate movimiento { get { return controlPersonajeCombate; } }
     #endregion
 
     #region Estadisticas
@@ -177,14 +179,15 @@ public abstract class Personaje : MonoBehaviour
 
     public virtual IEnumerator DesplazarseAObjetivo(Personaje personaje)
     {
-        controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionAtacante);
-        yield return new WaitForSeconds(4f);
+       
+        yield return  controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionAtacante,personaje.UbicacionPropia);
+        //yield return  controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionPropia,personaje.UbicacionAtacante);
     }
 
         public virtual IEnumerator DesplazarseAOrigen()
     {
-        controlPersonajeCombate.VolverAOrigen(UbicacionPropia);
-        yield return new WaitForSeconds(4f);
+        
+        yield return controlPersonajeCombate.VolverAOrigen();
     }
 
 

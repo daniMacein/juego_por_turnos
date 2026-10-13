@@ -84,8 +84,7 @@ private int indiceEquipoB=0;
         personaje.transform.position=ubicacionActual.position;
         personaje.SetUbicacion(ubicacionActual);
 
-        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
-        personaje.SetUbicacionAtacante(ubiSec);
+        personaje.SetUbicacionAtacante(ObtenerUbicacionCombate(ubicacionActual));
         
 
 
@@ -102,8 +101,7 @@ private int indiceEquipoB=0;
         personaje.transform.position=ubicacionActual.position;
         personaje.SetUbicacion(ubicacionActual);
 
-        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
-        personaje.SetUbicacionAtacante(ubiSec);
+        personaje.SetUbicacionAtacante(ObtenerUbicacionCombate(ubicacionActual));
 
 
       indiceEquipoB++;
@@ -112,6 +110,19 @@ private int indiceEquipoB=0;
       personaje.selector = selectorPersonaje;
       personaje.controlCombate = this;
     }
+  }
+
+  //Devuelve la hija "ubicación de combate" (el punto frente a la ubicación donde salta el atacante).
+  //OJO: GetComponentInChildren<Transform>() NO vale aquí porque primero devuelve el propio objeto,
+  //así que UbicacionAtacante quedaba apuntando a la ubicación del personaje y se saltaba encima de él.
+  Transform ObtenerUbicacionCombate(Transform ubicacion)
+  {
+    foreach (Transform hijo in ubicacion)
+    {
+      return hijo;
+    }
+    Debug.LogError("La ubicación " + ubicacion.name + " no tiene hija de combate, se usará la propia ubicación");
+    return ubicacion;
   }
 
   //todo: Posicion y orden

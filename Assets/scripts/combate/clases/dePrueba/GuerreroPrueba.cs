@@ -14,7 +14,7 @@ public class GuerreroPrueba : Personaje
         vidaMaxima = 1000;
         vida = 1000;
         armadura = 30;
-        speed = 50;
+        speed = 200;
 
         probCritico = 10;
         probEvasion = 25;
@@ -39,8 +39,8 @@ public class GuerreroPrueba : Personaje
         );
 
         ataquesInfo[2] = new AtaqueInfo(
-            "Golpe explosivo",
-            "Inflige daño en area a todos los enemigos."
+            "Golpe cercano",
+            "Se acerca y golpea con la espada"
         );
 
         ataquesInfo[3] = new AtaqueInfo(
@@ -86,7 +86,7 @@ public class GuerreroPrueba : Personaje
 
     public override void Ataque3()
     {
-        LanzarAtaque(2, new SelectorData(1, equipoEnemigo), CrearAtaque1);
+        LanzarAtaque(2, new SelectorData(1, equipoEnemigo), CrearAtaque3);
 
     }
 
@@ -145,6 +145,34 @@ public class GuerreroPrueba : Personaje
         AplicarEstadisticasAGolpe(golpe2);
 
         AtaqueData ataque = new AtaqueData(golpe1,golpe2);
+
+
+        // ejecutar ataque
+
+        controlCombate.EmpezarAtaque(this, ataque);
+
+
+    }
+
+
+        private void CrearAtaque3(List<Personaje> objetivos)
+
+    {
+        foreach (Personaje objetivo in objetivos)
+        {
+            Debug.Log("el seleccionado es: " + objetivo.nombre);
+        }
+
+        //  Golpe principal
+
+        GolpeData golpe1 = new GolpeData
+        (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+
+        golpe1.penetracionArmadura=0f;
+        AplicarEstadisticasAGolpe(golpe1);
+
+        AtaqueData ataque = new AtaqueData(golpe1);
+        ataque.EstablecerObjetivoMelee(objetivos[0]);
 
 
         // ejecutar ataque
