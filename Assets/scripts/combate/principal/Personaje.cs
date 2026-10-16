@@ -179,8 +179,14 @@ public abstract class Personaje : MonoBehaviour
 
     public virtual IEnumerator DesplazarseAObjetivo(Personaje personaje)
     {
-       
+         //yield WaitForSeconds(1f);
+        animator.SetTrigger("Salto");
+
+        yield return new WaitForSeconds(0.25f);
+        
         yield return  controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionAtacante,personaje.UbicacionPropia);
+         animator.SetTrigger("Aterrizar");
+         yield return new WaitForSeconds(1f);
         //yield return  controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionPropia,personaje.UbicacionAtacante);
     }
 
