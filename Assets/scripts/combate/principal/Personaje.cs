@@ -82,7 +82,7 @@ public abstract class Personaje : MonoBehaviour
 
         animator = GetComponent<Animator>(); 
         porcentajeVida=(vida/vidaMaxima)*100;
-        barraVida = GetComponent<BarraVida>();
+        //barraVida = GetComponent<BarraVida>();
     }
 
 
@@ -235,7 +235,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         porcentajeVida=(vida/vidaMaxima)*100;
-        barraVida.ModificarBarraVida(); 
+        //barraVida.ModificarBarraVida(); 
 
     }
 
@@ -436,9 +436,12 @@ public abstract class Personaje : MonoBehaviour
 
     protected virtual void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
     {
+
+        if (resultadoGolpe.tipoAtaque==TipoAtaque.Daño){
         animator.SetTrigger("RecibirDano");
         //Debug.Log("ATACADOOOOOOOOOOOOOOOOOOOOO");
         Debug.Log(nombre + " golpeado con " + resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
+        }
     }
 
     //Despues de haber recibido un ataque completo. Se indica que el ataque ha sido finalizado/ejecutado
