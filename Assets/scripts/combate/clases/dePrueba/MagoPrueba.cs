@@ -16,13 +16,13 @@ public class MagoPrueba : Personaje
         speed = 50;
 
         probCritico = 10;
-        probEvasion = 5;
+        probEvasion = 25;
 
         potencia = 1;
-        probGolpe = 10;
+        probGolpe = 100;
         alteracionDaño = 1;
 
-        nombre="Azulio ";
+        //nombre="MagoRojo ";
         clase="Mago";
 
 
@@ -58,7 +58,11 @@ public class MagoPrueba : Personaje
 {
     case TipoAnimacion.Ataque1_Golpe1:
         
-         yield return new WaitForSeconds(2f);
+        //AnimarPersonajes perso= GetComponentInChildren<AnimarPersonajes>();
+        //StartCoroutine(perso.AnimacionAtaqueCerca());
+
+        animator.SetTrigger("MagicAtaque");
+         yield return new WaitForSeconds(1.14f);
         break;
 
     case TipoAnimacion.Magia_Fuego:
@@ -140,7 +144,7 @@ public class MagoPrueba : Personaje
         //  Golpe principal
 
         GolpeData golpe1 = new GolpeData
-        (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        (100, objetivos, TipoAtaque.Daño, TipoObjetivo.AreaEnemigos,TipoAnimacion.Ataque1_Golpe1);
 
         GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
 

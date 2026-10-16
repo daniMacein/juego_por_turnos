@@ -8,6 +8,8 @@ public class AnimacionVentanaGolpe : MonoBehaviour
     private TextMeshProUGUI tmp;
     private float time =0;
 
+    public float escalaInicial = 1f;
+
     public AnimationCurve escalaCurva;
 
         public AnimationCurve alturaCurva;
@@ -30,7 +32,7 @@ public class AnimacionVentanaGolpe : MonoBehaviour
     void Update()
     {
         tmp.color= new Color(1,1,1,opacidadCurva.Evaluate(time));
-        transform.localScale = Vector3.one * escalaCurva.Evaluate(time);
+        transform.localScale = Vector3.one * escalaInicial * escalaCurva.Evaluate(time);
         transform.position= origen + new Vector3(0,1+ alturaCurva.Evaluate(time),0);
         time+=Time.deltaTime;
     }

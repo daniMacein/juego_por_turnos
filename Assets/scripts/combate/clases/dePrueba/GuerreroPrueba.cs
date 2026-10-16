@@ -17,13 +17,13 @@ public class GuerreroPrueba : Personaje
         speed = 50;
 
         probCritico = 10;
-        probEvasion = 5;
+        probEvasion = 25;
 
         potencia = 1;
         probGolpe = 90;
         alteracionDaño = 1;
 
-        nombre="Rojelio";
+        //nombre="Caballero";
         clase="Guerrero";
 
 
@@ -58,8 +58,8 @@ public class GuerreroPrueba : Personaje
         switch(golpeData.tipoAnimacion)
 {
     case TipoAnimacion.Ataque1_Golpe1:
-
-         yield return new WaitForSeconds(2f);
+        animator.SetTrigger("TajoVertical");
+         yield return new WaitForSeconds(0.7f);
         break;
 
     case TipoAnimacion.Magia_Fuego:
@@ -139,7 +139,7 @@ public class GuerreroPrueba : Personaje
         GolpeData golpe1 = new GolpeData
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaTodos,TipoAnimacion.Ataque1_Golpe1);
+        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaEnemigos,TipoAnimacion.Ataque1_Golpe1);
 
         AplicarEstadisticasAGolpe(golpe1);
         AplicarEstadisticasAGolpe(golpe2);
@@ -153,6 +153,14 @@ public class GuerreroPrueba : Personaje
 
 
     }
+
+/*
+    public override void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
+    {
+        base.AtaqueRecibido(resultadoAtaque);
+
+        animator.SetTrigger("RecibirDano");
+    }*/
 
 
 

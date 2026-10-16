@@ -65,11 +65,7 @@ public class SelectorPersonaje : MonoBehaviour
                 return;
             }
 
-            //el mismo personaje no cuenta dos veces
-            if (objetivos.Contains(p))
-            {
-                return;
-            }
+
 
             objetivos.Add(p);
             Debug.Log("Objetivo " + objetivos.Count + "/" + datos.numeroObjetivos + ": " + p.nombre);

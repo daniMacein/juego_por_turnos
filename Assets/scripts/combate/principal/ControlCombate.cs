@@ -4,6 +4,8 @@ using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -15,11 +17,24 @@ public class ControlCombate : MonoBehaviour
 
   //  public List<Personaje> personajes = new List<Personaje>();
 
- 
+ public Transform []posicionesA;
+  public Transform []posicionesB;
 
   void Start()
   {
     interfazCombate= InterfazCombate.interfazCombate;
+    if (timeline == null)
+    {
+      timeline = GetComponent<TimelineTurnos>();
+    }
+    if (timeline == null)
+    {
+      timeline = FindObjectOfType<TimelineTurnos>();
+    }
+    if (timeline == null)
+    {
+      timeline = gameObject.AddComponent<TimelineTurnos>();
+    }
     //personaje1.Ataque1();
     CrearCombate();
   }
@@ -45,11 +60,16 @@ public class ControlCombate : MonoBehaviour
   //todo: Iniciar el combate
   public SelectorPersonaje selectorPersonaje;
 
+  //banda superior con el orden de turnos (se busca solo si no se asigna)
+  public TimelineTurnos timeline;
+
 
   
 
 
 
+private int indiceEquipoA=0;
+private int indiceEquipoB=0;
 
   void AsignarEquipo()
   {
@@ -59,6 +79,17 @@ public class ControlCombate : MonoBehaviour
       {
         principalesA.Add(personaje);
         equipoA.Add(personaje);
+
+        Transform ubicacionActual=posicionesA[indiceEquipoA].transform;
+        personaje.transform.position=ubicacionActual.position;
+        personaje.SetUbicacion(ubicacionActual);
+
+        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
+        personaje.SetUbicacionAtacante(ubiSec);
+        
+
+
+      indiceEquipoA++;
   
       }
       
@@ -66,6 +97,16 @@ public class ControlCombate : MonoBehaviour
       {
         principalesB.Add(personaje);
         equipoB.Add(personaje);
+
+        Transform ubicacionActual=posicionesB[indiceEquipoB].transform;
+        personaje.transform.position=ubicacionActual.position;
+        personaje.SetUbicacion(ubicacionActual);
+
+        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
+        personaje.SetUbicacionAtacante(ubiSec);
+
+
+      indiceEquipoB++;
       }
 
       personaje.selector = selectorPersonaje;
@@ -169,6 +210,10 @@ public class ControlCombate : MonoBehaviour
      
       CrearPosicionEnPersonajes();
       OrdenarPersonajes();
+      if (timeline != null)
+      {
+        timeline.MostrarOrden(PersonajesOrdenados);
+      }
       Debug.Log("Ronda " + numeroRonda + " comenzada");
 
       yield return new WaitForSeconds(2f);
@@ -196,6 +241,10 @@ public class ControlCombate : MonoBehaviour
       // después del turno, reordenas por si algo ha cambiado
       //Reordenar();
       PersonajesOrdenados.RemoveAt(0);
+      if (timeline != null)
+      {
+        timeline.AvanzarTurno();
+      }
     }
   }
 
@@ -266,9 +315,20 @@ public class ControlCombate : MonoBehaviour
     {
       case TipoObjetivo.AreaTodos:
         return new List<Personaje>(TodosPersonajes);
+        
 
       case TipoObjetivo.Unitario:
         return golpe.objetivos;
+
+        case TipoObjetivo.AreaEnemigos:
+        if (atacante.equipo == Equipo.equipoA)
+        {
+           return new List<Personaje>(equipoB);
+        }
+        else
+        {
+          return new List<Personaje>(equipoA);
+        }
 
       default:
         return new List<Personaje>();
@@ -292,6 +352,22 @@ public class ControlCombate : MonoBehaviour
   {
     Dictionary<Personaje, ResultadoAtaque> resultados = new Dictionary<Personaje, ResultadoAtaque>();
 
+    //empezar movimiento de camara: encuadra al atacante y sus objetivos
+    if (CamaraCombate.camaraCombate != null)
+    {
+      List<Personaje> objetivosCamara = new List<Personaje>();
+      foreach (GolpeData golpeCamara in ataque.golpes)
+      {
+        foreach (Personaje p in ObtenerObjetivos(atacante, golpeCamara))
+        {
+          if (p != null && !objetivosCamara.Contains(p))
+          {
+            objetivosCamara.Add(p);
+          }
+        }
+      }
+      CamaraCombate.camaraCombate.moviminetoAtaque(atacante, objetivosCamara);
+    }
 
     foreach (GolpeData golpe in ataque.golpes)
     {
@@ -300,6 +376,7 @@ public class ControlCombate : MonoBehaviour
 
 
       // se parara aqui hasta que haga la animacion completa de ese golpe especifico
+      
       yield return atacante.AnimarAtaque(golpe, objetivosFinales);
 
       if (golpe.estadoGolpe == EstadoGolpe.Fallado)
@@ -340,18 +417,31 @@ public class ControlCombate : MonoBehaviour
 
         //?AQUI PROGRAMARAS CON "RES", que es el resultado golpe, que se vea en pantalla "golpeado con tal"
         GestorUICombate.gestorUICombate.MostrarGolpe(res);
+       
+      }
+
+      if (CamaraCombate.camaraCombate != null)
+      {
+        CamaraCombate.camaraCombate.movimientoGolpe();
       }
       }
-     
+      
       //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);
+    }
+
+
+    //camara: vuelve a su sitio mientras se muestran las reacciones al golpe
+    if (CamaraCombate.camaraCombate != null)
+    {
+      CamaraCombate.camaraCombate.restaurarOriginal();
     }
 
     // Avisar que ha recibido un ataque, a las personas afectadas (mas pasar la info)
     foreach (var kvp in resultados)
     {
       kvp.Key.AtaqueRecibido(kvp.Value);
-      yield return new WaitForSeconds(2f);
+      //yield return new WaitForSeconds(2f);
     }
     atacante.TerminarAtaque(ataque);
 

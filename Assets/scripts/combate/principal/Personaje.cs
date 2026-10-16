@@ -17,10 +17,13 @@ public abstract class Personaje : MonoBehaviour
 
     public AtaqueInfo[] ataquesInfo = new AtaqueInfo[4];
 
+    [Header("Icono para el timeline de turnos (asignar en el inspector)")]
+    public Sprite icono;
+
     #endregion
 
     #region Interaccion
-    //private Animator animator;
+    protected Animator animator;
     public SelectorPersonaje selector;
     public ControlCombate controlCombate;
     public List<Efecto> efectosActivos = new List<Efecto>();
@@ -31,6 +34,11 @@ public abstract class Personaje : MonoBehaviour
 
     public bool haTerminadoElAtaque;
     public AtaqueData ataqueElegido;
+
+     public Transform UbicacionPropia { get; protected set; }
+      public Transform UbicacionAtacante { get; protected set; }
+
+      private ControlPersonajeCombate controlPersonajeCombate;
     #endregion
 
     #region Estadisticas
@@ -57,6 +65,7 @@ public abstract class Personaje : MonoBehaviour
 
     void Start()
     {
+        controlPersonajeCombate= GetComponent<ControlPersonajeCombate>();
         
       if (equipo == Equipo.equipoA)
         {
@@ -67,7 +76,7 @@ public abstract class Personaje : MonoBehaviour
         equipoEnemigo = Equipo.equipoA;
         }
 
-        //animator = GetComponent<Animator>(); 
+        animator = GetComponent<Animator>(); 
         porcentajeVida=(vida/vidaMaxima)*100;
     }
 
@@ -113,6 +122,7 @@ public abstract class Personaje : MonoBehaviour
     //Cancela la seleccion en marcha (tambien valdra para un futuro boton de cancelar)
     public void CancelarEspera()
     {
+        
         if (esperaActiva != null)
         {
             StopCoroutine(esperaActiva);
@@ -143,7 +153,8 @@ public abstract class Personaje : MonoBehaviour
         ataqueEnCurso = -1;
 
         selector.Reset();
-
+        InterfazCombate.interfazCombate.ResetBotonesPersonaje();
+         
         alCompletar(objetivos);
     }
 
@@ -157,27 +168,26 @@ public abstract class Personaje : MonoBehaviour
     {
         //aqui miras cual es el golpe, porque tendra un identificador dentro de golpe y haces la animacion
         //correspondiente
+                   
+        yield return new WaitForSeconds(1f);
 
-        if (golpeData.tipoAtaque== TipoAtaque.Daño){
-             // Lógica para animar un ataque de daño
-            Debug.Log("Animando ataque de daño");
-
-            foreach (Personaje personaje in objetivosFinales)
-            {
-                Animator animatorObjetivo = personaje.GetComponent<Animator>();
-                if(animatorObjetivo != null)
-                {
-                    animatorObjetivo.Play("Golpeado");
-                     yield return new WaitForSeconds(1f);
-                    animatorObjetivo.Play("Idle");
-                } else {
-                    Debug.LogWarning("El objetivo no tiene un Animator asignado.");
-                }
-            }
-            
-        }
-       
+                
+  
     }
+
+    public virtual IEnumerator DesplazarseAObjetivo()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+        public virtual IEnumerator DesplazarseAOrigen()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+
+
+    
 
     #region gets/set
 
@@ -212,6 +222,16 @@ public abstract class Personaje : MonoBehaviour
 
         porcentajeVida=(vida/vidaMaxima)*100;
 
+    }
+
+    public void SetUbicacion(Transform ubi)
+    {
+        this.UbicacionPropia=ubi;
+    }
+
+    public void SetUbicacionAtacante(Transform ubi)
+    {
+        this.UbicacionAtacante=ubi;
     }
 
 
@@ -353,13 +373,16 @@ public abstract class Personaje : MonoBehaviour
         float vidaRecibida = 0;
         float armaduraGastada = 0;
         bool golpeAcertado=true;
+        //estado propio de ESTE objetivo: no se escribe en el golpe compartido,
+        //o el primer objetivo que evada contaminaría el resultado de los demás
+        EstadoGolpe estadoFinal = golpe.estadoGolpe;
         //si es daño
         if (golpe.esPositivo == false)
         {
 
              if (ProbabilidadAcertada(probEvasion-golpe.probGolpeExtra))
             {
-               golpe.estadoGolpe=EstadoGolpe.Evadido; 
+               estadoFinal=EstadoGolpe.Evadido;
                golpeAcertado=false;
             }
 
@@ -368,9 +391,9 @@ public abstract class Personaje : MonoBehaviour
                       vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
             SetVida(vidaRecibida);
             armaduraGastada = GastarArmadura(golpe.armadura);
-                
+
             }
-      
+
         }
         else
         {
@@ -385,19 +408,21 @@ public abstract class Personaje : MonoBehaviour
         {
            AplicarEfecto(efecto);
         }
-            
+
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
-        (this,vidaRecibida, armaduraGastada, golpe.estadoGolpe, golpe.tipoObjetivo, golpe.tipoAtaque);
+        (this,vidaRecibida, armaduraGastada, estadoFinal, golpe.tipoObjetivo, golpe.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;
 
     }
 
-    private void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
+    protected virtual void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
     {
+        animator.SetTrigger("RecibirDano");
+        //Debug.Log("ATACADOOOOOOOOOOOOOOOOOOOOO");
         Debug.Log(nombre + " golpeado con " + resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
     }
 
@@ -406,6 +431,7 @@ public abstract class Personaje : MonoBehaviour
     public virtual void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
 
     {
+ 
         Debug.Log(nombre + ": vida actual: " + vida.ToString("F0") + "/" + vidaMaxima + "\n" + "armadura:" + armadura.ToString("F0"));
 
     }
