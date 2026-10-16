@@ -34,4 +34,8 @@ public List<Personaje> OrdenarPersonajesVidas( Equipo equipo)
 
 
 
+
+
+
+
 }

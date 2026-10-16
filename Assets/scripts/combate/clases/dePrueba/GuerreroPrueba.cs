@@ -17,10 +17,10 @@ public class GuerreroPrueba : Personaje
         speed = 200;
 
         probCritico = 10;
-        probEvasion = 25;
+        probEvasion = 10;
 
         potencia = 1;
-        probGolpe = 90;
+        probGolpe = 100;
         alteracionDaño = 1;
 
         //nombre="Caballero";
@@ -115,6 +115,9 @@ public class GuerreroPrueba : Personaje
         AplicarEstadisticasAGolpe(golpe1);
 
         AtaqueData ataque = new AtaqueData(golpe1);
+
+
+
 
 
         // ejecutar ataque
