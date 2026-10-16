@@ -20,6 +20,8 @@ public abstract class Personaje : MonoBehaviour
     [Header("Icono para el timeline de turnos (asignar en el inspector)")]
     public Sprite icono;
 
+    protected BarraVida barraVida;
+
     #endregion
 
     #region Interaccion
@@ -80,6 +82,7 @@ public abstract class Personaje : MonoBehaviour
 
         animator = GetComponent<Animator>(); 
         porcentajeVida=(vida/vidaMaxima)*100;
+        barraVida = GetComponent<BarraVida>();
     }
 
 
@@ -232,6 +235,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         porcentajeVida=(vida/vidaMaxima)*100;
+        barraVida.ModificarBarraVida(); 
 
     }
 

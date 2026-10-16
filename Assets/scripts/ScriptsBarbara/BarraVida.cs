@@ -8,20 +8,27 @@ using UnityEngine.UI;
 public class BarraVida : MonoBehaviour
 {
     public Image BarraDeVida; 
-    public int vidaActual; 
-    public int vidaMaxima;
+    public GameObject Fondo;
+    private float vidaActual; 
+    private float vidaMaxima;
+    public GameObject posVida;
+    public Personaje personaje;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        vidaActual = 1000;
-        vidaMaxima = 1000;
+        Vector3 posicion = posVida.transform.position;
+        Fondo.transform.position = posicion;
+        ModificarBarraVida();
     }
 
     // Update is called once per frame
-    void Update()
+
+    public void ModificarBarraVida()
     {
+        vidaActual = personaje.vida;
+        vidaMaxima = personaje.vidaMaxima;
         BarraDeVida.fillAmount =  (float)vidaActual / vidaMaxima;
 
     }
