@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using UnityEditor.Experimental.GraphView;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -71,6 +72,10 @@ public class ControlCombate : MonoBehaviour
 private int indiceEquipoA=0;
 private int indiceEquipoB=0;
 
+private float orientacionA= 112;
+
+private float orientacionB=224;
+
   void AsignarEquipo()
   {
     foreach (Personaje personaje in TodosPersonajes)
@@ -84,8 +89,10 @@ private int indiceEquipoB=0;
         personaje.transform.position=ubicacionActual.position;
         personaje.SetUbicacion(ubicacionActual);
 
-        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
-        personaje.SetUbicacionAtacante(ubiSec);
+        personaje.SetUbicacionAtacante(ObtenerUbicacionCombate(ubicacionActual));
+
+        Quaternion rotacion = Quaternion.Euler(0f, orientacionA, 0f);
+        personaje.transform.rotation= rotacion;
         
 
 
@@ -102,8 +109,10 @@ private int indiceEquipoB=0;
         personaje.transform.position=ubicacionActual.position;
         personaje.SetUbicacion(ubicacionActual);
 
-        Transform ubiSec= ubicacionActual.GetComponentInChildren<Transform>();
-        personaje.SetUbicacionAtacante(ubiSec);
+        personaje.SetUbicacionAtacante(ObtenerUbicacionCombate(ubicacionActual));
+
+        Quaternion rotacionB = Quaternion.Euler(0f, orientacionB, 0f);
+        personaje.transform.rotation= rotacionB;
 
 
       indiceEquipoB++;
@@ -112,7 +121,26 @@ private int indiceEquipoB=0;
       personaje.selector = selectorPersonaje;
       personaje.controlCombate = this;
     }
+
+    //posición inicial: cada equipo mira al otro
+    
   }
+
+  //Devuelve la hija "ubicación de combate" (el punto frente a la ubicación donde salta el atacante).
+  //OJO: GetComponentInChildren<Transform>() NO vale aquí porque primero devuelve el propio objeto,
+  //así que UbicacionAtacante quedaba apuntando a la ubicación del personaje y se saltaba encima de él.
+  Transform ObtenerUbicacionCombate(Transform ubicacion)
+  {
+    foreach (Transform hijo in ubicacion)
+    {
+      return hijo;
+    }
+    Debug.LogError("La ubicación " + ubicacion.name + " no tiene hija de combate, se usará la propia ubicación");
+    return ubicacion;
+  }
+
+
+
 
   //todo: Posicion y orden
 
@@ -369,6 +397,13 @@ private int indiceEquipoB=0;
       CamaraCombate.camaraCombate.moviminetoAtaque(atacante, objetivosCamara);
     }
 
+    //Si ataca a melee, se desplaza hacia el objetivo
+    if(ataque.seDesplaza)
+    {
+      yield return atacante.DesplazarseAObjetivo(ataque.meleeObjetivo);
+    }
+    
+
     foreach (GolpeData golpe in ataque.golpes)
     {
 
@@ -428,6 +463,13 @@ private int indiceEquipoB=0;
       
       //espera tras desencadenar un golpe
       yield return new WaitForSeconds(2f);
+    }
+
+
+    //Por ahora aqui: el personaje vuelve a su posicion si se ha acercado
+    if(ataque.seDesplaza)
+    {
+      yield return atacante.DesplazarseAOrigen();
     }
 
 
