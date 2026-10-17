@@ -15,7 +15,7 @@ public class GolpeData
 
     
 
-    public float penetracionArmadura=1;
+    public float penetracionArmadura=0;
 
     public int probGolpeExtra=0;
 
