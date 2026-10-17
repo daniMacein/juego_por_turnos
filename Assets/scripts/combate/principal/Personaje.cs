@@ -82,7 +82,7 @@ public abstract class Personaje : MonoBehaviour
 
         animator = GetComponent<Animator>(); 
         porcentajeVida=(vida/vidaMaxima)*100;
-        //barraVida = GetComponent<BarraVida>();
+        barraVida =  GetComponentInChildren<BarraVida>();
     }
 
 
@@ -235,7 +235,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         porcentajeVida=(vida/vidaMaxima)*100;
-        //barraVida.ModificarBarraVida(); 
+        barraVida.ModificarBarraVida(); 
 
     }
 
