@@ -18,8 +18,8 @@ public class SelectorPersonaje : MonoBehaviour
     private readonly Dictionary<Personaje, List<ParteResaltada>> partesResaltadas = new Dictionary<Personaje, List<ParteResaltada>>();
     // MaterialPropertyBlock usa código nativo: hay que crearlo en Awake, no aquí.
     private MaterialPropertyBlock bloquePropiedades;
-    // Amarillo HDR para que el efecto destaque claramente incluso en modelos oscuros.
-    private readonly Color colorResaltado = new Color(2f, 1.5f, 0.05f, 1f);
+    [Header("Resaltado al pasar el cursor")]
+    [SerializeField] private Color colorResaltado = new Color(2f, 1.5f, 0.05f, 1f);
     private const float intensidadResaltado = 1f;
     private Personaje personajeResaltado;
 
