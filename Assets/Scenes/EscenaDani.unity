@@ -938,12 +938,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: bfe59c02918788045b869d5d5a378adb, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!65 &200109702
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1421,12 +1421,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!114 &304934855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,12 +1815,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: bfe59c02918788045b869d5d5a378adb, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!65 &380088471
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2518,12 +2518,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!95 &664358942
 Animator:
   serializedVersion: 7
@@ -3290,23 +3290,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cf6e8bb30e22b4ea4f7ee5e34fe19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlCombate
-  personaje1: {fileID: 0}
-  posicionesA:
-  - {fileID: 696856397}
-  - {fileID: 26609075}
-  - {fileID: 388784710}
-  - {fileID: 1558220901}
-  posicionesB:
-  - {fileID: 44204492}
-  - {fileID: 1144125140}
-  - {fileID: 614959183}
-  - {fileID: 1700029860}
   TodosPersonajes: []
   equipoA: []
   equipoB: []
   principalesA: []
   principalesB: []
   personajesMuertos: []
+  UbicacionesA:
+  - {fileID: 696856397}
+  - {fileID: 26609075}
+  - {fileID: 388784710}
+  - {fileID: 1558220901}
+  UbicacionesB:
+  - {fileID: 44204492}
+  - {fileID: 1144125140}
+  - {fileID: 614959183}
+  - {fileID: 1700029860}
   selectorPersonaje: {fileID: 951301808}
   timeline: {fileID: 0}
   numeroRonda: 1
@@ -3764,12 +3763,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!95 &993018273
 Animator:
   serializedVersion: 7
@@ -4026,12 +4025,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 1a4d4ec1a8358994fbeae15a70f55c7b, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!95 &993878766
 Animator:
   serializedVersion: 7
@@ -4355,12 +4354,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 1a4d4ec1a8358994fbeae15a70f55c7b, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!65 &1051560628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5005,12 +5004,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!95 &1184438482
 Animator:
   serializedVersion: 7
@@ -5463,12 +5462,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: bfe59c02918788045b869d5d5a378adb, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!65 &1313899598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6471,12 +6470,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!114 &1768572535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7030,12 +7029,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!114 &1805704121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7531,12 +7530,12 @@ MonoBehaviour:
   - nombre: 
     descripcion: 
   icono: {fileID: 21300000, guid: 0e08fc2a03825104d8ee37c34c3ce0a6, type: 3}
+  estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
-  estaVivo: 1
 --- !u!114 &1973289687
 MonoBehaviour:
   m_ObjectHideFlags: 0

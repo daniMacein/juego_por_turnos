@@ -24,30 +24,11 @@ public abstract class Personaje : MonoBehaviour
 
     #endregion
 
-    #region Interaccion
-    protected Animator animator;
-    public SelectorPersonaje selector;
-    public ControlCombate controlCombate;
-    public List<Efecto> efectosActivos = new List<Efecto>();
-    public Equipo equipo;
-    public Equipo equipoEnemigo;
 
-
-
-    public bool haTerminadoElAtaque;
-    public AtaqueData ataqueElegido;
-
-     public Transform UbicacionPropia { get; protected set; }
-      public Transform UbicacionAtacante { get; protected set; }
-
-      private ControlPersonajeCombate controlPersonajeCombate;
-      //acceso al movimiento para las clases hijas (acercarse al objetivo y volver)
-      protected ControlPersonajeCombate movimiento { get { return controlPersonajeCombate; } }
-    #endregion
 
     #region Estadisticas
 
-    public bool estaVivo=true;
+    public bool estaVivo = true;
     public float vidaMaxima { get; protected set; }
     public float vida { get; protected set; } //vida actual
     public float porcentajeVida { get; protected set; } //vida actual en porcentaje
@@ -61,48 +42,83 @@ public abstract class Personaje : MonoBehaviour
     public int probGolpe { get; protected set; } //probabilidad de asestar el ataque
                                                  //*------------------------------------------
     public float potencia { get; protected set; }
-    public float penetracionArmadura{get;protected set;}=1; // Ignora parte de la armadura
+    public float penetracionArmadura { get; protected set; } = 1; // Ignora parte de la armadura
     public float alteracionDaño { get; protected set; } //porcentaje que implica cuanto por ciento te entra de mas o de menos en el daño.
 
     #endregion
 
 
+    #region Variables
+
+
+    //Referencias
+    protected Animator animator;
+    public SelectorPersonaje selector;
+    public ControlCombate controlCombate;
+    private ControlPersonajeCombate controlPersonajeCombate;
+
+
+    //Equipo
+    public Equipo equipo;
+    public Equipo equipoEnemigo;
+
+
+    //Cosas de ataques
+    public AtaqueData ataqueElegido;
+    public bool haTerminadoElAtaque;
+
+
+    //ubicacion
+    public Transform UbicacionPropia { get; protected set; }
+    public Transform UbicacionAtacante { get; protected set; }
+
+    //efectos
+    public List<Efecto> efectosActivos = new List<Efecto>();
+
+
+    #endregion
+
+
+    #region Start
+
+
     void Start()
     {
-        controlPersonajeCombate= GetComponent<ControlPersonajeCombate>();
-        
-      if (equipo == Equipo.equipoA)
+        controlPersonajeCombate = GetComponent<ControlPersonajeCombate>();
+
+        if (equipo == Equipo.equipoA)
         {
-        equipoEnemigo = Equipo.equipoB;
+            equipoEnemigo = Equipo.equipoB;
         }
-     else
+        else
         {
-        equipoEnemigo = Equipo.equipoA;
+            equipoEnemigo = Equipo.equipoA;
         }
 
-        animator = GetComponent<Animator>(); 
-        porcentajeVida=(vida/vidaMaxima)*100;
-        barraVida =  GetComponentInChildren<BarraVida>();
+        animator = GetComponent<Animator>();
+        porcentajeVida = (vida / vidaMaxima) * 100;
+        barraVida = GetComponentInChildren<BarraVida>();
     }
+
+    #endregion
 
 
     #region Ataques
 
     public abstract void Ataque1();
 
-
     public abstract void Ataque2();
     public abstract void Ataque3();
     public abstract void Ataque4();
 
 
-        //corrutina de selección de objetivos en marcha (para poder cancelarla)
+    //corrutina de selección de objetivos en marcha (para poder cancelarla)
     private Coroutine esperaActiva;
     private int ataqueEnCurso = -1;
 
 
-    
 
+    //todo: Metodos generales para lanzar ataques
     //Lanza la espera de objetivos de un ataque.
     //Si ya hay un ataque esperando: el mismo boton lo cancela, otro boton lo sustituye.
     protected void LanzarAtaque(int indiceAtaque, SelectorData datos, Action<List<Personaje>> alCompletar)
@@ -127,7 +143,7 @@ public abstract class Personaje : MonoBehaviour
     //Cancela la seleccion en marcha (tambien valdra para un futuro boton de cancelar)
     public void CancelarEspera()
     {
-        
+
         if (esperaActiva != null)
         {
             StopCoroutine(esperaActiva);
@@ -159,7 +175,7 @@ public abstract class Personaje : MonoBehaviour
 
         selector.Reset();
         InterfazCombate.interfazCombate.ResetBotonesPersonaje();
-         
+
         alCompletar(objetivos);
     }
 
@@ -168,40 +184,64 @@ public abstract class Personaje : MonoBehaviour
 
 
 
+
+
+    #region Animacion y ubi
+
+
+    //TODO: ANIMACION DE INFLIGIR
     public virtual IEnumerator AnimarAtaque(GolpeData golpeData, List<Personaje> objetivosFinales)
 
     {
         //aqui miras cual es el golpe, porque tendra un identificador dentro de golpe y haces la animacion
         //correspondiente
-                   
+
         yield return new WaitForSeconds(1f);
 
-                
-  
+
+
     }
+
+    //TODO: ANIM DESPLAZAMIENTO
 
     public virtual IEnumerator DesplazarseAObjetivo(Personaje personaje)
     {
-         //yield WaitForSeconds(1f);
+        //yield WaitForSeconds(1f);
         animator.SetTrigger("Salto");
 
         yield return new WaitForSeconds(0.25f);
-        
-        yield return  controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionAtacante,personaje.UbicacionPropia);
-         animator.SetTrigger("Aterrizar");
-         yield return new WaitForSeconds(1f);
+
+        yield return controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionAtacante, personaje.UbicacionPropia);
+        animator.SetTrigger("Aterrizar");
+        yield return new WaitForSeconds(1f);
         //yield return  controlPersonajeCombate.MoverseAobjetivo(personaje.UbicacionPropia,personaje.UbicacionAtacante);
     }
 
-        public virtual IEnumerator DesplazarseAOrigen()
+    public virtual IEnumerator DesplazarseAOrigen()
     {
-        
+
         yield return controlPersonajeCombate.VolverAOrigen();
     }
 
+    //TODO: ANIMACION DE RECIBIR 
+
+    protected virtual void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
+    {
+
+        if (resultadoGolpe.tipoAtaque == TipoAtaque.Daño)
+        {
+            animator.SetTrigger("RecibirDano");
+            //Debug.Log("ATACADOOOOOOOOOOOOOOOOOOOOO");
+            Debug.Log(nombre + " golpeado con " + resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
+        }
+    }
 
 
-    
+    #endregion
+
+
+
+
 
     #region gets/set
 
@@ -218,8 +258,6 @@ public abstract class Personaje : MonoBehaviour
     void SetVida(float vidaRecibida)
     {
 
-
-
         if ((vida + vidaRecibida) > vidaMaxima)
 
         {
@@ -234,35 +272,38 @@ public abstract class Personaje : MonoBehaviour
             vida += vidaRecibida;
         }
 
-        porcentajeVida=(vida/vidaMaxima)*100;
-        barraVida.ModificarBarraVida(); 
+        porcentajeVida = (vida / vidaMaxima) * 100;
+        barraVida.ModificarBarraVida();
 
     }
 
     public void SetUbicacion(Transform ubi)
     {
-        this.UbicacionPropia=ubi;
+        this.UbicacionPropia = ubi;
     }
 
     public void SetUbicacionAtacante(Transform ubi)
     {
-        this.UbicacionAtacante=ubi;
+        this.UbicacionAtacante = ubi;
     }
 
 
 
+    #endregion
+    #region Muerte
+
     public bool EstaVivo()
     {
-        
-        if (vida<=0)
+
+        if (vida <= 0)
         {
-            estaVivo=false;
-             //HARÁ TODO LO QUE TENGA QUE HACER
-             Debug.Log("ME HE MUERTO " + nombre);
+            estaVivo = false;
+            //HARÁ TODO LO QUE TENGA QUE HACER
+            Debug.Log("ME HE MUERTO " + nombre);
             return false;
-            
+
         }
-        Debug.Log("Sigo vivo"+ nombre );
+        Debug.Log("Sigo vivo" + nombre);
         return true;
 
 
@@ -270,7 +311,7 @@ public abstract class Personaje : MonoBehaviour
 
 
     #endregion
-    #region Metodos
+    #region Formulas
     //*formulas
 
     //todo: Formulas de utilidad
@@ -291,27 +332,27 @@ public abstract class Personaje : MonoBehaviour
 
     //todo: Formulas de estadisticas
 
-    private float DañoReducidoPorArmadura(float daño,float penetracion)
+    private float DañoReducidoPorArmadura(float daño, float penetracion)
     {
-        penetracion=1-penetracion;
-        return daño * (100 / (100 + (armadura*penetracion)));
+        penetracion = 1 - penetracion;
+        return daño * (100 / (100 + (armadura * penetracion)));
     }
 
     private float CalcularCritico()
     {
-        float excesoCritico=0f;
+        float excesoCritico = 0f;
         if (probCritico > 100)
         {
-            excesoCritico=probCritico-100;
-            excesoCritico=excesoCritico*0.5f;
+            excesoCritico = probCritico - 100;
+            excesoCritico = excesoCritico * 0.5f;
 
         }
-        int rango =(int)excesoCritico+150;
+        int rango = (int)excesoCritico + 150;
         if (rango > 200)
         {
-            rango=200;
+            rango = 200;
         }
-        float critico =UnityEngine.Random.Range(rango,210)/100f;
+        float critico = UnityEngine.Random.Range(rango, 210) / 100f;
         return critico;
 
     }
@@ -329,11 +370,15 @@ public abstract class Personaje : MonoBehaviour
         return armaduraAntigua - armadura;
     }
 
+    #endregion
+    #region Infligir ataques
+
     //todo: Metodos para infligir 
     //(utilizados para infligir ataques y efectos)
 
 
-// Aplicar a tu daño todo lo que hay que aplicar
+    // Aplicar a tu daño todo lo que hay que aplicar
+    //**1) Metodo que se le aplica a cada golpe
     public void AplicarEstadisticasAGolpe(GolpeData golpe)
     {
 
@@ -343,7 +388,7 @@ public abstract class Personaje : MonoBehaviour
             golpe.vida = golpe.vida * potencia;
             golpe.armadura = golpe.armadura * potencia;
 
-            if(probGolpe > 100)
+            if (probGolpe > 100)
             {
                 golpe.probGolpeExtra = probGolpe - 100;
             }
@@ -357,13 +402,13 @@ public abstract class Personaje : MonoBehaviour
                 if (golpe.esPositivo)
                 {
                     golpe.tipoAtaque = TipoAtaque.Curacion;
-                    golpe.estadoGolpe=EstadoGolpe.Critico;
+                    golpe.estadoGolpe = EstadoGolpe.Critico;
                 }
                 else
                 {
                     golpe.armadura = golpe.armadura * critico;
                     golpe.tipoAtaque = TipoAtaque.Daño;
-                    golpe.estadoGolpe=EstadoGolpe.Critico;
+                    golpe.estadoGolpe = EstadoGolpe.Critico;
                 }
             }
         }
@@ -375,7 +420,7 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
-
+    //**2) acabar ataque
     //Indico que he terminado un ataque
     public virtual void TerminarAtaque(AtaqueData ataqueData)
     {
@@ -383,106 +428,113 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
-    //todo: Metodos para recibir
 
-    //aplicar todo lo que hay que aplicar al recibir daño
-    private float RecibirDaño(float daño, float penetracion)
 
-    {
 
-        float nuevoDaño = daño * alteracionDaño;
-        
-        nuevoDaño = DañoReducidoPorArmadura(nuevoDaño,penetracion);
-        
-        return nuevoDaño;
-    }
+    #endregion
+    #region Recibir ataques
 
-    private float GastarArmadura(float desgaste)
-    {
-        return DesgasteArmadura(desgaste * alteracionDaño);
-    }
+
+    //todo: METODO GENERAL DE RECIBIR GOLPE
 
     public ResultadoGolpe RecibirGolpe(GolpeData golpe)
     {
         // recuerda: daño es negativo
+
+        //** Declaracion de variables
         float vidaRecibida = 0;
         float armaduraGastada = 0;
-        bool golpeAcertado=true;
+        bool golpeAcertado = true;
         //estado propio de ESTE objetivo: no se escribe en el golpe compartido,
         //o el primer objetivo que evada contaminaría el resultado de los demás
         EstadoGolpe estadoFinal = golpe.estadoGolpe;
-        //si es daño
+
+        //** Si es daño:
         if (golpe.esPositivo == false)
         {
 
-             if (ProbabilidadAcertada(probEvasion-golpe.probGolpeExtra))
+            if (ProbabilidadAcertada(probEvasion - golpe.probGolpeExtra))
             {
-               estadoFinal=EstadoGolpe.Evadido;
-               golpeAcertado=false;
+                estadoFinal = EstadoGolpe.Evadido;
+                golpeAcertado = false;
             }
 
             else
             {
-                      vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
-            SetVida(vidaRecibida);
-            armaduraGastada = GastarArmadura(golpe.armadura);
-
+                vidaRecibida = RecibirDaño(golpe.vida, golpe.penetracionArmadura);
+                SetVida(vidaRecibida);
+                armaduraGastada = GastarArmadura(golpe.armadura);
             }
 
         }
         else
+        //** Si es Curacion:
         {
             SetVida(golpe.vida);
             vidaRecibida = golpe.vida;
         }
 
-        //aplicar los efectos
+        //** aplicar los efectos
         if (golpe.aplicaEfecto && golpeAcertado)
         {
             foreach (Efecto efecto in golpe.efectos)
-        {
-           AplicarEfecto(efecto);
-        }
+            {
+                AplicarEfecto(efecto);
+            }
 
         }
 
+        //** Recopilar el resultado
         ResultadoGolpe resultado = new ResultadoGolpe
-        (this,vidaRecibida, armaduraGastada, estadoFinal, golpe.tipoObjetivo, golpe.tipoAtaque);
+        (this, vidaRecibida, armaduraGastada, estadoFinal, golpe.tipoObjetivo, golpe.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;
 
     }
 
-    protected virtual void AnimacionRecibirGolpe(ResultadoGolpe resultadoGolpe)
+    //todo: METODOS QUE COMPLEMENTAN RECIBIR
+    //aplicar todo lo que hay que aplicar al recibir daño
+    private float RecibirDaño(float daño, float penetracion)
+
     {
 
-        if (resultadoGolpe.tipoAtaque==TipoAtaque.Daño){
-        animator.SetTrigger("RecibirDano");
-        //Debug.Log("ATACADOOOOOOOOOOOOOOOOOOOOO");
-        Debug.Log(nombre + " golpeado con " + resultadoGolpe.dañoFinal.ToString("F0") + "p de vida");
-        }
+        float nuevoDaño = daño * alteracionDaño;
+
+        nuevoDaño = DañoReducidoPorArmadura(nuevoDaño, penetracion);
+
+        return nuevoDaño;
     }
+
+
+    //** armadura Rota
+    private float GastarArmadura(float desgaste)
+    {
+        return DesgasteArmadura(desgaste * alteracionDaño);
+    }
+
+
+    //todo: POSTATAQUE
 
     //Despues de haber recibido un ataque completo. Se indica que el ataque ha sido finalizado/ejecutado
     //y se consigue cuantos daño y armadura total ha sido quitada.
     public virtual void AtaqueRecibido(ResultadoAtaque resultadoAtaque)
 
     {
- 
+
         Debug.Log(nombre + ": vida actual: " + vida.ToString("F0") + "/" + vidaMaxima + "\n" + "armadura:" + armadura.ToString("F0"));
 
     }
 
-    
-    //todo: formulas de estados
 
 
-    private void morir()
 
-    {
-        
-    }
+
+
+
+    #endregion
+    #region Efectos
+
 
     //todo: EFECTOS
 
@@ -497,10 +549,10 @@ public abstract class Personaje : MonoBehaviour
         if (efecto.esPositivo == false)
         {
 
-        vidaRecibida = RecibirDaño(efecto.vida, efecto.penetracionArmadura);
-        SetVida(vidaRecibida);
-        armaduraGastada = GastarArmadura(efecto.armadura);      
-      
+            vidaRecibida = RecibirDaño(efecto.vida, efecto.penetracionArmadura);
+            SetVida(vidaRecibida);
+            armaduraGastada = GastarArmadura(efecto.armadura);
+
         }
         else
         {
@@ -509,7 +561,7 @@ public abstract class Personaje : MonoBehaviour
         }
 
         ResultadoGolpe resultado = new ResultadoGolpe
-        (this,vidaRecibida, armaduraGastada, efecto.estadoGolpe, efecto.tipoObjetivo, efecto.tipoAtaque);
+        (this, vidaRecibida, armaduraGastada, efecto.estadoGolpe, efecto.tipoObjetivo, efecto.tipoAtaque);
         AnimacionRecibirGolpe(resultado);
 
         return resultado;
@@ -546,6 +598,9 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
+
+    #endregion
+
     //! tostring
     public override string ToString()
     {
@@ -563,4 +618,3 @@ public abstract class Personaje : MonoBehaviour
     }
 }
 
-    #endregion
