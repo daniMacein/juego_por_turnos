@@ -747,14 +747,13 @@ GameObject:
   - component: {fileID: 200109701}
   - component: {fileID: 200109700}
   - component: {fileID: 200109705}
-  - component: {fileID: 200109706}
   m_Layer: 0
   m_Name: SacerVerde
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &200109699
 Transform:
   m_ObjectHideFlags: 0
@@ -917,18 +916,6 @@ MonoBehaviour:
   duracionIda: 0.35
   duracionVuelta: 0.45
   alturaSalto: 1.2
---- !u!114 &200109706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200109698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e1d6bf574c2f44928c7d7b3da613b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResaltadoPersonaje
 --- !u!1 &201765289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,14 +1362,13 @@ GameObject:
   - component: {fileID: 380088470}
   - component: {fileID: 380088469}
   - component: {fileID: 380088474}
-  - component: {fileID: 380088475}
   m_Layer: 0
   m_Name: SacerRojo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &380088468
 Transform:
   m_ObjectHideFlags: 0
@@ -1545,18 +1531,6 @@ MonoBehaviour:
   duracionIda: 0.35
   duracionVuelta: 0.45
   alturaSalto: 1.2
---- !u!114 &380088475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380088467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e1d6bf574c2f44928c7d7b3da613b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResaltadoPersonaje
 --- !u!1 &388784709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,7 +1776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &476879698
 Transform:
   m_ObjectHideFlags: 0
@@ -3176,6 +3150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0740358a982fa0d4788df5732b2a3956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectorPersonaje
+  camara: {fileID: 0}
   seleccionado: {fileID: 0}
   haySeleccion: 0
   objetivos: []
@@ -3400,14 +3375,13 @@ GameObject:
   - component: {fileID: 993018273}
   - component: {fileID: 993018272}
   - component: {fileID: 993018277}
-  - component: {fileID: 993018278}
   m_Layer: 0
   m_Name: caballero (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &993018271
 Transform:
   m_ObjectHideFlags: 0
@@ -3570,18 +3544,6 @@ MonoBehaviour:
   duracionIda: 0.35
   duracionVuelta: 0.45
   alturaSalto: 1.2
---- !u!114 &993018278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 993018270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e1d6bf574c2f44928c7d7b3da613b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResaltadoPersonaje
 --- !u!1 &993878759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3786,14 +3748,13 @@ GameObject:
   - component: {fileID: 1051560627}
   - component: {fileID: 1051560626}
   - component: {fileID: 1051560631}
-  - component: {fileID: 1051560632}
   m_Layer: 0
   m_Name: Mago
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1051560625
 Transform:
   m_ObjectHideFlags: 0
@@ -3956,18 +3917,6 @@ MonoBehaviour:
   duracionIda: 0.35
   duracionVuelta: 0.45
   alturaSalto: 1.2
---- !u!114 &1051560632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051560624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58e1d6bf574c2f44928c7d7b3da613b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResaltadoPersonaje
 --- !u!1001 &1057195690
 PrefabInstance:
   m_ObjectHideFlags: 0
