@@ -17,10 +17,10 @@ public class GuerreroPrueba : Personaje
         speed = 200;
 
         probCritico = 10;
-        probEvasion = 25;
+        probEvasion = 10;
 
         potencia = 1;
-        probGolpe = 90;
+        probGolpe = 100;
         alteracionDaño = 1;
 
         //nombre="Caballero";
@@ -114,7 +114,22 @@ public class GuerreroPrueba : Personaje
         golpe1.penetracionArmadura=0f;
         AplicarEstadisticasAGolpe(golpe1);
 
-        AtaqueData ataque = new AtaqueData(golpe1);
+
+
+
+        GolpeData golpe2 = new GolpeData
+        (50, objetivos, TipoAtaque.Daño, TipoObjetivo.AreaEnemigos,TipoAnimacion.Ataque1_Golpe1);
+
+        golpe2.penetracionArmadura=0f;
+        AplicarEstadisticasAGolpe(golpe2);
+
+
+
+        AtaqueData ataque = new AtaqueData(golpe1,golpe2);
+
+        ataque.EstablecerObjetivoMelee(objetivos[0]);
+
+
 
 
         // ejecutar ataque
@@ -139,12 +154,16 @@ public class GuerreroPrueba : Personaje
         GolpeData golpe1 = new GolpeData
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        GolpeData golpe2 = new GolpeData(30, objetivos, TipoAtaque.Daño,TipoObjetivo.AreaEnemigos,TipoAnimacion.Ataque1_Golpe1);
+
+        List<Personaje>unoMismo= new List<Personaje>();
+        
+        GolpeData golpe2 = new GolpeData(50, objetivos, TipoAtaque.Curacion,TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
         AplicarEstadisticasAGolpe(golpe1);
         AplicarEstadisticasAGolpe(golpe2);
 
         AtaqueData ataque = new AtaqueData(golpe1,golpe2);
+        ataque.EstablecerObjetivoMelee(objetivos[0]);
 
 
         // ejecutar ataque

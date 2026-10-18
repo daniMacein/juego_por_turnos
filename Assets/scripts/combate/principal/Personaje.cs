@@ -274,6 +274,7 @@ public abstract class Personaje : MonoBehaviour
 
     private float DañoReducidoPorArmadura(float daño,float penetracion)
     {
+        penetracion=1-penetracion;
         return daño * (100 / (100 + (armadura*penetracion)));
     }
 
