@@ -3372,12 +3372,26 @@ MonoBehaviour:
   tamanoMarco: 84
   grosorMarco: 8
   espacioEntre: 10
-  alturaBanda: 120
+  paddingPanel: 18
+  margenLados: 48
+  margenLinea: 18
+  solapeRonda: 16
+  anchoRonda: 130
+  altoRonda: 34
+  margenSuperior: 10
   colorEquipoA: {r: 0.25, g: 0.5, b: 1, a: 1}
-  colorEquipoB: {r: 1, g: 0.3, b: 0.25, a: 1}
-  colorFondoBanda: {r: 0, g: 0, b: 0, a: 0.45}
+  colorEquipoB: {r: 1, g: 0, b: 0, a: 1}
+  colorFondoPanel: {r: 0, g: 0, b: 0, a: 0.62352943}
+  colorFondoRonda: {r: 0, g: 0, b: 0, a: 0.62352943}
+  colorTextoRonda: {r: 1, g: 1, b: 1, a: 1}
+  opacidadIcono: 0.749
   atenuadoResto: 0.6
   escalaTurnoActual: 1.25
+  grosorLinea: 6
+  desplazamientoLineaY: 0
+  colorLinea: {r: 0.85, g: 0.88, b: 0.95, a: 0.10980392}
+  colorBordeActual: {r: 1, g: 1, b: 1, a: 0.3529412}
+  grosorBordeActual: 3
 --- !u!1 &951645405
 GameObject:
   m_ObjectHideFlags: 0
