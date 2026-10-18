@@ -24,18 +24,12 @@ public class ControlCombate : MonoBehaviour
   void Start()
   {
     interfazCombate= InterfazCombate.interfazCombate;
+
     if (timeline == null)
     {
-      timeline = GetComponent<TimelineTurnos>();
+       timeline = FindFirstObjectByType<TimelineTurnos>();
     }
-    if (timeline == null)
-    {
-      timeline = FindObjectOfType<TimelineTurnos>();
-    }
-    if (timeline == null)
-    {
-      timeline = gameObject.AddComponent<TimelineTurnos>();
-    }
+
     //personaje1.Ataque1();
     CrearCombate();
   }
@@ -57,6 +51,9 @@ public class ControlCombate : MonoBehaviour
 
   public List<Personaje> principalesA = new List<Personaje>();
   public List<Personaje> principalesB = new List<Personaje>();
+
+  public List<Personaje> personajesMuertos = new List<Personaje>();
+
 
   //todo: Iniciar el combate
   public SelectorPersonaje selectorPersonaje;
@@ -203,7 +200,78 @@ private float orientacionB=224;
 
          print( posicionPersonaje.personaje.nombre+" posicion " +string.Join(", ",posicionPersonaje.posicion) );
 
+             if (timeline != null)
+      {
+        timeline.MostrarOrden(PersonajesOrdenados);
+      }
 
+
+    }
+
+    
+  }
+
+
+  void ComprobarMuerte()
+  {
+
+   // Se recorre una copia porque ControlMuerte elimina elementos de la lista original.
+   foreach( Personaje personaje in new List<Personaje>(TodosPersonajes))
+    {
+      if (personaje.EstaVivo() == false)
+      {
+        ControlMuerte(personaje);
+        personaje.gameObject.SetActive(false);
+        Debug.Log("ESTOY DENTRO DE LA LISTA",personajesMuertos[0]);
+      }
+
+    }
+    
+  }
+
+
+  void ControlMuerte(Personaje personaje)
+  {
+    personajesMuertos.Add(personaje);
+
+    // Se elimina al personaje muerto de todas las listas de combate donde esté.
+    TodosPersonajes.RemoveAll(p => p == personaje);
+
+    equipoA.RemoveAll(p => p == personaje);
+    equipoB.RemoveAll(p => p == personaje);
+
+    principalesA.RemoveAll(p => p == personaje);
+    principalesB.RemoveAll(p => p == personaje);
+
+    // PersonajesOrdenados contiene PosicionPersonaje (numero + personaje) y
+    // un personaje puede aparecer varias veces: se quitan todas sus entradas.
+    PersonajesOrdenados.RemoveAll(pp => pp != null && pp.personaje == personaje);
+  }
+
+  private bool partidaFinalizada=false;
+
+  void ComprobarFinPartida()
+  {
+
+    if (equipoA.Count==0 && equipoB.Count==0)
+    {
+      Debug.Log("Se acabo la partida");
+      Debug.Log("EMPATE");
+      partidaFinalizada=true;
+    }
+    
+    if (equipoA.Count==0)
+    {
+      Debug.Log("Se acabo la partida");
+      Debug.Log("Gango el equipo B");
+      partidaFinalizada=true;
+    }
+
+    if (equipoB.Count==0)
+    {
+       Debug.Log("Se acabo la partida");
+      Debug.Log("Gango el equipo A");
+        partidaFinalizada=true;
     }
   }
 
@@ -232,21 +300,25 @@ private float orientacionB=224;
 
   {
 
-    while (numeroRonda < 3)
+    while (true)
 
     {
      
       CrearPosicionEnPersonajes();
       OrdenarPersonajes();
-      if (timeline != null)
-      {
-        timeline.MostrarOrden(PersonajesOrdenados);
-      }
+  
       Debug.Log("Ronda " + numeroRonda + " comenzada");
 
       yield return new WaitForSeconds(2f);
       yield return EjecutarRonda();
-      numeroRonda++;
+     
+
+            if (partidaFinalizada)
+      {
+        break;
+      }
+
+       numeroRonda++;
     }
 
     Debug.Log("combate terminado");
@@ -266,13 +338,14 @@ private float orientacionB=224;
 
       //EjecutarTurno(actual);
       yield return EjecutarTurno(PersonajeActual);
-      // después del turno, reordenas por si algo ha cambiado
-      //Reordenar();
-      PersonajesOrdenados.RemoveAt(0);
-      if (timeline != null)
+
+
+      ComprobarFinPartida();
+      if (partidaFinalizada)
       {
-        timeline.AvanzarTurno();
+        break;
       }
+
     }
   }
 
@@ -296,6 +369,22 @@ private float orientacionB=224;
      }*/
 
      EjecutarEfectosGenerales();
+
+     
+
+            // después del turno, reordenas por si algo ha cambiado
+      //Reordenar();
+      PersonajesOrdenados.RemoveAt(0);
+
+       ComprobarMuerte();
+
+
+       OrdenarPersonajes();
+      /*
+      if (timeline != null)
+      {
+        timeline.AvanzarTurno();
+      }*/
   }
 
 

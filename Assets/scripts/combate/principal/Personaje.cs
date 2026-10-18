@@ -250,6 +250,25 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
+
+    public bool EstaVivo()
+    {
+        
+        if (vida<=0)
+        {
+            estaVivo=false;
+             //HARÁ TODO LO QUE TENGA QUE HACER
+             Debug.Log("ME HE MUERTO " + nombre);
+            return false;
+            
+        }
+        Debug.Log("Sigo vivo"+ nombre );
+        return true;
+
+
+    }
+
+
     #endregion
     #region Metodos
     //*formulas

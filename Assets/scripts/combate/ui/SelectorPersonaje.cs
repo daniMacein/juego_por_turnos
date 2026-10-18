@@ -4,23 +4,28 @@ using UnityEngine.EventSystems;
 
 public class SelectorPersonaje : MonoBehaviour
 {
+    #region Estado del selector
+
     [SerializeField] private Camera camara;
 
     // Selección simple (sin SelectorData): un solo objetivo.
     public Personaje seleccionado;
-    public bool haySeleccion = false;
+    public bool haySeleccion;
 
     // Selección guiada por SelectorData.
     private SelectorData datos;
     public List<Personaje> objetivos = new List<Personaje>();
 
-    private readonly List<MallaPersonaje> mallas = new List<MallaPersonaje>();
-    private readonly Dictionary<Personaje, List<ParteResaltada>> partesResaltadas = new Dictionary<Personaje, List<ParteResaltada>>();
-    // MaterialPropertyBlock usa código nativo: hay que crearlo en Awake, no aquí.
-    private MaterialPropertyBlock bloquePropiedades;
+    private bool enModoSeleccion;
+
+    // Color HDR para que el resaltado destaque también sobre modelos oscuros.
     [Header("Resaltado al pasar el cursor")]
     [SerializeField] private Color colorResaltado = new Color(2f, 1.5f, 0.05f, 1f);
     private const float intensidadResaltado = 1f;
+
+    private readonly List<MallaPersonaje> mallas = new List<MallaPersonaje>();
+    private readonly Dictionary<Personaje, List<ParteResaltada>> partesResaltadas = new Dictionary<Personaje, List<ParteResaltada>>();
+    private MaterialPropertyBlock bloquePropiedades;
     private Personaje personajeResaltado;
 
     // True cuando se han acumulado todos los objetivos que pedía el SelectorData.
@@ -29,42 +34,9 @@ public class SelectorPersonaje : MonoBehaviour
         get { return datos != null && objetivos.Count >= datos.numeroObjetivos; }
     }
 
-    private sealed class MallaPersonaje
-    {
-        public Personaje personaje;
-        public Renderer renderer;
-        public MeshCollider collider;
-        public SkinnedMeshRenderer mallaAnimada;
-        public Mesh geometriaAnimada;
+    #endregion
 
-        public bool Preparar()
-        {
-            if (personaje == null || renderer == null || !renderer.enabled ||
-                !renderer.gameObject.activeInHierarchy || collider == null)
-            {
-                return false;
-            }
-
-            if (mallaAnimada != null)
-            {
-                // BakeMesh conserva la pose que está mostrando el personaje este frame.
-                mallaAnimada.BakeMesh(geometriaAnimada);
-
-                // Forzar a MeshCollider a recocinar la malla ya actualizada.
-                collider.sharedMesh = null;
-                collider.sharedMesh = geometriaAnimada;
-            }
-
-            return true;
-        }
-    }
-
-    private sealed class ParteResaltada
-    {
-        public Renderer renderer;
-        public string propiedadColor;
-        public Color colorOriginal;
-    }
+    #region Flujo de selección
 
     private void Awake()
     {
@@ -80,6 +52,13 @@ public class SelectorPersonaje : MonoBehaviour
 
     private void LateUpdate()
     {
+        // Fuera del modo de selección no se resalta ni se aceptan clics.
+        if (!enModoSeleccion || seleccionCompleta)
+        {
+            ActualizarResaltado(null);
+            return;
+        }
+
         if (camara == null)
         {
             camara = Camera.main;
@@ -90,7 +69,7 @@ public class SelectorPersonaje : MonoBehaviour
             }
         }
 
-        // Evita seleccionar un personaje a través de un botón o panel de la interfaz.
+        // Evita seleccionar a través de un botón o panel de la interfaz.
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             ActualizarResaltado(null);
@@ -108,13 +87,103 @@ public class SelectorPersonaje : MonoBehaviour
         }
     }
 
-    // Empieza un modo de selección: solo se suman personajes del equipo permitido.
+    // Activa la selección de objetivos. Pasa datos null para la selección simple.
     public void EmpezarSeleccion(SelectorData datos)
     {
         Reset();
         this.datos = datos;
+        enModoSeleccion = true;
     }
 
+    private void Registrar(Personaje personaje)
+    {
+        if (!enModoSeleccion || personaje == null)
+        {
+            return;
+        }
+
+        // Modo guiado: solo se aceptan personajes del equipo indicado.
+        if (datos != null)
+        {
+            if (seleccionCompleta || !datos.equipos.Contains(personaje.equipo))
+            {
+                return;
+            }
+
+            objetivos.Add(personaje);
+            Debug.Log("Objetivo " + objetivos.Count + "/" + datos.numeroObjetivos + ": " + personaje.nombre);
+            return;
+        }
+
+        // Modo simple (de prueba).
+        seleccionado = personaje;
+        haySeleccion = true;
+    }
+
+    private bool PuedeSeleccionar(Personaje personaje)
+    {
+        return enModoSeleccion && personaje != null &&
+               (datos == null || datos.equipos.Contains(personaje.equipo));
+    }
+
+    // Se llama al cancelar y también después de copiar los objetivos completados.
+    public void Reset()
+    {
+        enModoSeleccion = false;
+        seleccionado = null;
+        haySeleccion = false;
+        datos = null;
+        objetivos.Clear();
+        ActualizarResaltado(null);
+    }
+
+    #endregion
+
+    #region Resaltado visual
+
+    private void ActualizarResaltado(Personaje nuevoPersonaje)
+    {
+        if (personajeResaltado == nuevoPersonaje)
+        {
+            return;
+        }
+
+        ResaltarPersonaje(personajeResaltado, false);
+        personajeResaltado = nuevoPersonaje;
+        ResaltarPersonaje(personajeResaltado, true);
+    }
+
+    private void ResaltarPersonaje(Personaje personaje, bool activo)
+    {
+        if (personaje == null || !partesResaltadas.TryGetValue(personaje, out List<ParteResaltada> partes))
+        {
+            return;
+        }
+
+        foreach (ParteResaltada parte in partes)
+        {
+            if (parte.renderer == null)
+            {
+                continue;
+            }
+
+            Color color = parte.colorOriginal;
+            if (activo)
+            {
+                color = Color.Lerp(color, colorResaltado, intensidadResaltado);
+            }
+
+            parte.renderer.GetPropertyBlock(bloquePropiedades);
+            bloquePropiedades.SetColor(parte.propiedadColor, color);
+            parte.renderer.SetPropertyBlock(bloquePropiedades);
+        }
+    }
+
+    #endregion
+
+    #region Geometría de selección
+
+    // Recoge las mallas de los personajes y prepara los colliders usados solo para apuntar.
     private void CrearMallasSeleccionables()
     {
         LimpiarMallasSeleccionables();
@@ -141,6 +210,7 @@ public class SelectorPersonaje : MonoBehaviour
         }
     }
 
+    // Guarda los renderers y colores originales que el selector puede resaltar.
     private void RegistrarPartesResaltables(Personaje personaje)
     {
         List<ParteResaltada> partes = new List<ParteResaltada>();
@@ -188,6 +258,7 @@ public class SelectorPersonaje : MonoBehaviour
         }
     }
 
+    // Crea un collider por malla para ajustarse a las distintas partes del modelo.
     private void AgregarMalla(Personaje personaje, Renderer renderizador, Mesh malla, SkinnedMeshRenderer mallaAnimada)
     {
         if (malla == null)
@@ -230,6 +301,7 @@ public class SelectorPersonaje : MonoBehaviour
         mallas.Add(seleccionable);
     }
 
+    // Devuelve el personaje cuyo triángulo visible está más cerca de la cámara.
     private Personaje ObtenerPersonajeMasCercano(Ray rayo)
     {
         Personaje masCercano = null;
@@ -250,77 +322,6 @@ public class SelectorPersonaje : MonoBehaviour
         }
 
         return masCercano;
-    }
-
-    private bool PuedeSeleccionar(Personaje personaje)
-    {
-        return personaje != null && (datos == null || datos.equipos.Contains(personaje.equipo));
-    }
-
-    private void ActualizarResaltado(Personaje nuevoPersonaje)
-    {
-        if (personajeResaltado == nuevoPersonaje)
-        {
-            return;
-        }
-
-        ResaltarPersonaje(personajeResaltado, false);
-        personajeResaltado = nuevoPersonaje;
-        ResaltarPersonaje(personajeResaltado, true);
-    }
-
-    private void ResaltarPersonaje(Personaje personaje, bool activo)
-    {
-        if (personaje == null || !partesResaltadas.TryGetValue(personaje, out List<ParteResaltada> partes))
-        {
-            return;
-        }
-
-        foreach (ParteResaltada parte in partes)
-        {
-            if (parte.renderer == null)
-            {
-                continue;
-            }
-
-            Color color = parte.colorOriginal;
-            if (activo)
-            {
-                color = Color.Lerp(color, colorResaltado, intensidadResaltado);
-            }
-
-            parte.renderer.GetPropertyBlock(bloquePropiedades);
-            bloquePropiedades.SetColor(parte.propiedadColor, color);
-            parte.renderer.SetPropertyBlock(bloquePropiedades);
-        }
-    }
-
-    private void Registrar(Personaje personaje)
-    {
-        // Modo guiado: los clics de equipos no válidos no suman.
-        if (datos != null)
-        {
-            if (seleccionCompleta)
-            {
-                return;
-            }
-
-            objetivos.Add(personaje);
-            Debug.Log("Objetivo " + objetivos.Count + "/" + datos.numeroObjetivos + ": " + personaje.nombre);
-            return;
-        }
-
-        // Modo simple (de prueba).
-        seleccionado = personaje;
-        haySeleccion = true;
-    }
-
-    public void Reset()
-    {
-        seleccionado = null;
-        haySeleccion = false;
-        datos = null;
-        objetivos.Clear();
     }
 
     private void OnDestroy()
@@ -358,4 +359,41 @@ public class SelectorPersonaje : MonoBehaviour
             DestroyImmediate(objeto);
         }
     }
+
+    private sealed class MallaPersonaje
+    {
+        public Personaje personaje;
+        public Renderer renderer;
+        public MeshCollider collider;
+        public SkinnedMeshRenderer mallaAnimada;
+        public Mesh geometriaAnimada;
+
+        public bool Preparar()
+        {
+            if (personaje == null || renderer == null || !renderer.enabled ||
+                !renderer.gameObject.activeInHierarchy || collider == null)
+            {
+                return false;
+            }
+
+            if (mallaAnimada != null)
+            {
+                // Actualiza el collider a la pose de la animación de este frame.
+                mallaAnimada.BakeMesh(geometriaAnimada);
+                collider.sharedMesh = null;
+                collider.sharedMesh = geometriaAnimada;
+            }
+
+            return true;
+        }
+    }
+
+    private sealed class ParteResaltada
+    {
+        public Renderer renderer;
+        public string propiedadColor;
+        public Color colorOriginal;
+    }
+
+    #endregion
 }

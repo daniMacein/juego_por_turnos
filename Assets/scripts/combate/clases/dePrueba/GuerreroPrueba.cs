@@ -14,7 +14,7 @@ public class GuerreroPrueba : Personaje
         vidaMaxima = 1000;
         vida = 1000;
         armadura = 30;
-        speed = 200;
+        speed = 20;
 
         probCritico = 10;
         probEvasion = 10;
@@ -44,8 +44,8 @@ public class GuerreroPrueba : Personaje
         );
 
         ataquesInfo[3] = new AtaqueInfo(
-            "Arrodillarse",
-            "Nada."
+            "Golpe mortal",
+            "Hce 500 de daño."
         );
 
 
@@ -92,7 +92,7 @@ public class GuerreroPrueba : Personaje
 
     public override void Ataque4()
     {
-        LanzarAtaque(3, new SelectorData(1, equipoEnemigo), CrearAtaque1);
+        LanzarAtaque(3, new SelectorData(1, equipoEnemigo), CrearAtaque4);
 
     }
 
@@ -188,6 +188,35 @@ public class GuerreroPrueba : Personaje
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
         golpe1.penetracionArmadura=0f;
+        AplicarEstadisticasAGolpe(golpe1);
+
+        AtaqueData ataque = new AtaqueData(golpe1);
+        ataque.EstablecerObjetivoMelee(objetivos[0]);
+
+
+        // ejecutar ataque
+
+        controlCombate.EmpezarAtaque(this, ataque);
+
+
+    }
+
+
+    
+        private void CrearAtaque4(List<Personaje> objetivos)
+
+    {
+        foreach (Personaje objetivo in objetivos)
+        {
+            Debug.Log("el seleccionado es: " + objetivo.nombre);
+        }
+
+        //  Golpe principal
+
+        GolpeData golpe1 = new GolpeData
+        (500, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+
+    
         AplicarEstadisticasAGolpe(golpe1);
 
         AtaqueData ataque = new AtaqueData(golpe1);
