@@ -10,8 +10,7 @@ public class BarraVida : MonoBehaviour
    
     public Personaje personaje;
 
-    [SerializeField] private TextMeshProUGUI textoVida;
-    private Color colorTextoVida = Color.gold;
+    public TextMeshProUGUI textoVida;
     [SerializeField] private Color colorDanio = new Color(0.9f, 0.08f, 0.08f, 1f);
     [SerializeField] private float duracionDanio = 2f;
 
@@ -47,10 +46,10 @@ public class BarraVida : MonoBehaviour
             : 0f;
 
         PrepararCapaDanio();
-        PrepararTextoVida();
 
         BarraDeVida.fillAmount = porcentajeVida;
-        textoVida.text = Mathf.RoundToInt(vidaActual) + "/" + Mathf.RoundToInt(vidaMaxima);
+        if (textoVida != null)
+            textoVida.text = Mathf.RoundToInt(vidaActual) + "/" + Mathf.RoundToInt(vidaMaxima);
 
         if (!estadoInicializado)
         {
@@ -124,49 +123,6 @@ public class BarraVida : MonoBehaviour
 
         // Se dibuja detrás de la vida verde y delante del fondo negro.
         rectDanio.SetAsFirstSibling();
-    }
-
-    private void PrepararTextoVida()
-    {
-        if (textoVida != null)
-            return;
-
-        RectTransform barraRect = BarraDeVida.rectTransform;
-        GameObject objetoTexto = new GameObject(
-            "TextoVida",
-            typeof(RectTransform),
-            typeof(CanvasRenderer),
-            typeof(TextMeshProUGUI));
-
-        objetoTexto.transform.SetParent(barraRect.parent, false);
-        textoVida = objetoTexto.GetComponent<TextMeshProUGUI>();
-
-        RectTransform rectTexto = textoVida.rectTransform;
-        rectTexto.anchorMin = barraRect.anchorMin;
-        rectTexto.anchorMax = barraRect.anchorMax;
-        rectTexto.pivot = barraRect.pivot;
-        rectTexto.anchoredPosition = barraRect.anchoredPosition;
-        rectTexto.sizeDelta = barraRect.sizeDelta;
-        rectTexto.localRotation = barraRect.localRotation;
-        rectTexto.localScale = barraRect.localScale;
-
-        textoVida.font = TMP_Settings.defaultFontAsset;
-        if (textoVida.font == null)
-            textoVida.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
-
-        textoVida.fontSize = 12f;
-        textoVida.enableAutoSizing = true;
-        textoVida.fontSizeMin = 7f;
-        textoVida.fontSizeMax = 12f;
-        textoVida.fontStyle = FontStyles.Bold;
-        textoVida.alignment = TextAlignmentOptions.Center;
-        textoVida.color = colorTextoVida;
-        textoVida.outlineColor = Color.black;
-        textoVida.outlineWidth = 0.2f;
-        textoVida.raycastTarget = false;
-
-        // El texto queda por encima de ambas capas de color.
-        rectTexto.SetAsLastSibling();
     }
 
     private IEnumerator OcultarDanioTrasUnTiempo()
