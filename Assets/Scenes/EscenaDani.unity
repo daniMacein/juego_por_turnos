@@ -2133,7 +2133,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: caballero
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 4a9f36d2dbf7c6443ae9b33c2497439e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2871,7 +2872,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: caballero
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 4a9f36d2dbf7c6443ae9b33c2497439e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2936,7 +2938,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: caballero
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 4a9f36d2dbf7c6443ae9b33c2497439e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5643,7 +5646,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: caballero
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 4a9f36d2dbf7c6443ae9b33c2497439e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -7680,7 +7684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e233c8878c03f24bb403869039ac40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VentanaDanoGenerador
-  prefab: {fileID: 1926570010301358417, guid: 38dcb538f19c4a64a9de28ff475465f7, type: 3}
 --- !u!4 &2016534535
 Transform:
   m_ObjectHideFlags: 0

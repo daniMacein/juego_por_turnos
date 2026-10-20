@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
+using System.Runtime.CompilerServices;
 public class ControlCombate : MonoBehaviour
 {
 
@@ -248,7 +249,7 @@ public class ControlCombate : MonoBehaviour
     EjecutarEfectosGenerales();
 
     PersonajesOrdenados.RemoveAt(0);
-    ComprobarMuerte();
+    yield return ComprobarMuerte();
     OrdenarPersonajes();
 
   }
@@ -373,7 +374,7 @@ public class ControlCombate : MonoBehaviour
   //todo: Muerte
 
 
-  void ComprobarMuerte()
+  private IEnumerator ComprobarMuerte()
   {
 
     // Se recorre una copia porque ControlMuerte elimina elementos de la lista original.
@@ -382,8 +383,11 @@ public class ControlCombate : MonoBehaviour
       if (personaje.EstaVivo() == false)
       {
         ControlMuerte(personaje);
+        
+        yield return personaje.AnimarMuerte();
+
         personaje.gameObject.SetActive(false);
-        Debug.Log("ESTOY DENTRO DE LA LISTA", personajesMuertos[0]);
+        
       }
 
     }

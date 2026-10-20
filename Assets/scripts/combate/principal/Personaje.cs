@@ -237,6 +237,16 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
+     //TODO: ANIMACION DE RECIBIR 
+
+     public virtual IEnumerator AnimarMuerte()
+    {
+          animator.SetTrigger("Morir");
+         yield return new WaitForSeconds(2f);
+
+    }
+
+
     #endregion
 
 
