@@ -37,7 +37,7 @@ public class GolpeData
     public bool esPositivo=true;
 
     //**Efectos
-    public List<Efecto> efectos;
+    public List<Efecto> efectos=new List<Efecto>();
 
     //** Métodos
     //metodo que se llama para aplicar la vida que va a curar

@@ -70,10 +70,12 @@ public class GuerreroPrueba : Personaje
     }
 
 
+
  public override void Ataque1()
     {
         //Tajo: 1 objetivo del equipo enemigo
         LanzarAtaque(0, new SelectorData(1, equipoEnemigo), CrearAtaque1);
+
 
     }
 
@@ -111,6 +113,9 @@ public class GuerreroPrueba : Personaje
         GolpeData golpe1 = new GolpeData
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
+        HerirEfecto herirEfecto = new HerirEfecto();
+        golpe1.efectos.Add(herirEfecto);
+        golpe1.aplicaEfecto=true;
         golpe1.penetracionArmadura=0f;
         AplicarEstadisticasAGolpe(golpe1);
 
