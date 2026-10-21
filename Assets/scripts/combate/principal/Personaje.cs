@@ -524,6 +524,7 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
+
     //todo: POSTATAQUE
 
     //Despues de haber recibido un ataque completo. Se indica que el ataque ha sido finalizado/ejecutado

@@ -7,7 +7,7 @@ public class EfectoData
 
 
     //**objetivos
-    public List<Personaje> objetivos;
+    public Personaje objetivo;
 
     //**Estadisticas
     public float vida;
@@ -40,10 +40,10 @@ public class EfectoData
    
 
 
-public EfectoData(float valor, List<Personaje> objetivos, TipoEfecto tipoEfecto,TipoAnimacion tipoAnimacion)
+public EfectoData(float valor, Personaje objetivo, TipoEfecto tipoEfecto,TipoAnimacion tipoAnimacion)
 {
     this.tipoEfecto = tipoEfecto;
-    this.objetivos = objetivos;
+    this.objetivo = objetivo;
     this.tipoAnimacion=tipoAnimacion;
 
     switch (tipoEfecto)

@@ -270,7 +270,7 @@ public class ControlCombate : MonoBehaviour
 
     foreach (Personaje personaje in TodosPersonajes)
     {
-      EfectosTurnoGeneral(personaje);
+      yield return EfectosTurnoGeneral(personaje);
     }
 
     yield return new WaitForSeconds(2f);
@@ -280,12 +280,29 @@ public class ControlCombate : MonoBehaviour
   }
 
 
-  public void EfectosTurnoGeneral(Personaje personaje)
+  private IEnumerator EfectosTurnoGeneral(Personaje personaje)
   {
     foreach (Efecto efecto in personaje.efectosActivos)
     {
-      efecto.EnTurnoGeneral(personaje);
+      if (efecto.afectaEnTurnoGeneral){
+        EfectoData efectoData = efecto.EnTurnoGeneral(personaje);
+        
+        yield return EjecutarEfecto(personaje,efectoData);
+      }
+
+
     }
+
+    yield return new WaitForSeconds(0.1f); 
+  }
+
+
+  private IEnumerator EjecutarEfecto(Personaje personaje, EfectoData efectoData)
+  {
+    ResultadoGolpe resultado = personaje.RecibirEfecto(efectoData);
+
+    GestorUICombate.gestorUICombate.MostrarGolpe(resultado);
+    yield return new WaitForSeconds(0.1f);
   }
 
 
@@ -617,7 +634,6 @@ public class ControlCombate : MonoBehaviour
     atacante.TerminarAtaque(ataque);
 
   }
-
 
 
 
