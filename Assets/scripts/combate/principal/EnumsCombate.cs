@@ -1,5 +1,6 @@
 public enum Equipo
 {
     equipoA,
-    equipoB
+    equipoB,
+    ambosEquipos
 }
