@@ -286,6 +286,7 @@ public class ControlCombate : MonoBehaviour
     {
       if (efecto.afectaEnTurnoGeneral){
         EfectoData efectoData = efecto.EnTurnoGeneral(personaje);
+        
         yield return EjecutarEfecto(personaje,efectoData);
       }
 
@@ -295,10 +296,12 @@ public class ControlCombate : MonoBehaviour
     yield return new WaitForSeconds(0.1f); 
   }
 
-//RELLENAR ESTO 
+
   private IEnumerator EjecutarEfecto(Personaje personaje, EfectoData efectoData)
   {
+    ResultadoGolpe resultado = personaje.RecibirEfecto(efectoData);
 
+    GestorUICombate.gestorUICombate.MostrarGolpe(resultado);
     yield return new WaitForSeconds(0.1f);
   }
 
