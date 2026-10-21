@@ -86,7 +86,7 @@ public class GuerreroPrueba : Personaje
 
     public override void Ataque3()
     {
-        LanzarAtaque(1, new SelectorData(1, Equipo.ambosEquipos), CrearAtaque3);
+        LanzarAtaque(1, new SelectorData(1, Equipo.ambosEquipos), CrearAtaque1);
 
     }
 
@@ -176,10 +176,13 @@ public class GuerreroPrueba : Personaje
     }
 
 
-        private void CrearAtaque3(List<Personaje> ambosEquipos)
+        private void CrearAtaque3(List<Equipo> ambosEquipos)
 
     {
-        objetivos=ambosEquipos[0];
+        /*
+        List<Personaje>objetivos= new List<Personaje>();
+
+        objetivos.Add(ambosEquipos[0]);
 
         foreach (Personaje objetivo in objetivos)
         {
@@ -208,7 +211,7 @@ public class GuerreroPrueba : Personaje
 
         controlCombate.EmpezarAtaque(this, ataque);
 
-
+    */
     }
 
 
