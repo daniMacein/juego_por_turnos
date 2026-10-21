@@ -1,13 +1,15 @@
 
 
 using System.Runtime.ConstrainedExecution;
+using UnityEngine.InputSystem.Interactions;
 
 public abstract class Efecto
 {
-
+public Personaje objetivo; 
 public bool id{ get; protected set; } 
    bool esPositivo;
    bool esDisipable=true;
+   public bool afectaEnTurnoGeneral=false; 
 
     public bool disipado=false;
    public int duracion { get; protected set; } 
@@ -25,7 +27,10 @@ public bool id{ get; protected set; }
 
     public virtual void EnTurnoEnemigo(Personaje personaje) { }
 
-    public virtual void EnTurnoGeneral(Personaje personaje) { }
+    public virtual EfectoData EnTurnoGeneral(Personaje personaje)
+    {
+        return null; 
+    }
 
     public virtual void TrasRecibirAtaque(Personaje personaje, ResultadoAtaque resultado) { }
 
