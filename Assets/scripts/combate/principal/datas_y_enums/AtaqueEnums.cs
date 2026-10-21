@@ -29,7 +29,8 @@ public enum TipoAnimacion
     Ataque1_Golpe1,
     Ataque1_Golpe2,
     AtaqueFuerte,
-    Magia_Fuego
+    Magia_Fuego,
+    Nulo
 }
 
 public enum TipoEfecto

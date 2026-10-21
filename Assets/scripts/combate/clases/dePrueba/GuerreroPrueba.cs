@@ -88,7 +88,7 @@ public class GuerreroPrueba : Personaje
 
     public override void Ataque3()
     {
-        LanzarAtaque(1, new SelectorData(1, Equipo.ambosEquipos), CrearAtaque1);
+        LanzarAtaque(1, new SelectorData(1, Equipo.ambosEquipos), CrearAtaque3);
 
     }
 
@@ -164,7 +164,7 @@ public class GuerreroPrueba : Personaje
         List<Personaje>unoMismo= new List<Personaje>();
         unoMismo.Add(this);
         
-        GolpeData golpe2 = new GolpeData(50, unoMismo, TipoAtaque.Curacion,TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        GolpeData golpe2 = new GolpeData(50, unoMismo, TipoAtaque.Curacion,TipoObjetivo.Unitario,TipoAnimacion.Nulo);
 
         AplicarEstadisticasAGolpe(golpe1);
         AplicarEstadisticasAGolpe(golpe2);
@@ -181,10 +181,10 @@ public class GuerreroPrueba : Personaje
     }
 
 
-        private void CrearAtaque3(List<Equipo> ambosEquipos)
+        private void CrearAtaque3(List<Personaje> ambosEquipos)
 
     {
-        /*
+        
         List<Personaje>objetivos= new List<Personaje>();
 
         objetivos.Add(ambosEquipos[0]);
@@ -199,16 +199,17 @@ public class GuerreroPrueba : Personaje
         GolpeData golpe1 = new GolpeData
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        List<Personaje>aliado= new List<Personaje>();
-        aliado.Add(AlgoritmosCombate.OrdenarPersonajesVidas(aliados)[0]);
+        
+        List<Personaje> aliado= algoritmosCombate.OrdenarPersonajesVidas(equipo);
 
         GolpeData golpe2 = new GolpeData
-        (100, objetivos, TipoAtaque.Curacion, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
+        (100, aliado, TipoAtaque.Curacion, TipoObjetivo.Unitario,TipoAnimacion.Nulo);
 
         golpe1.penetracionArmadura=0f;
         AplicarEstadisticasAGolpe(golpe1);
+        AplicarEstadisticasAGolpe(golpe2);
 
-        AtaqueData ataque = new AtaqueData(golpe1);
+        AtaqueData ataque = new AtaqueData(golpe1,golpe2);
         ataque.EstablecerObjetivoMelee(objetivos[0]);
 
 
@@ -216,7 +217,7 @@ public class GuerreroPrueba : Personaje
 
         controlCombate.EmpezarAtaque(this, ataque);
 
-    */
+    
     }
 
 

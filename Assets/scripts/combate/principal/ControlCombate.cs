@@ -555,7 +555,11 @@ public class ControlCombate : MonoBehaviour
 
 
       // se parara aqui hasta que haga la animacion completa de ese golpe especifico
-      yield return atacante.AnimarAtaque(golpe, objetivosFinales);
+      if (golpe.tipoAnimacion!= TipoAnimacion.Nulo)
+      {
+        yield return atacante.AnimarAtaque(golpe, objetivosFinales);
+      }
+      
 
 
       if (golpe.estadoGolpe == EstadoGolpe.Fallado)

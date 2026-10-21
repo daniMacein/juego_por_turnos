@@ -56,6 +56,7 @@ public abstract class Personaje : MonoBehaviour
     public SelectorPersonaje selector;
     public ControlCombate controlCombate;
     private ControlPersonajeCombate controlPersonajeCombate;
+    public AlgoritmosCombate algoritmosCombate;
 
 
     //Equipo
@@ -85,6 +86,7 @@ public abstract class Personaje : MonoBehaviour
     void Start()
     {
         controlPersonajeCombate = GetComponent<ControlPersonajeCombate>();
+        algoritmosCombate = FindFirstObjectByType<AlgoritmosCombate>();
 
         if (equipo == Equipo.equipoA)
         {
