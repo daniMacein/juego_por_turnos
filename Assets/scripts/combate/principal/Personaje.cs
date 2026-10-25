@@ -313,7 +313,7 @@ public abstract class Personaje : MonoBehaviour
             return false;
 
         }
-        Debug.Log("Sigo vivo" + nombre);
+        
         return true;
 
 
@@ -408,6 +408,7 @@ public abstract class Personaje : MonoBehaviour
             {
                 float critico = CalcularCritico();
                 golpe.vida = golpe.vida * critico;
+                golpe.numCritico=critico;
 
                 if (golpe.esPositivo)
                 {
@@ -489,7 +490,7 @@ public abstract class Personaje : MonoBehaviour
         {
             foreach (Efecto efecto in golpe.efectos)
             {
-                AplicarEfecto(efecto);
+                AplicarEfecto(efecto,golpe.numCritico);
             }
 
         }
@@ -581,10 +582,10 @@ public abstract class Personaje : MonoBehaviour
 
 
 
-    public void AplicarEfecto(Efecto efecto)
+    public void AplicarEfecto(Efecto efecto, float critico)
     {
         efectosActivos.Add(efecto);
-        //efecto.AlAplicarse(this, potencia, critico);
+        efecto.AlAplicarse(this, potencia, critico);
     }
 
 

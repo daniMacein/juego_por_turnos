@@ -19,6 +19,8 @@ public class GolpeData
 
     public int probGolpeExtra=0;
 
+    public float numCritico=1;
+
     //** Definir ataque
     public TipoAtaque tipoAtaque;
     public TipoObjetivo tipoObjetivo;
