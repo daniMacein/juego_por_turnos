@@ -941,6 +941,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -1424,6 +1425,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -1818,6 +1820,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -2522,6 +2525,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -3274,6 +3278,7 @@ GameObject:
   - component: {fileID: 951301808}
   - component: {fileID: 951301809}
   - component: {fileID: 951301810}
+  - component: {fileID: 951301811}
   m_Layer: 0
   m_Name: arena
   m_TagString: Untagged
@@ -3394,6 +3399,21 @@ MonoBehaviour:
   colorLinea: {r: 0.85, g: 0.88, b: 0.95, a: 0.10980392}
   colorBordeActual: {r: 1, g: 1, b: 1, a: 0.3529412}
   grosorBordeActual: 3
+--- !u!114 &951301811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951301805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a30bb437aea4ed84f8238b58aff979d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlgoritmosCombate
+  equipoA: []
+  equipoB: []
+  equi: []
 --- !u!1 &951645405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3769,6 +3789,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -4031,6 +4052,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -4360,6 +4382,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -5010,6 +5033,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -5468,6 +5492,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -6477,6 +6502,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -7036,6 +7062,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 0
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
@@ -7537,6 +7564,7 @@ MonoBehaviour:
   estaVivo: 1
   selector: {fileID: 0}
   controlCombate: {fileID: 0}
+  algoritmosCombate: {fileID: 0}
   equipo: 1
   equipoEnemigo: 0
   haTerminadoElAtaque: 0
