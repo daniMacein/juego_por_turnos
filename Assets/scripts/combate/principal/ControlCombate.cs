@@ -238,17 +238,17 @@ public class ControlCombate : MonoBehaviour
     p.haTerminadoElAtaque = false;
 
     yield return new WaitUntil(() => p.haTerminadoElAtaque == true);
-
+    
     p.haTerminadoElAtaque = false;
     /*
      else
      {
          IA.Ejecutar(p);
      }*/
+   
+        StartCoroutine(EjecutarEfectosGenerales());
 
-    EjecutarEfectosGenerales();
-
-    PersonajesOrdenados.RemoveAt(0);
+        PersonajesOrdenados.RemoveAt(0);
     yield return ComprobarMuerte();
     OrdenarPersonajes();
 
@@ -267,9 +267,10 @@ public class ControlCombate : MonoBehaviour
   private IEnumerator EjecutarEfectosGenerales()
   {
 
-
+  
     foreach (Personaje personaje in TodosPersonajes)
     {
+      
       yield return EfectosTurnoGeneral(personaje);
     }
 
@@ -281,10 +282,13 @@ public class ControlCombate : MonoBehaviour
 
 
   private IEnumerator EfectosTurnoGeneral(Personaje personaje)
+
   {
     foreach (Efecto efecto in personaje.efectosActivos)
     {
+      
       if (efecto.afectaEnTurnoGeneral){
+       
         EfectoData efectoData = efecto.EnTurnoGeneral(personaje);
         
         yield return EjecutarEfecto(personaje,efectoData);

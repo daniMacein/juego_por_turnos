@@ -82,7 +82,7 @@ public class GestorUICombate : MonoBehaviour
 
         
 
-        Debug.Log(resultadoGolpe.objetivo.gameObject.name);
+        
         MostrarNumGolpe(resultadoGolpe.objetivo.transform.position,texto, color,escala );
 
     }
