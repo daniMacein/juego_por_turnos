@@ -75,6 +75,7 @@ public class ControlCombate : MonoBehaviour
 
   void Start()
   {
+    Debug.Log("HOLA ESTO ES LA PRUEBA DE LA UNION");
     interfazCombate = InterfazCombate.interfazCombate;
 
     if (timeline == null)

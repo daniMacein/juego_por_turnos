@@ -2,11 +2,16 @@
 
 using System.Runtime.ConstrainedExecution;
 using UnityEngine.InputSystem.Interactions;
+using System.Collections.Generic;
+
 
 public abstract class Efecto
 {
+    public List<RasgoEfectoData> rasgosEfectos;
     public Personaje objetivo;
-    public bool id { get; protected set; }
+
+    public TipoDeDuplicado tipoDeDuplicado;
+    public string id ;
     bool esPositivo;
     bool esDisipable = true;
     public bool afectaEnTurnoGeneral = false;
@@ -16,7 +21,24 @@ public abstract class Efecto
 
     public virtual void DisiparEfecto() { }
 
-    public virtual void AlAplicarse(Personaje objetivo, float potencia, float critico) { }
+     public virtual void LimpiarEfecto() { }
+
+    public virtual void AlAplicarse(Personaje objetivo, float potencia, float critico)
+    {
+        
+        foreach (RasgoEfectoData rasgo in rasgosEfectos)
+        {
+            rasgo.numero=rasgo.numero*potencia*critico;
+        }
+
+    }
+
+    public virtual void AlDuplicarse(Personaje objetivo, float potencia, float critico)
+    {
+        
+
+
+    }
     public virtual void AntesDeImpacto(GolpeData golpe, Personaje objetivo) { }
 
     public virtual void InicioDeRonda(Personaje personaje) { }
@@ -41,5 +63,25 @@ public abstract class Efecto
     //efectos especiales
 
     public virtual void AntesDeMorir() { }
+
+
+    public Efecto(params RasgoEfectoData[] rasgos)
+{
+    this.rasgosEfectos = new List<RasgoEfectoData>(rasgosEfectos);
+   
+
+    foreach (RasgoEfectoData rasgo in rasgosEfectos)
+    {
+        if ( rasgo.tiempoRasgo== TiempoRasgo.EnTurnoGeneral)
+        {
+            afectaEnTurnoGeneral=true;
+        }
+
+
+    
+    }
+    
+}
+
 
 }

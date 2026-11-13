@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class AtaqueData 
 {
 
+    //HOLA
    public List<GolpeData> golpes;
 
   public Personaje meleeObjetivo;
@@ -15,6 +16,8 @@ public void EstablecerObjetivoMelee(Personaje personaje)
         meleeObjetivo=personaje;
         
         seDesplaza=true;
+
+        
     }
 
 public AtaqueData(params GolpeData[] golpes)

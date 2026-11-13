@@ -38,3 +38,41 @@ public enum TipoEfecto
     Daño,
     Curacion
 }
+
+public enum TipoStat
+{
+    Vida,
+    Potencia,
+    Armadura,
+    Defensa,
+    Speed,
+    ProbCritico,
+    ProbEvasion,
+    ProbGolpe,
+    PenetracionArmadura,
+    AlteracionDaño
+
+}
+
+public enum TiempoRasgo
+{
+    
+    InicioDeRonda,
+    EnTurnoPropio,
+    EnTurnoAliado,
+    EnTurnoEnemigo,
+    EnTurnoGeneral,
+    TrasRecibirAtaque,
+    TrasIniciarAtaque,
+    AlMorir,
+    AntesDeMorir
+
+}
+
+public enum TipoDeDuplicado
+{
+    Acumulable,
+    UnoSolo,
+    Separable   
+    
+}

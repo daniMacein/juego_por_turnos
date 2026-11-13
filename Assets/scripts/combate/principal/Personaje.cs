@@ -77,6 +77,7 @@ public abstract class Personaje : MonoBehaviour
     public List<Efecto> efectosActivos = new List<Efecto>();
 
 
+
     #endregion
 
 
@@ -586,8 +587,35 @@ public abstract class Personaje : MonoBehaviour
 
     public void AplicarEfecto(Efecto efecto, float critico)
     {
-        efectosActivos.Add(efecto);
-        efecto.AlAplicarse(this, potencia, critico);
+
+        bool duplicado=false;
+
+        foreach (Efecto efectoActivo in efectosActivos)
+        {
+            if (efectoActivo.id==efecto.id)
+            {
+                if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.UnoSolo)
+                {
+                    
+                    efectoActivo.LimpiarEfecto();
+                    efectosActivos.Add(efecto);
+                    
+                    duplicado=true;
+                }
+
+
+                efectosActivos.Add(efecto);
+                efecto.AlDuplicarse(this, potencia, critico);
+                duplicado=true;
+            }
+        }
+        if (duplicado==false)
+        {
+            efectosActivos.Add(efecto);
+            efecto.AlAplicarse(this, potencia, critico);
+        }
+        
+       
     }
 
 
