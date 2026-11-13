@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Runtime.ConstrainedExecution;
+using System.Linq;
 public abstract class Personaje : MonoBehaviour
 {
 
@@ -590,7 +591,7 @@ public abstract class Personaje : MonoBehaviour
 
         bool duplicado=false;
 
-        foreach (Efecto efectoActivo in efectosActivos)
+        foreach (Efecto efectoActivo in efectosActivos.ToList())
         {
             if (efectoActivo.id==efecto.id)
             {
@@ -598,10 +599,48 @@ public abstract class Personaje : MonoBehaviour
                 {
                     
                     efectoActivo.LimpiarEfecto();
+                    efectosActivos.Remove(efectoActivo);
                     efectosActivos.Add(efecto);
                     
                     duplicado=true;
                 }
+
+                if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.Separable)
+                {
+                    
+                    efectosActivos.Add(efecto);
+                    efecto.AlAplicarse(this, potencia, critico);
+                    
+                    duplicado=true;
+                }
+
+                if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.Acumulable)
+                {
+                    
+                    
+                    foreach (RasgoEfectoData rasgo in efectoActivo.rasgosEfectos )
+                    {
+                        
+                        
+                    
+                        
+                        
+
+
+
+                    }
+                    
+                    
+                    efectosActivos.Add(efecto);
+                    efecto.AlAplicarse(this, potencia, critico);
+                    
+                    duplicado=true;
+                }
+
+
+
+
+
 
 
                 efectosActivos.Add(efecto);

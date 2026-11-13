@@ -31,7 +31,11 @@ public abstract class Efecto
             rasgo.numero=rasgo.numero*potencia*critico;
         }
 
+        
+
     }
+
+ 
 
     public virtual void AlDuplicarse(Personaje objetivo, float potencia, float critico)
     {
