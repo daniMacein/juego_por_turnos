@@ -19,7 +19,7 @@ public class GuerreroPrueba : Personaje
         probCritico = 10;
         probEvasion = 10;
 
-        potencia = 1;
+        potencia = 2;
         probGolpe = 100;
         alteracionDaño = 1;
 
@@ -88,7 +88,7 @@ public class GuerreroPrueba : Personaje
 
     public override void Ataque3()
     {
-        LanzarAtaque(1, new SelectorData(1, Equipo.ambosEquipos), CrearAtaque3);
+        LanzarAtaque(1, new SelectorData(1,equipoEnemigo), CrearAtaque3);
 
     }
 
@@ -181,6 +181,7 @@ public class GuerreroPrueba : Personaje
     }
 
 
+    //preubas de efectos
         private void CrearAtaque3(List<Personaje> ambosEquipos)
 
     {
@@ -199,19 +200,23 @@ public class GuerreroPrueba : Personaje
         GolpeData golpe1 = new GolpeData
         (100, objetivos, TipoAtaque.Daño, TipoObjetivo.Unitario,TipoAnimacion.Ataque1_Golpe1);
 
-        
-        List<Personaje> aliado= algoritmosCombate.OrdenarPersonajesVidas(equipo);
 
-        GolpeData golpe2 = new GolpeData
-        (100, aliado, TipoAtaque.Curacion, TipoObjetivo.Unitario,TipoAnimacion.Nulo);
 
-        golpe1.penetracionArmadura=0f;
+        golpe1.penetracionArmadura=1f;
         AplicarEstadisticasAGolpe(golpe1);
-        AplicarEstadisticasAGolpe(golpe2);
 
-        AtaqueData ataque = new AtaqueData(golpe1,golpe2);
+        //aqui
+        RasgoEfectoData rasgo1 = new RasgoEfectoData (5,TipoStat.Vida,TiempoRasgo.EnTurnoGeneral,5,TipoAnimacion.Nulo);
+       
+        AplicarEstadisticasARasgo(rasgo1,golpe1);
+
+        Efecto efecto1 = new Efecto(rasgo1);
+        
+        
+        AtaqueData ataque = new AtaqueData(golpe1);
         ataque.EstablecerObjetivoMelee(objetivos[0]);
 
+    
 
         // ejecutar ataque
 

@@ -435,6 +435,23 @@ public abstract class Personaje : MonoBehaviour
         }
     }
 
+
+    public void AplicarEstadisticasARasgo(RasgoEfectoData rasgoEfectoData,GolpeData golpeData)
+    {
+        
+        float critico= golpeData.numCritico;
+
+
+        foreach (StackEfecto stack in rasgoEfectoData.stacks)
+        {
+            stack.valor=stack.valor*critico*potencia;
+           
+        }
+
+        
+
+    }
+
     //**2) acabar ataque
     //Indico que he terminado un ataque
     public virtual void TerminarAtaque(AtaqueData ataqueData)
@@ -605,14 +622,6 @@ public abstract class Personaje : MonoBehaviour
                     duplicado=true;
                 }
 
-                if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.Separable)
-                {
-                    
-                    efectosActivos.Add(efecto);
-                    efecto.AlAplicarse(this, potencia, critico);
-                    
-                    duplicado=true;
-                }
 
                 if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.Acumulable)
                 {

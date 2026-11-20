@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Interactions;
 using System.Collections.Generic;
 
 
-public abstract class Efecto
+public class Efecto
 {
     public List<RasgoEfectoData> rasgosEfectos;
     public Personaje objetivo;
@@ -28,7 +28,7 @@ public abstract class Efecto
         
         foreach (RasgoEfectoData rasgo in rasgosEfectos)
         {
-            rasgo.numero=rasgo.numero*potencia*critico;
+            rasgo.valorOriginal=rasgo.valorOriginal*potencia*critico;
         }
 
         
@@ -71,7 +71,7 @@ public abstract class Efecto
 
     public Efecto(params RasgoEfectoData[] rasgos)
 {
-    this.rasgosEfectos = new List<RasgoEfectoData>(rasgosEfectos);
+    this.rasgosEfectos = new List<RasgoEfectoData>(rasgos);
    
 
     foreach (RasgoEfectoData rasgo in rasgosEfectos)

@@ -72,7 +72,6 @@ public enum TiempoRasgo
 public enum TipoDeDuplicado
 {
     Acumulable,
-    UnoSolo,
-    Separable   
+    UnoSolo   
     
 }
