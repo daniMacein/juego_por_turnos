@@ -11,7 +11,7 @@ public class Efecto
     public Personaje objetivo;
 
     public TipoDeDuplicado tipoDeDuplicado;
-    public string id ;
+    public string id;
     bool esPositivo;
     bool esDisipable = true;
     public bool afectaEnTurnoGeneral = false;
@@ -21,25 +21,22 @@ public class Efecto
 
     public virtual void DisiparEfecto() { }
 
-     public virtual void LimpiarEfecto() { }
+    public virtual void LimpiarEfecto() { }
 
-    public virtual void AlAplicarse(Personaje objetivo, float potencia, float critico)
+    public virtual void AlAplicarse(Personaje objetivo)
     {
-        
-        foreach (RasgoEfectoData rasgo in rasgosEfectos)
-        {
-            rasgo.valorOriginal=rasgo.valorOriginal*potencia*critico;
-        }
 
-        
+        this.objetivo = objetivo;
+
+
 
     }
 
- 
+
 
     public virtual void AlDuplicarse(Personaje objetivo, float potencia, float critico)
     {
-        
+
 
 
     }
@@ -55,6 +52,38 @@ public class Efecto
 
     public virtual EfectoData EnTurnoGeneral(Personaje personaje)
     {
+
+
+        EfectoData efectoData = new EfectoData();
+        foreach (RasgoEfectoData rasgo in rasgosEfectos)
+        {
+            if (rasgo.tiempoRasgo == TiempoRasgo.EnTurnoGeneral)
+            {
+
+                if (rasgo.stacks.Count > 0)
+                {
+
+                    rasgo.cooldownActual--;
+
+                    if (rasgo.cooldownActual == 0)
+                    {
+                        efectoData.rasgos.Add(rasgo);
+                        rasgo.ReducirDuracion();
+                        rasgo.cooldownActual=rasgo.cooldown;
+
+                    }
+
+
+
+
+                }
+
+
+            }
+        }
+
+
+
         return null;
     }
 
@@ -70,22 +99,22 @@ public class Efecto
 
 
     public Efecto(params RasgoEfectoData[] rasgos)
-{
-    this.rasgosEfectos = new List<RasgoEfectoData>(rasgos);
-   
-
-    foreach (RasgoEfectoData rasgo in rasgosEfectos)
     {
-        if ( rasgo.tiempoRasgo== TiempoRasgo.EnTurnoGeneral)
+        this.rasgosEfectos = new List<RasgoEfectoData>(rasgos);
+
+
+        foreach (RasgoEfectoData rasgo in rasgosEfectos)
         {
-            afectaEnTurnoGeneral=true;
+            if (rasgo.tiempoRasgo == TiempoRasgo.EnTurnoGeneral)
+            {
+                afectaEnTurnoGeneral = true;
+            }
+
+
+
         }
 
-
-    
     }
-    
-}
 
 
 }

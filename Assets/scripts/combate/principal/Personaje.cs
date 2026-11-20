@@ -241,12 +241,12 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
-     //TODO: ANIMACION DE RECIBIR 
+    //TODO: ANIMACION DE RECIBIR 
 
-     public virtual IEnumerator AnimarMuerte()
+    public virtual IEnumerator AnimarMuerte()
     {
-          animator.SetTrigger("Morir");
-         yield return new WaitForSeconds(2f);
+        animator.SetTrigger("Morir");
+        yield return new WaitForSeconds(2f);
 
     }
 
@@ -317,7 +317,7 @@ public abstract class Personaje : MonoBehaviour
             return false;
 
         }
-        
+
         return true;
 
 
@@ -412,7 +412,7 @@ public abstract class Personaje : MonoBehaviour
             {
                 float critico = CalcularCritico();
                 golpe.vida = golpe.vida * critico;
-                golpe.numCritico=critico;
+                golpe.numCritico = critico;
 
                 if (golpe.esPositivo)
                 {
@@ -436,19 +436,19 @@ public abstract class Personaje : MonoBehaviour
     }
 
 
-    public void AplicarEstadisticasARasgo(RasgoEfectoData rasgoEfectoData,GolpeData golpeData)
+    public void AplicarEstadisticasARasgo(RasgoEfectoData rasgoEfectoData, GolpeData golpeData)
     {
-        
-        float critico= golpeData.numCritico;
+
+        float critico = golpeData.numCritico;
 
 
         foreach (StackEfecto stack in rasgoEfectoData.stacks)
         {
-            stack.valor=stack.valor*critico*potencia;
-           
+            stack.valor = stack.valor * critico * potencia;
+
         }
 
-        
+
 
     }
 
@@ -511,7 +511,7 @@ public abstract class Personaje : MonoBehaviour
         {
             foreach (Efecto efecto in golpe.efectos)
             {
-                AplicarEfecto(efecto,golpe.numCritico);
+                AplicarEfecto(efecto);
             }
 
         }
@@ -572,7 +572,7 @@ public abstract class Personaje : MonoBehaviour
     //todo: EFECTOS
 
 
-
+/*
     public ResultadoGolpe RecibirEfecto(EfectoData efecto)
     {
         // recuerda: daño es negativo
@@ -600,70 +600,60 @@ public abstract class Personaje : MonoBehaviour
         return resultado;
 
     }
+*/
 
 
-
-    public void AplicarEfecto(Efecto efecto, float critico)
+    public void AplicarEfecto(Efecto efectoNuevo)
     {
 
-        bool duplicado=false;
+        bool duplicado = false;
 
         foreach (Efecto efectoActivo in efectosActivos.ToList())
         {
-            if (efectoActivo.id==efecto.id)
+            if (efectoActivo.id == efectoNuevo.id)
             {
-                if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.UnoSolo)
+                if (efectoActivo.tipoDeDuplicado == TipoDeDuplicado.UnoSolo)
                 {
-                    
+
                     efectoActivo.LimpiarEfecto();
                     efectosActivos.Remove(efectoActivo);
-                    efectosActivos.Add(efecto);
-                    
-                    duplicado=true;
+                    efectosActivos.Add(efectoNuevo);
+
+                    duplicado = true;
+                    break;
                 }
 
 
-                if (efectoActivo.tipoDeDuplicado==TipoDeDuplicado.Acumulable)
+                if (efectoActivo.tipoDeDuplicado == TipoDeDuplicado.Acumulable)
                 {
-                    
-                    
-                    foreach (RasgoEfectoData rasgo in efectoActivo.rasgosEfectos )
+
+                    for (int i = 0; i < efectoActivo.rasgosEfectos.Count; i++)
+
                     {
-                        
-                        
-                    
-                        
-                        
 
-
+                        foreach (StackEfecto stack in efectoNuevo.rasgosEfectos[i].stacks)
+                        {
+                            efectoActivo.rasgosEfectos[i].AnadirNuevosStack(stack.valor);
+                        }
 
                     }
-                    
-                    
-                    efectosActivos.Add(efecto);
-                    efecto.AlAplicarse(this, potencia, critico);
-                    
-                    duplicado=true;
+
+                    duplicado = true;
+                    break;
                 }
 
-
-
-
-
-
-
-                efectosActivos.Add(efecto);
-                efecto.AlDuplicarse(this, potencia, critico);
-                duplicado=true;
+                efectosActivos.Add(efectoNuevo);
+               
+                duplicado = true;
             }
         }
-        if (duplicado==false)
+        if (duplicado == false)
         {
-            efectosActivos.Add(efecto);
-            efecto.AlAplicarse(this, potencia, critico);
+            efectosActivos.Add(efectoNuevo);
+            efectoNuevo.AlAplicarse(this);
         }
-        
-       
+
+
     }
 
 

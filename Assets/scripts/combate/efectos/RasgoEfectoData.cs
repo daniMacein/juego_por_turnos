@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 public class RasgoEfectoData
 {
 
@@ -11,7 +12,11 @@ public class RasgoEfectoData
 
     public List<StackEfecto> stacks = new List<StackEfecto>(); //x todos los stacks acumulados
 
+    public int cooldown=1;
+    public int cooldownActual=1;
+   
 
+   
     public RasgoEfectoData(float valor, TipoStat tipoStat, TiempoRasgo tiempoRasgo, int duracion, TipoAnimacion tipoAnimacion)
     {
 
@@ -32,7 +37,7 @@ public class RasgoEfectoData
     }
 
 
-    public void anadirNuevosStack(float valor)
+    public void AnadirNuevosStack(float valor)
     {
         StackEfecto nuevoRasgo = new StackEfecto(valor,duracionOriginal);
         stacks.Add(nuevoRasgo);
@@ -48,8 +53,24 @@ public class RasgoEfectoData
 
     public void AnadirCooldown(int cooldown)
     {
-
+        this.cooldown=cooldown;
+        
+        
     }
+
+    public void ReducirDuracion()
+    {
+        foreach (StackEfecto stackEfecto in stacks.ToList())
+        {
+            stackEfecto.duracion=stackEfecto.duracion-1;
+            if (stackEfecto.duracion==0)
+            {
+                stacks.Remove(stackEfecto);
+            }
+        }
+        
+    }
+
 
 
 
